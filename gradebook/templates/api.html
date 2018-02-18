@@ -1,0 +1,178 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel = 'stylesheet' href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css'>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js'></script>
+<link href = 'https://fonts.googleapis.com/icon?family=Material+Icons' rel = 'stylesheet'>
+
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,500" rel="stylesheet">
+
+<link rel="stylesheet" href="https://use.typekit.net/rzr6kwp.css">
+
+<script src="https://use.typekit.net/rzr6kwp.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<style>
+    body {
+        font-family: "Europa", "Lato", "Sans Serif"
+    }
+
+    .anim, .page {
+        transition: 1s all ease; 
+
+    }
+
+    .pre-anim{
+        margin-top: 50px;
+        opacity: 0;
+
+    }
+
+    .post-anim{
+        margin-top: 0;
+        opacity: 1;
+    }
+
+    .pre-anim-left{
+        margin-right: 100px;
+        opacity: 0;
+
+    }
+
+    .post-anim-left{
+        margin-right: 0;
+        opacity: 1;
+    }
+
+    
+
+    .box-button {
+        font-size: 30px; 
+        background: white;
+
+        padding: 5 20 10 20;
+        border-radius: 40px;
+        border-style: solid;
+        border-color: white;
+        border-width: 2px;
+    }
+
+    input, textarea{
+        color: white;
+        border-bottom: black;
+    }
+
+    .contact {
+        border-style: solid;
+        border-width:2px;
+        border-radius:30px;
+        border-color: rgba(0, 0, 0,0);
+
+        background: #30Fd93;
+        padding: 5 10 5 10;
+        color:     #000;
+    }
+
+    .contact:hover {
+        background: #20ed83;
+    }
+</style>
+
+<html>
+    <body style = 'width:100%; height: 100%; background: url("/static/backalt10.png"); background-size:cover; position: absolute;'>
+        <div class = 'page valign-wrapper' style = 'width: 100%; height:100%; position: absolute; left:0%'>
+            <div style = 'width:100%; text-align:center; font-size: 18px; color: #333333'>
+                <img src = "/static/gradebook_api.svg" class = 'anim pre-anim' style = 'width: 550px'>
+                <br/>
+                <br/>
+                <span style = 'margin-right: 20px; cursor: pointer' id = 'api'>get API key</span> | <span style = 'margin-left: 20px'><a style = 'color:black' href = 'https://grades.newportml.com/api/docs'>documention</a></span>
+            </div>
+        </div>
+
+        <div class = 'page' style = 'width: 100%; height:100%; background: url("/static/backalt25.png"); background-size: cover;position: absolute; left:100%;' >
+            <div style = 'width: 100%; height:100%; background: rgba(0, 0, 0, .2); 'class = 'valign-wrapper' >
+                <img src = "/static/gradebook_api.svg" class = '' style = 'position: absolute; left: 50px; top: 30px; width: 250px'>
+
+                <a class = 'contact' href = 'https://grades.newportml.com/api/docs' style = 'z-index:1000; position:absolute; right: 30px; top: calc(50% - 15px); color: #000; font-size: 15px'><span style = ''>Documentation</span><img src = '/static/arrow_forward_medium.svg' style = 'margin-left: 0px; vertical-align:middle; width:50px'></a>
+
+
+                <div style = 'width:100%; text-align:center; font-size: 18px; color: #333333'>
+                <div style = 'font-size: 20px; width:100%; color: white'>
+                    <div style = 'width: 400px; margin-left:calc(50% - 200px); text-align:left'>Once you submit the application, it make take up to two days to have it approved by GradeBook. Please enter your real email as it is the only way we will be able to provide you the API key.</div></div>
+
+                    <form action="https://formspree.io/nathancyan2002@gmail.com" method="POST">
+                        <div class="input-field col s6">
+                            <input placeholder="First Name" name = 'fname' id="fname" type="text" class="validate" style = 'width: 200px' onkeyup = "keyHandler()">
+                            <input placeholder="Last Name" name = 'lname' id="lname" type="text" class="validate" style = 'width: 200px' onkeyup = "keyHandler()">
+                        </div>
+
+                        <div class = 'input-field col s6'>
+                            <input placeholder="Email" name = 'email' id="email" type="email" class="validate" style = 'width: 400px' onkeyup = "keyHandler()">
+                        </div>
+
+                        <div class="input-field col s12">
+                            <textarea id="reason" class="materialize-textarea" placeholder = 'Reason for application' name = 'reason' style = 'width:400px' onkeyup = "keyHandler()"></textarea>
+                        </div>
+
+                        <div id = 'api-submit' class = 'anim pre-anim-left'>
+                            <input type = 'submit'class= 'contact' style = ' width: 400px; margin-top: 30px'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br/>
+        
+    </body>
+</html>
+
+<script>
+    // VARIABLES
+    var page = 0;
+</script>
+
+<script>
+    
+    $(document).ready(function(){
+        $('.pre-anim').removeClass("pre-anim").addClass("post-anim");
+        Materialize.updateTextFields();
+
+        $('#api').click(function(){
+            shiftPage(-1);
+        });
+        
+    });
+
+    function keyHandler(){
+        var ids = ['fname', 'lname', 'email', 'reason'];
+
+        var allFilled = true;
+
+        for (var i = 0; i < ids.length; i++){
+            if ($('#' + ids[i]).val() == ""){
+                allFilled = false; 
+                break;
+            }
+        }
+
+        if (allFilled){
+            $('#api-submit').removeClass('pre-anim-left').addClass("post-anim-left");
+        }else{
+            $('#api-submit').removeClass('post-anim-left').addClass("pre-anim-left");
+
+        }
+    }
+
+    function shiftPage(direction){
+        page += direction;
+
+        var pages = document.getElementsByClassName("page");
+        for (var p = 0; p < pages.length; p++){
+            var current = pages[p].style['left'];
+            current = current.slice(0, current.length - 1);
+
+            console.log((direction * 100) + + current+ "%");
+            pages[p].style['left'] = (direction * 100) + + current+ "%";
+        }
+    }
+
+</script>

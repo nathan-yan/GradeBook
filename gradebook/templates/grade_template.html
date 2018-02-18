@@ -1,0 +1,609 @@
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel = 'stylesheet' href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css'>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js'></script>
+<link href = 'https://fonts.googleapis.com/icon?family=Material+Icons' rel = 'stylesheet'>
+
+<script src= 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+
+<script src = 'http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.js'></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500" rel="stylesheet">
+
+<link rel="stylesheet" href="https://use.typekit.net/rzr6kwp.css">
+
+<script src="https://use.typekit.net/rzr6kwp.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<link rel="stylesheet" href = "circular.css">
+
+<style>
+    body {
+        color: {{ text_color }};
+        font-family: "Futura PT", "europa", "chalet-london-sixty", "ColfaxWeb", 'Segoe UI', 'Lato', Verdana, sans-serif;
+        font-size: 15px;
+        font-weight:300;
+
+        text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+    }
+
+    #menu-logo{
+         transition:0.5s all ease;
+        -webkit-transition:0.5s all ease;
+        -moz-transition:all 0.5s ease;
+        -o-transition:all 0.5 ease;
+    }
+
+    .affix{
+        position:fixed;
+        top:50;
+        left:8;
+
+        width:100%;
+
+        z-index:1;
+}
+
+.special-link {
+        -webkit-transition: all .5s ease;
+        -moz-transitition: all .5s ease;
+        -o-transition: all .5s ease;
+        transition: all .5s ease;
+
+        color: #B9FDFF;
+        font-weight:700;
+
+    }
+
+    .special-link:hover {
+        color: rgb(50, 100, 240);
+    }
+
+
+.menu-item{
+    display:inline-block;
+    margin-left:40px;
+    font-weight:500;
+
+}
+
+#menu{
+    transition:0.5s all ease;
+    -webkit-transition:0.5s all ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5 ease;
+
+    position:fixed;
+    top:10; left: 0px;
+
+    z-index:10000;
+}
+
+#main-logo{
+
+     transition:4s color, 1s font-size ease;
+    -webkit-transition:4s color, 1s font-size ease;
+    -moz-transition:color 4s, 1s font-size ease;
+    -o-transition:color 4s, 1s font-size ease;
+
+}
+
+.animation-5{
+      transition:.5s all ease !important;
+    -webkit-transition:.5s all ease !important;
+    -moz-transition:all .5s ease !important;
+    -o-transition:all .5s ease!important;
+
+}
+
+.page {
+        transition:1s top ease !important;
+    -webkit-transition:1s top ease !important;
+    -moz-transition:top 1s ease !important;
+    -o-transition:top 1s ease!important;
+
+}
+
+.colored-a {
+    transition:1s color ease;
+    -webkit-transition:1s color ease;
+    -moz-transition:1s color ease;
+    -o-transition:1s color ease;
+}
+
+.circle {
+    width:12px;
+    height:12px;
+    border-radius:50%;
+
+    border-style:solid;
+    background-color:white;
+    border-color:black;
+
+    display:inline-block;
+
+    padding-top:3px;
+
+    text-align:center;
+
+}
+
+.circle-small {
+    width:3px;
+    height:3px;
+
+    background-color:white;
+    display:inline-block;
+
+}
+
+.blur {
+    -webkit-filter: blur(2px);-moz-filter: blur(2px);-o-filter: blur(2px);-ms-filter: blur(2px); filter: blur(2px);
+}
+
+.h1 {
+    font-size:70px;
+    font-weight:400;
+}
+
+.h2 {
+    font-size:30px;
+}
+
+.h3 {
+    font-size:20px;
+}
+
+#forward {
+
+    z-index:1000;
+}
+
+#forward:hover{
+    cursor:pointer;
+}
+
+.shifted{
+    left:500px !important;
+}
+
+.page {
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+
+}
+
+.page-s{
+       transition:0.8s top ease !important;
+    -webkit-transition:0.8s top ease !important;
+    -moz-transition:top 0.8s ease !important;
+    -o-transition:top 0.8s ease!important;
+
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.center-v {
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.h1-0{
+    font-size:0;
+}
+
+.margin-50 {
+    margin-left:50;
+}
+
+.invert-color {
+    -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.demo-card {
+
+}
+
+.button-a{
+     transition:0.2s all ease;
+    -webkit-transition:0.2s all ease;
+    -moz-transition:all 0.2s ease;
+    -o-transition:all 0.2s ease;
+
+    background-color: rgba(0, 0, 0, 0);
+    color:white
+}
+
+.button-a:hover{
+    background-color: rgba(255, 255, 255, .2);
+    color:white;
+}
+
+ @-webkit-keyframes autofill {
+    to {
+        color: #aaa;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+.bottom-margin {
+    margin-bottom: 20px;
+}
+
+.grade {
+    padding-top:-3px;
+    width: 210px;
+
+     transition:1s all ease !important;
+            -webkit-transition:1s all ease !important;
+            -moz-transition:all 1s ease !important;
+            -o-transition:all 1.5s ease!important;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 50%, rgb(150, 200, 255) 50%);
+            background-size: 200% 100%;
+            background-position: 100% bottom;
+ 
+}
+
+.grade:hover{
+              background-position: left bottom;
+
+            
+}
+
+.profile {
+    width:70px;
+    height:70px;
+
+}
+
+.line {
+    border-bottom: 1px solid black;
+    border-top: 0px solid black;
+    border-collapse: collapse;
+    border-radius:0;
+}
+
+th, td {
+    border-radius:0;
+}
+
+#contact {
+    border-style: solid;
+    border-width:2px;
+    border-radius:30px;
+    border-color: rgba(0, 0, 0,0);
+
+    background: #30Fd93;
+    padding: 5 10 5 10;
+    color:    #000;
+
+}
+
+</style>
+
+<html>
+    <body style = 'width:100%; background-color: {{ header_color }}; position:relative;'>
+ 
+        <div style = 'width:100%; position:relative; height:70px;'>
+                            <img src = '/static/gradebook.svg' style = 'width:300px; position:absolute; left:150px; top:20px;'>
+
+            <div style = 'position:absolute; right:150px;'>
+                <div style = 'margin-left:150px; margin-top:30px; background: url("{{ profile }}"); display:inline-block; background-size: cover; background-repeat:no-repeat; background-position:50% 20%' class = 'profile' ></div>
+                        <div style = 'display:inline-block; height:70px;' class= 'valign-wrapper'>
+                            <div>
+                                <div style = 'font-size:25px'>{{ name }}</div>
+                                <div style = 'font-size:15px'>{{ school }}</div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                     <div style = 'position:absolute; left: 20px'>
+            </div>
+                </div>
+
+           
+            </div>
+
+        <div id = 'mnu' style = 'width:20%; height:50px; padding-bottom:25px; margin-left:145px;'>
+           
+           <table>
+                <tr>
+                    <td>
+                        <div style = 'border-radius:5px; font-weight:700px; font-size:20px; padding: 15 20 5 20; background: {{ bg_color }}'>
+                            <a href = 'https://grades.newportml.com/grades'>Grades</a>
+                        </div>
+                        </td>
+                    <td>
+                        <div style = 'font-weight:700px; font-size:20px; padding: 10 15 0 8'>
+                             <a href = 'https://grades.newportml.com/school?AGU=0'>Contacts</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div style = 'font-weight:700px; font-size:20px; padding: 10 15 0 8'>
+                            <a style = 'color: #4db6ac' href = 'https://grades.newportml.com/profile'>Profile</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div style = 'font-weight:700px; font-size:20px; padding: 10 15 0 8'>
+                            <a style = 'color: rgb(255, 110, 100)' href = 'https://grades.newportml.com/'>Logout</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id = 'content-wrapper' style = 'z-index:1; padding-left: 100px; padding-right:100px; background: {{ bg_color }}; margin-top:8px; height:100%; padding-top:50px; padding-bottom:1300px;'>
+            <div id = 'content' style = 'margin-left: 50px; margin-top:0px; width: 70%'>
+                
+
+                <br/>
+                <span style = 'font-size: 70px'>Grades</span>
+<br/>
+
+                {% for semester in semester_links %}
+                    {% if semester == "selected" %}
+                        <span style = 'margin-right: 20px; font-size: 30px' class = 'line'>Q{{loop.index}}</span>
+                    {% else %}
+                        <span style = 'margin-right: 20px; font-size: 30px'><a href = "{{semester}}">Q{{loop.index}}</a></span>
+                    {% endif %}
+                {% endfor %}
+                <br/><br/>
+                <table>
+                <tr>
+                    {% for value in categories %}
+                        <th class = 'line'> {{value}} </th>
+                    {% endfor %}
+                </tr>
+                
+                {% for class in links %}
+                    <tr class = 'class'>
+                        {% for v, href in class %}
+                            <th class = 'line'><a href = {{ href }}>{{ v }}</a></th>&emsp;
+                        {% endfor %}
+                    </tr>
+                    
+                {% endfor %}
+                </table>
+
+                <br/>
+                <br/>
+
+                <span style = 'font-size: 70px'>GPA <i onclick = "$('#modal1').modal('open')" class = 'material-icons' style = 'padding-bottom:-10px'>info_outline</i></span>
+                <table>
+                    <tr>
+                        <td class = 'line'><b>High School Standard<b/></td>
+                        <td class = 'line'><b>Traditional Standard<b/></td>
+                    </tr>
+
+                    <tr>
+                        <td style = 'font-size: 50' id = 'highschool'>4.0</td>
+                        <td  style = 'font-size: 50' id = 'traditional' >4.0</td>
+                    </tr>
+                </table>
+                
+                <!--<div><span>{{p1}}</span>&emsp;<span>{{class1}}</span>&emsp;<span>{{resources1}}</span>&emsp;<span>{{room1}}</span>&emsp;<span>{{grade1}}</span></div>
+                <div><span>{{p2}}</span>&emsp;<span>{{class2}}</span>&emsp;<span>{{resources2}}</span>&emsp;<span>{{room2}}</span>&emsp;<span>{{grade2}}</span></div>
+                <div><span>{{p3}}</span>&emsp;<span>{{class3}}</span>&emsp;<span>{{resources3}}</span>&emsp;<span>{{room3}}</span>&emsp;<span>{{grade3}}</span></div>
+                <div><span>{{p4}}</span>&emsp;<span>{{class4}}</span>&emsp;<span>{{resources4}}</span>&emsp;<span>{{room4}}</span>&emsp;<span>{{grade4}}</span></div>
+                <div><span>{{p5}}</span>&emsp;<span>{{class5}}</span>&emsp;<span>{{resources5}}</span>&emsp;<span>{{room5}}</span>&emsp;<span>{{grade5}}</span></div>
+                <div><span>{{p6}}</span>&emsp;<span>{{class6}}</span>&emsp;<span>{{resources6}}</span>&emsp;<span>{{room6}}</span>&emsp;<span>{{grade6}}</span></div>
+                <div><span>{{p7}}</span>&emsp;<span>{{class7}}</span>&emsp;<span>{{resources7}}</span>&emsp;<span>{{room7}}</span>&emsp;<span>{{grade7}}</span></div>
+                <div><span>{{p8}}</span>&emsp;<span>{{class8}}</span>&emsp;<span>{{resources8}}</span>&emsp;<span>{{room8}}</span>&emsp;<span>{{grade8}}</span></div>
+                <div><span>{{p9}}</span>&emsp;<span>{{class9}}</span>&emsp;<span>{{resources9}}</span>&emsp;<span>{{room9}}</span>&emsp;<span>{{grade9}}</span></div>
+                <div><span>{{p10}}</span>&emsp;<span>{{class10}}</span>&emsp;<span>{{resources10}}</span>&emsp;<span>{{room10}}</span>&emsp;<span>{{grade10}}</span></div>
+                <div><span>{{p11}}</span>&emsp;<span>{{class11}}</span>&emsp;<span>{{resources11}}</span>&emsp;<span>{{room11}}</span>&emsp;<span>{{grade11}}</span></div>-->
+                
+            </div>
+        </div>
+
+        <div id="modal2" class="modal " style = 'background: {{bg_color}}; height: 100%'>
+            <div class="modal-content valign-wrapper" style = 'width:100%; height: 100%'>
+                <div>
+                <img src = '/static/gradebook.svg' style = 'width:300px; margin-bottom:-5px; margin-right:-40px'><span style = 'font-size: 30px; color:#FFA4B6 '>v2.7</span>
+                <p>Some people were a bit confused about the GPA section, and others have complained about it not working properly, we've addressed both and we hope we've fixed everything!</p>
+
+                <br/>
+
+                <span style = 'font-weight: 700'>UPDATES</span>
+                <ol>
+                    <li><p>GradeBook has a friggin web mobile version! Dabdabdabdabdab.</p></li>
+                    <li><p>You can now see grades from previous quarters in the home/grades page.</p></li>
+                </ol>
+
+                <p style = 'color: darkred'>GradeBook apologizes for the constant logging out that some users may have experienced. This is due to use restarting to server to push new but small updates (the guy who was working on this one was not very careful lol).</p>
+
+                <br>
+
+                Thanks,
+                <br/>
+                The GradeBook team
+
+                <br/>
+                <br/>
+                
+                <a href="#" class="modal-action modal-close" style = 'color: rgb(255, 110, 100)'>Close</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal1" class="modal " style = 'background: {{bg_color}}; height: 100%'>
+            <div class="modal-content valign-wrapper" style = 'width:100%; height: 100%'>
+                <div>
+                <span style = 'font-size: 50'>GPA standards explained</span>
+
+                <p>
+                    High School standard <b>doesn't</b> deal with + and - for grades. So a 90% still counts as an A (4.0), and not an A- (3.7). It is named this way because certain schools, including Newport, use this type of system.
+                </p>
+
+                <p>
+                    Traditional standard <b>does</b> deal with + and - for grades. So a 90% counts as an A- (3.7). It is named that way because most places use this type of scale, including CollegeBoard.
+                </p>
+
+                <p>
+                    Depending on your grade, one standard or the other will be better. For example, if all of your classes are scored 90%, your High School standard GPA would still be a 4.0, but your Traditional standard GPA would be a 3.7. On the other hand, if all your grades were 89%, your High School standard GPA would be a 3.0, while your Traditional standard GPA would be a 3.3.
+                </p>
+                
+                <a href="#" class="modal-action modal-close" style = 'color: rgb(255, 110, 100)'>Close</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
+
+        <div style = 'width:100%; text-align:center; position:fixed; bottom:10px; left: calc(50% - 171px)' class = 'center-align'>
+        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
+            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = 'https://grades.newportml.com/community'>Contact us!</a></span></div></div>
+</div>
+
+    </body>
+
+</html>
+
+<script>
+
+    var gpa_score = {
+        "A+" : 4.0,
+        "A" : 4.0,
+        "A-" : 3.7,
+        "B+" : 3.3, 
+        "B" : 3.0,
+        "B-" : 2.7,
+        "C+" : 2.3,
+        "C" : 2.0,
+        "C-" : 1.7,
+        "D+" : 1.3,
+        "D" : 1.0,
+        "F" : 0,
+    }
+
+    
+    function round(num, prec){
+        var f = Math.pow(10, prec);
+        return Math.round(num * f) / f;
+    }
+
+    function GPACollege(classes){
+        var letters = [];
+
+        for (var c= 0; c < classes.length; c++){
+            var grade = classes[c];
+            if (92 <= grade){
+                letters.push("A");
+            }else if (90 <= grade && grade < 92){
+                letters.push("A-");
+            }else if (87 <= grade && grade < 90){
+                letters.push("B+");
+            }else if (83 <= grade && grade < 87){
+                letters.push("B");
+            }else if (80 <= grade && grade < 83){
+                letters.push("B-");
+            }else if (77 <= grade && grade < 80){
+                letters.push("C+");
+            }else if (73 <= grade && grade < 77){
+                letters.push("C");
+            }else if (70 <= grade && grade < 73){
+                letters.push("C-");
+            }else if (67 <= grade && grade < 70){
+                letters.push("D+");
+            }else if (65 <= grade && grade < 67){
+                letters.push("D");
+            }else {
+                letters.push("F")
+            }
+        }
+
+        var sum = 0.0;
+        console.log(letters);
+        for (var c = 0; c < classes.length; c++){
+            console.log(gpa_score[letters[c]])
+            sum += gpa_score[letters[c]];
+        }
+
+        return sum/(classes.length * 1.0);
+    }
+
+    function GPANewport(classes) {
+        var letters = [];
+
+        for (var c= 0; c < classes.length; c++){
+            var grade = classes[c];
+            if (90 <= grade){
+                letters.push("A");
+            }else if (80 <= grade && grade < 90){
+                letters.push("B");
+            }else if (70 <= grade && grade < 80){
+                letters.push("C");
+            }else if (65 <= grade && grade < 70){
+                letters.push("D");
+            }else if (0 <= grade && grade < 65){
+                letters.push("F");
+            }
+        }
+
+        var sum = 0.0;
+        for (var c = 0; c < classes.length; c++){
+            sum += gpa_score[letters[c]];
+            console.log(sum);
+        }
+
+        return sum/(classes.length * 1.0);
+    }
+
+    function displayGPA(){
+        var classes = document.getElementsByClassName("class");
+        var class_grades = [];
+        for (var c= 0; c < classes.length; c++){
+            var grade = classes[c].lastChild.innerText;
+            grade = (grade.split(' (')[1].slice(0, -1) + + 0);
+            console.log(grade);
+            class_grades.push(grade);
+
+        }
+
+    
+
+        var gpaN = round(GPANewport(class_grades), 2);
+        var gpaC = round(GPACollege(class_grades), 2);
+
+        $("#highschool").text(gpaN);
+        $("#traditional").text(gpaC);        
+    }
+
+    displayGPA();
+ 
+
+ $('.modal').modal({
+     dismissible:false
+ });
+
+    if ({{first}}){
+          $('#modal2').modal('open');
+    }
+   
+
+
+</script>
