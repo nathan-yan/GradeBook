@@ -1,0 +1,542 @@
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel = 'stylesheet' href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css'>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js'></script>
+<link href = 'https://fonts.googleapis.com/icon?family=Material+Icons' rel = 'stylesheet'>
+
+<script src= 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+
+<script src = 'http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.js'></script>
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500" rel="stylesheet">
+
+<link rel="stylesheet" href="https://use.typekit.net/rzr6kwp.css">
+
+<script src="https://use.typekit.net/rzr6kwp.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<link rel="stylesheet" href = "circular.css">
+
+<style>
+    body {
+        color: {{ text_color }};
+        font-family: "Futura PT", "europa", "chalet-london-sixty", "ColfaxWeb", 'Segoe UI', 'Lato', Verdana, sans-serif;
+        font-size: 15px;
+        font-weight:300;
+
+        text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+    }
+
+    #menu-logo{
+         transition:0.5s all ease;
+        -webkit-transition:0.5s all ease;
+        -moz-transition:all 0.5s ease;
+        -o-transition:all 0.5 ease;
+    }
+
+    .affix{
+        position:fixed;
+        top:50;
+        left:8;
+
+        width:100%;
+
+        z-index:1;
+}
+
+.special-link {
+        -webkit-transition: all .5s ease;
+        -moz-transitition: all .5s ease;
+        -o-transition: all .5s ease;
+        transition: all .5s ease;
+
+        color: #B9FDFF;
+        font-weight:700;
+
+    }
+
+    .special-link:hover {
+        color: rgb(50, 100, 240);
+    }
+
+
+.menu-item{
+    display:inline-block;
+    margin-left:40px;
+    font-weight:500;
+
+}
+
+#menu{
+    transition:0.5s all ease;
+    -webkit-transition:0.5s all ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5 ease;
+
+    position:fixed;
+    top:10; left: 0px;
+
+    z-index:10000;
+}
+
+#main-logo{
+
+     transition:4s color, 1s font-size ease;
+    -webkit-transition:4s color, 1s font-size ease;
+    -moz-transition:color 4s, 1s font-size ease;
+    -o-transition:color 4s, 1s font-size ease;
+
+}
+
+.animation-5{
+      transition:.5s all ease !important;
+    -webkit-transition:.5s all ease !important;
+    -moz-transition:all .5s ease !important;
+    -o-transition:all .5s ease!important;
+
+}
+
+.page {
+        transition:1s top ease !important;
+    -webkit-transition:1s top ease !important;
+    -moz-transition:top 1s ease !important;
+    -o-transition:top 1s ease!important;
+
+}
+
+.colored-a {
+    transition:1s color ease;
+    -webkit-transition:1s color ease;
+    -moz-transition:1s color ease;
+    -o-transition:1s color ease;
+}
+
+.circle {
+    width:12px;
+    height:12px;
+    border-radius:50%;
+
+    border-style:solid;
+    background-color:white;
+    border-color:black;
+
+    display:inline-block;
+
+    padding-top:3px;
+
+    text-align:center;
+
+}
+
+.circle-small {
+    width:3px;
+    height:3px;
+
+    background-color:white;
+    display:inline-block;
+
+}
+
+.blur {
+    -webkit-filter: blur(2px);-moz-filter: blur(2px);-o-filter: blur(2px);-ms-filter: blur(2px); filter: blur(2px);
+}
+
+.h1 {
+    font-size:70px;
+    font-weight:400;
+}
+
+.h2 {
+    font-size:30px;
+}
+
+.h3 {
+    font-size:20px;
+}
+
+#forward {
+
+    z-index:1000;
+}
+
+#forward:hover{
+    cursor:pointer;
+}
+
+.shifted{
+    left:500px !important;
+}
+
+.page {
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+
+}
+
+.page-s{
+       transition:0.8s top ease !important;
+    -webkit-transition:0.8s top ease !important;
+    -moz-transition:top 0.8s ease !important;
+    -o-transition:top 0.8s ease!important;
+
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.center-v {
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.h1-0{
+    font-size:0;
+}
+
+.margin-50 {
+    margin-left:50;
+}
+
+.invert-color {
+    -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.demo-card {
+
+}
+
+.button-a{
+     transition:0.2s all ease;
+    -webkit-transition:0.2s all ease;
+    -moz-transition:all 0.2s ease;
+    -o-transition:all 0.2s ease;
+
+    border-radius:30px;
+    border-style:solid;
+    background-color: rgba(0, 0, 0, 0);
+    color:{{ text_color }};
+
+    padding: 5 8 5 8;
+}
+
+.button-a:hover{
+    background-color: rgba(0, 0, 0, .2) !important;
+    color:white !important;
+}
+
+ @-webkit-keyframes autofill {
+    to {
+        color: #aaa;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+.bottom-margin {
+    margin-bottom: 20px;
+}
+
+.grade {
+    padding-top:-3px;
+    padding-right: 10px;
+
+     transition:1s all ease !important;
+            -webkit-transition:1s all ease !important;
+            -moz-transition:all 1s ease !important;
+            -o-transition:all 1.5s ease!important;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 50%, rgb(150, 200, 255) 50%);
+            background-size: 200% 100%;
+            background-position: 99% bottom;
+ 
+}
+
+.grade:hover{
+              background-position: left bottom;
+
+            
+}
+
+.profile {
+    width:70px;
+    height:70px;
+
+}
+
+td {
+    border-radius:0 !important;
+}
+
+.line {
+    border-bottom: 1px solid black;
+    border-top: 0px solid black;
+    border-collapse: collapse;
+    border-radius:0;
+}
+
+th, td {
+    min-width:100px;
+    border-radius:0;
+}
+
+.profile-opt-theme {
+    margin-left:-5px;
+    padding-left:5px; 
+    color: #4db6ac !important;
+}
+
+.profile-opt-theme:hover {
+    color: white !important;
+    background: #4db6ac !important;
+    
+}
+
+.profile-opt-picture {
+    margin-left:-5px;
+    padding-left:5px; 
+    color: #f06292 !important;
+}
+
+.profile-opt-picture:hover {
+    color: white !important;
+    background: #f06292 !important;
+    
+}
+
+.profile-opt-misc {
+    margin-left:-5px;
+    padding-left:5px; 
+    color: #ffca28 !important;
+}
+
+.profile-opt-misc:hover {
+    color: white !important;
+    background: #ffca28 !important;
+    
+}
+
+.unselectable{
+    -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
+#contact {
+    border-style: solid;
+    border-width:2px;
+    border-radius:30px;
+    border-color: rgba(0, 0, 0,0);
+
+    background: #30Fd93;
+    padding: 5 10 5 10;
+    color:     #000;
+
+}
+
+</style>
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+<html>
+    <body style = 'width:100%; height:100%; background: {{ header_color }}'>
+
+       <div style = 'width:100%; position:relative; height:60px;'>
+                            <img src = '/static/gradebook.svg' style = 'width:200px; position:absolute; left:30px; top:20px;'>
+           
+            </div>
+
+         <div id = 'mnu' style = 'position:fixed; bottom:0; left:0; width:100%; background: {{header_color}}; z-index:100000'>
+            <div style = 'width:100%; padding-bottom:0px; margin-left:0px; text-align:center'>
+           
+           <table style = 'width: 100%'>
+                <tr style = 'width: 100%; margin-left: 5%'>
+                    <td style =' width:33%; text-align:center'>
+                        <div style = 'width: 100%; border-radius:5px; font-weight:700px; font-size:17px; padding: 5 20 5 20; '>
+                            <a href = 'https://grades.newportml.com/grades?mobile=true'>Grades</a>
+                        </div>
+                    </td>
+                    <td style =' width:33%; text-align:center'>
+                        <div style = 'border-radius:5px;width: 100%;font-weight:700px;  font-size:17px; padding: 5 20 5 20;'>
+                             <a href = 'https://grades.newportml.com/school?AGU=0&mobile=True'>Contacts</a>
+                        </div>
+                    </td>
+                    <td style =' width:33%; text-align:center'>
+                        <div style = 'background: {{ bg_color }};width: 100%;font-weight:700px;border-radius:5px; font-size:17px; padding: 5 20 5 20;'>
+                            <a style = 'color: #4db6ac' href = 'https://grades.newportml.com/profile?mobile=True'>Profile</a>
+                        </div>
+                    </td>
+                    
+                </tr>
+            </table>
+            </div>
+        </div>
+        <div id = 'content-wrapper' style = 'z-index:1; padding-left: 30px; padding-right:0px; background: {{ bg_color }}; margin-top:8px; height:fit-content; min-height:100%; padding-top:0px; padding-bottom:400px;'>
+            <div id = 'content' style = 'margin-left: 0px; margin-top:0px; width: 100%'>
+                
+                <iframe name="hiddenFrame" class="hide"></iframe>
+
+                <br/>
+                <a href = 'https://grades.newportml.com/grades?mobile=True' style = 'vertical-align:middle; margin-left:0px; font-size:50px; ' class = 'material-icons'>keyboard_backspace</a><span style = 'font-size: 50px; vertical-align:middle'>Profile<span style = 'font-size:40px'></span></span>
+
+                <ul class="collapsible popout  z-depth-0" style = 'margin-left:-30px' data-collapsible="accordion">
+
+                     <li class= 'z-depth-0' style = ''>
+                        <div class="collapsible-header unselectable profile-opt-theme z-depth-0" style = 'padding-left: 20px;background: {{ bg_color }}; border-bottom-style:none; font-size:50px; color:#4db6ac'>Change theme</div>
+                        <div class="collapsible-body"><span style = 'font-size: 30px; color: rgb(50, 50, 150)' id = 'change-night'>Night</span><span style = 'margin-left:100px; font-size: 30px; color: rgb(150, 200, 250)' id = 'change-day'>Day</span></div>
+                    </li>
+
+                    <li class= 'z-depth-0'>
+                        <div class="collapsible-header unselectable profile-opt-theme z-depth-0" style = 'padding-left: 20px;background: {{ bg_color }}; border-bottom-style:none; font-size:50px; color:#4db6ac'>Change home page</div>
+                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                    </li>
+
+                    <li class= 'z-depth-0'>
+                        <div class="collapsible-header unselectable profile-opt-picture z-depth-0" style = 'padding-left: 20px;background: {{ bg_color }}; border-bottom-style:none; font-size:50px; color:#f06292'>Change profile picture</div>
+                        <div class="collapsible-body">
+                            Change your profile picture! Try to make your profile picture:
+                                <ul style = 'margin-left: 30px'>
+                                    <li>- Small in size (1 - 4 MB)</li>
+                                    <li>- Have the important parts in the center (O.K. to crop)</li> 
+                                    <li>- Appropriate :)</li>
+
+                                    </ul>
+
+                                    <br/>
+                                    <br/>
+
+                                
+                            <form action="https://grades.newportml.com/placeholder" method = 'POST' enctype="multipart/form-data" id = 'submit-profile'>
+                                <input type = 'hidden' name = 'token' value = {{ token }}>
+                                <input type = 'hidden' name = 'username' value = {{ username }}>
+
+                                <div class="file-field input-field">
+                                <div>
+                                    <span style = 'margin-left:10px' class= 'button-a'>Upload a photo</span>
+                                    <input type="file" name = 'profile'>
+                                </div>
+                                <br/>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" readonly>
+                                </div>
+                                <div style = 'color: #f06292; margin-left:10px; font-size: 25px;' id = 'submit-profile-btn'>Upload</div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <li class= 'z-depth-0'>
+                        <div class="collapsible-header unselectable profile-opt-picture z-depth-0" style = 'padding-left: 20px;background: {{ bg_color }}; border-bottom-style:none; font-size:50px; color:#f06292'>Change background picture</div>
+                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                    </li>
+
+                    <li class= 'z-depth-0'>
+                        <div class="collapsible-header unselectable profile-opt-misc z-depth-0" style = 'padding-left: 20px;background: {{ bg_color }}; border-bottom-style:none; font-size:50px; color:#ffca28'>Change assignment coloring</div>
+                        <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+                    </li>
+                    
+                    <!--<div class = 'profile-opt-theme' style = 'font-size:50px; color:#4db6ac'>Change theme</div>
+
+                    <div class = 'profile-opt-theme' style = 'font-size:50px; color: #4db6ac'>Change home page</div>
+
+                    <div class = 'profile-opt-picture' style = 'font-size:50px; color: #f06292'>Change profile picture</div>
+                    <div class = 'profile-opt-picture' style = 'font-size:50px; color: #f06292'>Change background picture</div>
+
+                    <div class = 'profile-opt-misc' style = 'font-size:50px; color: #ffca28'>Change assignment coloring style</div>-->
+                </ul>
+                    
+                <!--<div><span>{{p1}}</span>&emsp;<span>{{class1}}</span>&emsp;<span>{{resources1}}</span>&emsp;<span>{{room1}}</span>&emsp;<span>{{grade1}}</span></div>
+                <div><span>{{p2}}</span>&emsp;<span>{{class2}}</span>&emsp;<span>{{resources2}}</span>&emsp;<span>{{room2}}</span>&emsp;<span>{{grade2}}</span></div>
+                <div><span>{{p3}}</span>&emsp;<span>{{class3}}</span>&emsp;<span>{{resources3}}</span>&emsp;<span>{{room3}}</span>&emsp;<span>{{grade3}}</span></div>
+                <div><span>{{p4}}</span>&emsp;<span>{{class4}}</span>&emsp;<span>{{resources4}}</span>&emsp;<span>{{room4}}</span>&emsp;<span>{{grade4}}</span></div>
+                <div><span>{{p5}}</span>&emsp;<span>{{class5}}</span>&emsp;<span>{{resources5}}</span>&emsp;<span>{{room5}}</span>&emsp;<span>{{grade5}}</span></div>
+                <div><span>{{p6}}</span>&emsp;<span>{{class6}}</span>&emsp;<span>{{resources6}}</span>&emsp;<span>{{room6}}</span>&emsp;<span>{{grade6}}</span></div>
+                <div><span>{{p7}}</span>&emsp;<span>{{class7}}</span>&emsp;<span>{{resources7}}</span>&emsp;<span>{{room7}}</span>&emsp;<span>{{grade7}}</span></div>
+                <div><span>{{p8}}</span>&emsp;<span>{{class8}}</span>&emsp;<span>{{resources8}}</span>&emsp;<span>{{room8}}</span>&emsp;<span>{{grade8}}</span></div>
+                <div><span>{{p9}}</span>&emsp;<span>{{class9}}</span>&emsp;<span>{{resources9}}</span>&emsp;<span>{{room9}}</span>&emsp;<span>{{grade9}}</span></div>
+                <div><span>{{p10}}</span>&emsp;<span>{{class10}}</span>&emsp;<span>{{resources10}}</span>&emsp;<span>{{room10}}</span>&emsp;<span>{{grade10}}</span></div>
+                <div><span>{{p11}}</span>&emsp;<span>{{class11}}</span>&emsp;<span>{{resources11}}</span>&emsp;<span>{{room11}}</span>&emsp;<span>{{grade11}}</span></div>-->
+                
+            </div>
+        </div>
+
+        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
+
+        <div style = 'width:100%; text-align:center; position:fixed; bottom:-5; left: calc(50% - 171px)' class = 'center-align'>
+        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
+            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = 'mailto:newportgrades@gmail.com'>Contact us!</a></span></div></div>
+    </body>
+
+    <form action = '' method = 'POST' id = 'gen-form'>
+        <input type = 'hidden' name = 'change' id = 'change'>
+    </form>
+</html>
+
+<script>
+  
+    $('#submit-profile-btn').click(function(e){
+        console.log("CLICKED");
+        $('#submit-profile').submit();
+    })
+
+   
+
+    // Thank God for SO amirite
+     var handle_request = new XMLHttpRequest();
+    handle_request.onreadystatechange = function() {
+        if (handle_request.readyState === 4) {
+            if (handle_request.status === 200) {
+                console.log(handle_request.response);
+                window.location.reload();
+            }
+        }
+    }
+
+ $('#change-night').click(function(){
+     console.log("clicked");
+
+    $('#change').val('mode:night');
+    var form = $('#gen-form');
+    form.attr("action", 'https://grades.newportml.com/profile-setting?mobile=True');
+    form.submit()
+ });
+
+$('#change-day').click(function(){
+     console.log("clicked");
+     
+    $('#change').val('mode:day');
+    var form = $('#gen-form');
+    form.attr("action", 'https://grades.newportml.com/profile-setting?mobile=True');
+    form.submit()
+    });
+
+
+
+</script>
