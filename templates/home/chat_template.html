@@ -1,0 +1,703 @@
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel = 'stylesheet' href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css'>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js'></script>
+<link href = 'https://fonts.googleapis.com/icon?family=Material+Icons' rel = 'stylesheet'>
+
+<script src= 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+
+<script src = 'http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.js'></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500" rel="stylesheet">
+
+<link rel="stylesheet" href="https://use.typekit.net/rzr6kwp.css">
+<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://use.typekit.net/rzr6kwp.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<link rel="stylesheet" href = "circular.css">
+
+<script src = '../static/js/emojis.js'></script>
+
+<style>
+    body {
+        font-family: "Europa";
+        font-size: 20px; 
+    }
+
+    .h1{
+        font-size: 70px; 
+    }
+
+    .h2 {
+        font-size: 50px; 
+    }
+
+    .h3 {
+        font-size: 30px;
+    }
+
+    .message-left {
+        font-family: "Segoe UI", "San Francisco", "Roboto";
+        font-size: 15px;
+
+        text-rendering: optimizeLegibility;
+
+        background: #222;
+        color: white;
+
+        display:inline-block;
+        padding: 5 15 5 15px;
+
+        border-radius: 23px;
+        margin-bottom: 3px;
+
+        max-width: 400px;
+
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+    .message-right {
+
+        font-family: "Segoe UI", "San Francisco", "Roboto";
+        font-size: 15px;
+
+        /*text-rendering: optimizeLegibility;*/
+
+        background: #222;
+        color: white;
+
+        display:inline-block;
+        padding: 5 15 5 15px;
+
+        border-radius: 23px;
+        margin-bottom: 3px;
+
+        word-break: break-all;
+        word-wrap: break-word;
+
+        text-align:left;
+
+        max-width: 400px;
+    }
+
+    .sender {
+        font-family: "Segoe UI", "San Francisco", "Roboto";
+
+        font-size: 12px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 20px;
+    }
+
+    .left-before {
+        border-bottom-left-radius: 5px;  
+    }
+
+    .left-after {
+        border-top-left-radius: 5px;
+    }
+
+    .right-before {
+        border-bottom-right-radius: 5px;  
+    }
+
+    .right-after {
+        border-top-right-radius: 5px;
+    }
+
+    [contenteditable][placeholder]:empty:before {
+        content: attr(placeholder);
+        color: #bababa;
+    }
+
+    .flex-wrap {
+        display:flex; 
+        flex-wrap: wrap;
+    }
+
+    #message-box-content {
+        font-family: "Segoe UI", "San Francisco", "Roboto";
+        font-size: 15px;
+
+        font-weight: 600;
+
+        outline: none;
+
+    }
+
+    #send-button {
+        background: rgb(30, 80, 220); 
+    }
+
+    #send-button:hover {
+        cursor: pointer;
+        background: rgb(10, 60, 200);
+    }
+
+    .utility-icon {
+         width: 100px; 
+         min-height: 100px; 
+
+         margin-right: 10px; 
+                  
+         text-align:center;
+
+         border-radius:8px;
+
+         box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+         -webkit-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+    }
+
+    #color-button {
+        cursor: pointer;
+        background: rgba(100, 150, 255, 0.5);
+    }
+
+     #color-button:hover {
+        cursor: pointer;
+        background: rgb(80, 120, 235);
+    }
+
+    #attach-button {
+        cursor: pointer;
+        background: rgba(140, 200, 255, 0.5);
+    }
+
+    #poll-button {
+        cursor: pointer;
+        background: rgba(100, 160, 240, 0.5);
+    }
+
+    #emoji-button {
+        cursor: pointer;
+        background: rgba(60, 110, 250, 0.5);
+    }
+
+     #emoji-button:hover {
+        background: rgb(40, 90, 230);
+    }
+
+    #attach-button:hover {
+        background: rgb(120, 180, 235);
+    }
+
+    #poll-button:hover {
+        background: rgb(90, 140, 220);
+    }
+
+   .color-change {
+        width: 50px; height: 50px; border-radius: 50%; margin: 12px 10px 0px 10px;
+   }
+
+   .color-change:hover {
+       opacity: 0.8
+   }
+
+    .download {
+        width: 15px;
+        height: 15px;
+
+        background: rgb(30, 80, 220);
+        border-radius: 50%;
+
+        display:inline-block;
+    }
+
+    #emojis-box {
+        width: 100%; height: 200px;
+        background: rgba(200, 200, 200, 0.5);
+
+        display: none;
+    }
+
+    #color-box {
+        display:none; 
+    }
+
+    .emoji {
+        width: 30px;
+        height: 30px;
+
+        margin-left: 10px; 
+        margin-right: 10px;
+        margin-top: 10px;
+    }
+
+    .class-name {
+        color: #aaa;
+
+        font-size: 50px;
+    }
+
+    .class-name:hover{
+        color: white;
+        background: #92aaff;
+    }
+
+    .action {
+        width: fit-content;
+        padding: 5px 10px 5px 10px;
+        border-radius: 8px;
+        color: white;
+
+        margin-top: 5px;
+    }
+
+    .action:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
+</style> 
+
+<html>
+    <body style = 'padding-left: 50px;padding-top:20px'>
+
+        <div style = 'position: fixed; right: 0; top: 0; width: 350px; height: 100%; background: #f5f5f5; z-index:1; padding-top: 50px; padding-left: 20px; border-left-style: solid; border-color: #ddd'>
+                <img src = "../static/gradebook_chat.svg" style = 'width: 200px'>
+                <br/><br/>
+                <span style = 'font-weight: 700; font-size: 13px'>Class</span>
+                <br/>
+                <span id = 'title' class = '' style = 'color: #50507f; font-size: 25px; overflow-x:scroll'>AP Calc AB (MAA703.1),</span>
+                <br/>
+                <span id = 'teacher' class = '' style = 'color: #50507f; font-size: 20px'>John Johnson</span>
+                <br/><br/>
+                <span style = 'font-weight: 700; font-size: 13px'>Actions</span>
+                <br/>
+                <div id = 'classroom-change' class = 'action' style = 'font-size: 20px; background: rgb(30, 220, 90)'>Change classroom</div>
+                <div id = '' class = 'action' style = 'font-size: 20px; background: rgb(80, 60, 200)'>Direct message</div>
+                <div id = '' class = 'action' style = 'font-size: 20px; background: rgb(255, 40, 30)'>Vote to kick</div>
+        </div>
+
+        <div id = 'messages' style = 'position:fixed; top:0; left: 20px; margin-top: 20px; padding-right: 50px; width: calc(100% - 350px); height: calc(100% - 250px); overflow-y:scroll'>
+           
+          <div id = 'm3' style = 'text-align:right; width: 100%'>
+                <div id = 'm1-sender' class = 'sender' style = 'margin-top: 20px'>Kavel Rao</div>
+                <div id = 'm2-content' class = 'message-right'><div class = 'download material-icons valign-wrapper' style = 'font-size: 12px'><div style = 'width: 100%; text-align:center'>arrow_downward</div></div> <a href = '#' style = 'color:white'><u>classAssign2.docx</u></a></div>
+            </div>
+        </div>
+
+        <div id = 'emojis-box' class = 'flex-wrap z-depth-3' style = 'z-index:2; position: fixed; width: 500px; right: 285px; height: 150px; bottom: 130px; overflow-y: scroll; background: #f5f5f5; border-radius: 8px; text-align:cener'>
+        </div>
+
+        <div id = 'color-box' class = 'flex-wrap z-depth-3' style = 'z-index:2; position: fixed; width: 500px; right: 395px; height: 150px; bottom: 130px; background: #f5f5f5; border-radius: 8px; text-align:ceter'>
+            <div class = 'color-change' style = '  background: #0084FF'></div>
+            <div class = 'color-change' style = '  background: #44BEC7'></div>
+            <div class = 'color-change' style = '  background: #FFC300'></div>
+            <div class = 'color-change' style = '  background: #FA3C4C'></div>
+            <div class = 'color-change' style = '  background: #D696BB'></div>
+            <div class = 'color-change' style = '  background: #6699CC'></div>
+            <div class = 'color-change' style = '  background: #FF7E29'></div>
+            <div class = 'color-change' style = '  background: #7646FF'></div>
+            <div class = 'color-change' style = '  background: #20CEF5'></div>
+            <div class = 'color-change' style = '  background: #67B868'></div>
+            <div class = 'color-change' style = '  background: #D4A88C'></div>
+            <div class = 'color-change' style = '  background: #FF5CA1'></div>
+        </div>
+
+        <div style = 'position:fixed; bottom:15px; left:100; width:calc(100% - 350px)'>
+            
+            
+            <div id = 'message-box' class = 'flex-wrap'>
+                <div style = 'background: rgb(50, 100, 240); width: 00px; height: 100px;'></div>
+                <div id = 'message-box-content' class = 'z-depth-3' contentEditable = "true" style = 'min-height: 100px; background: #eeeeee; border-radius: 8px; display:inline-block; width: calc(100% - 710px); margin-right: 10px; margin-left: 25px; height: fit-content; padding-left: 10px; padding-top: 10px;' placeholder = 'Aa'></div>
+
+                <div id = 'attach-button' class = 'utility-icon valign-wrapper'>
+                    <div style = 'width:100%; text-align:center'>
+                        <i class = 'material-icons' style = 'color: white'>attach_file</i>
+                    </div>
+                </div>
+
+                <div id = 'color-button' class = 'utility-icon valign-wrapper'>
+                        <div style = 'width:100%; text-align:center'>
+                            <i class = 'material-icons' style = 'color: white'>color_lens</i>
+                        </div>
+                    </div>
+    
+
+                <div id = 'emoji-button'class = 'utility-icon valign-wrapper'>
+                    <div style = 'width:100%; text-align:center'>
+                        <i class = 'material-icons' style = 'color: white'>tag_faces</i>
+                    </div>
+                </div>
+
+                <div id = 'send-button'  class = 'valign-wrapper utility-icon'>
+                    <div style = 'width:100%; text-align:center; color: white' class = ''>
+                        send
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class = 'modal' style = 'height: 900px' id = 'img-send-modal'>
+            <form action="/file" enctype="multipart/form-data" method="post">
+            <div class = 'valign-wrapper' style = 'height:90%; margin-top:0px; margin-left:50px;'>
+                <div style = 'width:calc(100% - 50px)'>
+                    <input id = 'file-handle' type="text" name="handle" size="40" style = 'display:none;'>
+                    <input id = 'file-server' type="text" name="server" size="40" style = 'display:none'>
+
+                    <div class="file-field input-field" style = 'width: 100%'>
+                        <div class="valign-wrapper" style = 'width: 70%; margin-left: 15%; border-style: dashed; height: 300px; background-size: contain; background-position: 50% 50%; background-repeat: no-repeat; border-radius:30px; -webkit-box-shadow:0; box-shadow:0; '>
+                            <div style = 'width: 100%; text-align:center'>
+                                Click here to upload files
+                                <input type="file" name="newfile" size="40">
+                            </div>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <br/>
+                            <input class="file-path" type="text">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" style = ' width: 100%; text-align:center'>
+                            <span id = 'image-modal-close' style = 'color: #c62828; font-weight:500; margin-left:
+                            \0px'>Close</span>
+                            <input id = 'image-modal-send' class = '' style = 'color:#0084FF; border:0 ;background-color:rgba(0, 0, 0, 0); border-radius:30px; margin-top:10px; margin-left:50px; font-weight:700; -webkit-box-shadow:0; box-shadow:0' type="submit" value="Send">
+                        </div>
+                </div>
+
+            
+            
+        
+            </div>
+
+            </form>
+
+        </div>
+
+        <div id="change-class-modal" style = 'min-height: 100%; width:100% !important; z-index:10000; background: #eee; padding: 50px' class="valign-wrapper modal modal-footer">
+            <div style = 'font-size: 100px; color: black'>
+                Classes
+            </div>
+            <br/>
+
+            {% for c in classnames %}
+                <div class = 'class-name' style = 'color: #555'>{{c}}</div>        
+            {% endfor %}
+                           
+        </div>
+
+         <div id="modal1" class="modal " style = 'height: 100%'>
+            <div class="modal-content valign-wrapper" style = 'width:100%; height: 100%'>
+                <div>
+                <span style = 'font-size: 50'>GPA standards explained</span>
+
+                <p>
+                    High School standard <b>doesn't</b> deal with + and - for grades. So a 90% still counts as an A (4.0), and not an A- (3.7). It is named this way because certain schools, including Newport, use this type of system.
+                </p>
+
+                <p>
+                    Traditional standard <b>does</b> deal with + and - for grades. So a 90% counts as an A- (3.7). It is named that way because most places use this type of scale, including CollegeBoard.
+                </p>
+
+                <p>
+                    Depending on your grade, one standard or the other will be better. For example, if all of your classes are scored 90%, your High School standard GPA would still be a 4.0, but your Traditional standard GPA would be a 3.7. On the other hand, if all your grades were 89%, your High School standard GPA would be a 3.0, while your Traditional standard GPA would be a 3.3.
+                </p>
+                
+                <a href="#" class="modal-action modal-close" style = 'color: rgb(255, 110, 100)'>Close</a>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
+
+<script id = 'global-variables'>
+    var showingEmojis = false;
+    var showingColors = false;
+    var lastAuthor = undefined;
+    var username;
+    var last_id_received = -1;
+    var last_update_id_received = 10000;
+    var userColors; 
+    
+    var currentClassname;
+    var currentGetMessageRequest;
+    var currentGetUpdateMessageRequest;
+    var previousMessage;
+</script>
+
+<script id = 'global-functions'>
+    function sendPlaintext(message, to){
+        var payload = {
+            "content" : message, 
+            "type" : "plaintext",
+            "sender" : username,
+            "to" : to
+        }
+
+        $.post(
+            "/submit_message", 
+            payload
+        )
+    };
+
+    function insertMessage(message){
+        var message_wrapper = $('<div>');
+        message_wrapper.attr('id', 'm' + message['id'])
+        
+        var message_sender = $('<div>');
+        message_sender.attr('id', 'm' + message['id'] + '-sender');
+        message_sender.html(message['sender'])
+        message_sender.addClass("sender");
+
+        var message_content = $('<div>');
+        message_content.attr('id', 'm' + message['id'] + '-content');
+        message_content.html(message['content']);
+        message_content.addClass(message['sender']);
+
+        message_content.css('background', userColors[message['sender']]);
+
+        if (message['sender'] == username){
+            message_content.addClass("message-left");
+
+        }else{
+            message_wrapper.css('text-align', 'right');
+            message_content.addClass("message-right");
+        }
+
+        if (message['sender'] != lastAuthor){
+           
+            message_wrapper.append(message_sender)
+        }else{
+            if (message['sender'] == username){
+                message_content.addClass("left-after");
+                previousMessage.addClass("left-before");
+
+            }else{
+                message_content.addClass("right-after");
+                previousMessage.addClass("right-before");
+            }
+        }
+
+        message_wrapper.append(message_content);
+
+        $('#messages').append(message_wrapper);
+        lastAuthor = message['sender'];
+
+        $('#messages').scrollTop($('#messages')[0].scrollHeight);
+
+        last_id_received = Math.max(last_id_received, message['id']);
+
+        previousMessage = message_content;
+    };
+
+    function insertUpdateMessage(message){
+        if (message['type'] == 'color_change'){
+            $('.' + message['sender']).css('background', message['content']);
+            userColors[message['sender']] = message['content'];
+        }
+
+        last_update_id_received = Math.max(last_update_id_received, message['id']);
+    }
+
+    function changeColor(color){
+        $.post(
+            "/submit_message",
+            {
+                "content" : color,
+                "type" : "color_change",
+                "sender" : username,
+            }
+        );
+    }
+
+    function getRecap(){
+        $.post(
+            "/get_recap", 
+            {
+                "class" : currentClassname
+            },
+            function (data, status) {
+                var data = JSON.parse(data);
+                console.log(data)
+                if (data['status'] == 'success'){
+                    for (var message in data['messages']){
+                        console.log(data['messages'][message]);
+                        insertMessage(data['messages'][message]);
+
+                        last_update_id_received = data['last_update_id'];
+                    }
+                }
+
+                // Once you've gotten the messages start the message loop
+                getMessagesLoop();
+                getUpdateMessagesLoop();
+            }
+        
+    );}
+
+    function getColors(){
+        $.post(
+            "/get_color_set", 
+            {
+                "class" : currentClassname
+            },
+            function (data, status) {
+                var data = JSON.parse(data);
+                console.log(data)
+                if (data['status'] == 'success'){
+                    userColors = data['colors']
+
+                    getRecap(); // Once you have colors get the recap
+                }
+
+            }
+        
+    );}
+
+    function getMessagesLoop(){
+        currentGetMessageRequest = $.post(
+        "/get_messages", 
+        {
+            "class" : currentClassname,
+            "last_id_received" : last_id_received
+        },
+        function (data, status) {
+            var data = JSON.parse(data);
+
+            console.log(data)
+            if (data['status'] == 'success'){
+                for (var message in data['messages']){
+                    console.log(data['messages'][message]);
+                    insertMessage(data['messages'][message]);
+                }
+            }
+
+            getMessagesLoop();
+        });
+    }
+
+    function getUpdateMessagesLoop(){
+        currentGetUpdateMessageRequest = $.post(
+        "/get_update_messages", 
+        {
+            "class" : currentClassname,
+            "last_update_id_received" : last_update_id_received
+        },
+        function (data, status) {
+            var data = JSON.parse(data);
+
+            console.log(data)
+            if (data['status'] == 'success'){
+                for (var message in data['messages']){
+                    console.log(data['messages'][message]);
+                    insertUpdateMessage(data['messages'][message]);
+
+                }
+            }
+
+            getUpdateMessagesLoop();
+        });
+    }
+
+    function switchToClass(classname){  // Switch view from one class to another
+        previousMessage = undefined;
+        lastAuthor = undefined;
+
+        currentClassname = classname;
+
+        if (currentGetMessageRequest != undefined){
+            currentGetMessageRequest.abort();
+        }
+
+        if (currentGetUpdateMessageRequest != undefined){
+            currentGetUpdateMessageRequest.abort();
+        }
+
+        getColors();
+       
+        $('#messages').html('');
+        $('#title').html(currentClassname);
+    }
+</script> 
+
+<script id = 'initialization-step'>
+    var colorItems = $(".color-change");
+    for (var i = 0; i < colorItems.length; i++){
+        $(colorItems[i]).click(function(){
+            changeColor($(this).css('background-color'));
+        })
+    }
+
+    var classnames = $(".class-name");
+    for (var i = 0; i < classnames.length; i++){
+        $(classnames[i]).click(function(){
+            switchToClass($(this).html());
+            $('#change-class-modal').modal("close");
+            $('.modal-overlay').css('z-index', '-10000');
+        });
+    }
+
+    // set username
+    username = "{{username}}";
+
+    // Populate emojis
+    for (var emoji in face_emojis){
+        var img = $('<img>');
+        img.attr('src', "https://" + face_emojis[emoji]);
+        img.addClass("emoji");
+
+        $('#emojis-box').append(img);
+    }
+
+    $('.modal').modal({
+            endingTop : '0%'
+        });
+    
+    $('#change-class-modal').modal("open");
+    $('.modal-overlay').css('z-index', '0');
+
+</script>
+
+<script id = 'event-listeners'>
+    $('#message-box-content').keypress(function(event){
+        var key = event.keyCode;
+
+        if (key == 13){
+            event.preventDefault();
+            sendPlaintext($('#message-box-content').text(), "class\0" + currentClassname);
+
+            $('#message-box-content').html('');
+        }
+    });
+
+    $('#attach-button').click(function(){
+        $('#img-send-modal').modal('open');
+    })
+
+    $('#emoji-button').click(function(){
+        if (!showingEmojis){
+            $("#emojis-box").css('display', 'inline-block');
+        }else{
+            $("#emojis-box").css('display', 'none');
+        }
+
+        showingEmojis = !showingEmojis;
+        $('#color-box').css('display', 'none');
+
+        showingColors = false;
+    });
+
+     $('#color-button').click(function(){
+        if (!showingColors){
+            $("#color-box").css('display', 'flex');
+        }else{
+            $("#color-box").css('display', 'none');
+        }
+
+        showingColors = !showingColors;
+        $('#emojis-box').css('display', 'none');
+
+        showingEmojis = false;
+    });
+
+    $('#classroom-change').click(function(){
+        $('#change-class-modal').modal("open");
+    });
+
+</script>
