@@ -364,6 +364,14 @@ th, td {
                 <span style = 'font-size: 70px; '>Grades</span>
                 <br/>
 
+                {% for quarter in quarter_links %}
+                    {% if quarter == "selected" %}
+                        <span style = 'margin-right: 20px; font-size: 30px; color: black;' class = 'line'>Q{{loop.index}}</span>
+                    {% else %}
+                        <a href = "{{quarter}}" style = 'color: #527aff; margin-right: 20px; font-size: 30px' class = 'line'>Q{{loop.index}}</a>
+                    {% endif %}
+                {% endfor %}
+
                 <table>
                     {% for row in grades %}
                         {% if loop.index0 % 2 == 1 %}
@@ -513,10 +521,10 @@ th, td {
 
         <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
 
-        <div style = 'width:100%; text-align:center; position:fixed; bottom:10px; left: calc(50% - 171px)' class = 'center-align'>
-        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
-            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = '/community'>Contact us!</a></span></div></div>
-</div>
+        
+             <div style = 'position: absolute; left:0; bottom: 0px; width: 100%; text-align: center; color: white; font-size: 12px; padding: 20px 10px 15px 10px; background: #527aff;'>
+                <span style = 'font-size: 14px; vertical-align: sub'>&copy</span> 2017-2018 Nathan Yan
+            </div>
 
     </body>
 

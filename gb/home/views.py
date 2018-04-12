@@ -15,7 +15,7 @@ from . import home
 def index():
     return render_template("index.html")
 
-@home.route("/home", methods = ["GET", "POST"])
+@home.route("/grades", methods = ["GET", "POST"])
 def show_home():
     verified = auth.auth_credentials(request)
 
@@ -23,10 +23,36 @@ def show_home():
         return render_template("index.html", error = 'Invalid Credentials')
 
     cookies, username = verified
-    
+
+    user = db.USERS_DB.userSecure.find_one({
+        "username" : username
+    })
+
+    quarter_number = request.args.get("q")
+
+    link = 'PXP_Gradebook.aspx?AGU=0'
+    if quarter_number:
+        link = user['quarterLinks'][quarter_number]
+
     # Get the grades
-    grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/PXP_Gradebook.aspx?AGU=0", cookies = cookies).text
+    grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + link, cookies = cookies).text
     grade_soup = bs(grade_page)
+
+    # Get semester links
+    heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
+    quarter_links = []
+
+    for quarter_link in heading_breadcrumb.find_all('li'):
+        if (quarter_link.text != '|'):
+            link = quarter_link.find('a')
+
+            if link:
+                quarter_links.append(link.get('href'))
+            else:
+                quarter_links.append('selected')
+    
+    quarters = ['grades?q=1', 'grades?q=2', 'grades?q=3', 'grades?q=4']
+    quarter_links = { str(i + 1) : quarter_links[i] for i in range (len(quarter_links))}
 
     tables = util.get_info_tables(grade_soup)
 
@@ -50,15 +76,12 @@ def show_home():
     # Generate a session token
     token = util.salt(128)
 
-    user = db.USERS_DB.userSecure.find_one({
-        "username" : username
-    })
-
     db.USERS_DB.userSecure.update({
         "username" : username
     }, {
         "$set" : {
             "classLinks" : links,
+            "quarterLinks" : quarter_links,
             "token" : token
         }
     })
@@ -69,7 +92,7 @@ def show_home():
     profile = user['settings']['profilePicture']
 
     response = make_response(
-        render_template("home/dashboard_grade_start.html", profile = profile, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color)
+        render_template("home/dashboard_grade_start.html", profile = profile, quarter_links = quarters, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color)
     )
 
     response.set_cookie("token", token, httponly = True)
