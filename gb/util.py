@@ -3,10 +3,11 @@ from bs4 import BeautifulSoup as bs
 
 import requests
 from requests import session
+import random 
 
 from . import db
 
-def get_info_tables(soup):
+def get_info_tables(soup, links = True):
     """Gets all info_tables in the HTML file
 
     Args:
@@ -35,7 +36,7 @@ def get_info_tables(soup):
                 # check for link first
                 link = column.find('a')
 
-                if link:
+                if link and links:
                     tables[-1][-1].append(str(link))
                 
                 else:
@@ -70,10 +71,12 @@ def parse_table(table):
     """
     
     dictionary = { category : [] for category in table[0] }
-
+    print(len(table[0]))
     # The first row of the table defines the seperate categories, so we'll skip the first row
     for row in table[1:]:
+        print(len(row))
         for column in range (len(row)):
+            print(column, end = ' ')
             dictionary[table[0][column]].append(row[column])     # Append the column value to its appropriate category
     
     return dictionary
@@ -91,7 +94,10 @@ def filter_parsed_by_category(dictionary, whitelist = [], blacklist = []):
     """
 
     for category in dictionary:
-        if 
+        if category in blacklist:
+            del dictionary[category]
+
+    return dictionary
 
 def filter_table_by_category(table, whitelist = [], blacklist = []):
     """Filters a info_table by a whitelist or blacklist, so that you can eliminate categories you don't want
@@ -105,6 +111,41 @@ def filter_table_by_category(table, whitelist = [], blacklist = []):
         list: The info_table but filtered
     """
 
-    for category in table[0]:
-        if category in blacklist:
-            
+    for category in range(len(table[0]) - 1, -1, -1):
+        if blacklist:
+            if table[0][category] in blacklist:
+                for row in range(len(table) - 1, -1, -1):
+                    del table[row][category]
+        elif whitelist: 
+            if table[0][category] not in whitelist:
+                for row in range (len(table) - 1, -1, -1):
+                    del table[row][category]
+
+    return table
+
+def salt(length):
+    """Returns a token/salt of length `length`
+
+    Args:
+        length (int): The length of the salt
+    
+    Returns:
+        string: The salt
+    """
+
+    alpha = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    s = ""
+    for l in range (length):
+        s += alpha[random.randint(0, len(alpha) - 1)]
+    
+    return s
+
+if __name__ == "__main__":
+    table = [
+        ['c1', 'c2', 'c3'],
+        ['test11', 'test12', 'test13'],
+        ['test21', 'test22', 'test23'],
+        ['test31', 'test32', 'test33']
+    ]
+
+    print(filter_table_by_category(table, whitelist = ['c1', 'c3']))

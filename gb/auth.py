@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup as bs
 
 import requests
 from requests import session
+import json
 
 from . import db
 
@@ -18,7 +19,7 @@ def authenticate_by_cookie(request):
         return 1        # Invalid username
     
     if user['token'] == token:
-        return user['cookies'], username
+        return json.loads(user['SynergyCookies']), username
     else:
         return 2        # Invalid token
 
@@ -65,9 +66,20 @@ def authenticate_by_post(request):
             "classLinks" : [],
             "settings" : {
                 "theme" : "day", 
-                "profilePicture" : profile.get("src"),
+                "profilePicture" : "https://wa-bsd405-psv.edupoint.com/" + profile.get("src"),
                 "backgroundPicture" : None,
                 "assignmentColoring" : "regular"
+            },
+            "SynergyCookies" : json.dumps(dict(s.cookies)),
+            "token" : None
+        })
+    else:
+        # Update user cookies
+        db.USERS_DB.userSecure.update({
+            "username" : request.form.get("username"),
+        },{
+            "$set" : {
+                "SynergyCookies" : json.dumps(dict(s.cookies))
             }
         })
 

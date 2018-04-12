@@ -1,0 +1,831 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel = 'stylesheet' href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css'>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js'></script>
+<link href = 'https://fonts.googleapis.com/icon?family=Material+Icons' rel = 'stylesheet'>
+
+<link rel="stylesheet" href="https://use.typekit.net/rzr6kwp.css">
+
+
+<script src = "https://www.jsdelivr.com/package/npm/chart.js?path=dist"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+
+<script src="https://use.typekit.net/rzr6kwp.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<link rel="stylesheet" href="../static/css/avenir.css">
+<link rel="stylesheet" href="../static/css/googlesans.css">
+
+
+<style>
+    body {
+        color: {{ text_color }};
+        font-family: "Google Sans", AvenirNextLTW01-Medium, 'Segoe UI', 'Lato', Verdana, sans-serif;
+        font-size: 15px;
+        font-weight:300;
+
+        text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+    }
+
+    #menu-logo{
+         transition:0.5s all ease;
+        -webkit-transition:0.5s all ease;
+        -moz-transition:all 0.5s ease;
+        -o-transition:all 0.5 ease;
+    }
+
+    .affix{
+        position:fixed;
+        top:50;
+        left:8;
+
+        width:100%;
+
+        z-index:1;
+}
+
+.special-link {
+        -webkit-transition: all .5s ease;
+        -moz-transitition: all .5s ease;
+        -o-transition: all .5s ease;
+        transition: all .5s ease;
+
+        color: #B9FDFF;
+        font-weight:700;
+
+    }
+
+    .special-link:hover {
+        color: rgb(50, 100, 240);
+    }
+
+
+.menu-item{
+    display:inline-block;
+    margin-left:40px;
+    font-weight:500;
+
+}
+
+#menu{
+    transition:0.5s all ease;
+    -webkit-transition:0.5s all ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5 ease;
+
+    position:fixed;
+    top:10; left: 0px;
+
+    z-index:10000;
+}
+
+#main-logo{
+
+     transition:4s color, 1s font-size ease;
+    -webkit-transition:4s color, 1s font-size ease;
+    -moz-transition:color 4s, 1s font-size ease;
+    -o-transition:color 4s, 1s font-size ease;
+
+}
+
+.animation-5{
+      transition:.5s all ease !important;
+    -webkit-transition:.5s all ease !important;
+    -moz-transition:all .5s ease !important;
+    -o-transition:all .5s ease!important;
+
+}
+
+.page {
+        transition:1s top ease !important;
+    -webkit-transition:1s top ease !important;
+    -moz-transition:top 1s ease !important;
+    -o-transition:top 1s ease!important;
+
+}
+
+.colored-a {
+    transition:1s color ease;
+    -webkit-transition:1s color ease;
+    -moz-transition:1s color ease;
+    -o-transition:1s color ease;
+}
+
+.circle {
+    width:12px;
+    height:12px;
+    border-radius:50%;
+
+    border-style:solid;
+    background-color:white;
+    border-color:black;
+
+    display:inline-block;
+
+    padding-top:3px;
+
+    text-align:center;
+
+}
+
+.circle-small {
+    width:3px;
+    height:3px;
+
+    background-color:white;
+    display:inline-block;
+
+}
+
+.blur {
+    -webkit-filter: blur(2px);-moz-filter: blur(2px);-o-filter: blur(2px);-ms-filter: blur(2px); filter: blur(2px);
+}
+
+.h1 {
+    font-size:70px;
+    font-weight:400;
+}
+
+.h2 {
+    font-size:30px;
+}
+
+.h3 {
+    font-size:20px;
+}
+
+#forward {
+
+    z-index:1000;
+}
+
+#forward:hover{
+    cursor:pointer;
+}
+
+.shifted{
+    left:500px !important;
+}
+
+.page {
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+
+}
+
+.page-s{
+       transition:0.8s top ease !important;
+    -webkit-transition:0.8s top ease !important;
+    -moz-transition:top 0.8s ease !important;
+    -o-transition:top 0.8s ease!important;
+
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.center-v {
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.h1-0{
+    font-size:0;
+}
+
+.margin-50 {
+    margin-left:50;
+}
+
+.invert-color {
+    -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.demo-card {
+
+}
+
+.button-a{
+     transition:0.2s all ease;
+    -webkit-transition:0.2s all ease;
+    -moz-transition:all 0.2s ease;
+    -o-transition:all 0.2s ease;
+
+    background-color: rgba(0, 0, 0, 0);
+    color:white
+}
+
+.button-a:hover{
+    background-color: rgba(255, 255, 255, .2);
+    color:white;
+}
+
+ @-webkit-keyframes autofill {
+    to {
+        color: #aaa;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+.bottom-margin {
+    margin-bottom: 20px;
+}
+
+.grade {
+    padding-top:-3px;
+    width: 210px;
+
+     transition:1s all ease !important;
+            -webkit-transition:1s all ease !important;
+            -moz-transition:all 1s ease !important;
+            -o-transition:all 1.5s ease!important;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 50%, rgb(150, 200, 255) 50%);
+            background-size: 200% 100%;
+            background-position: 100% bottom;
+ 
+}
+
+.grade:hover{
+              background-position: left bottom;
+
+            
+}
+
+.profile {
+    width:70px;
+    height:70px;
+
+    border-radius: 50% ;
+}
+
+.line {
+    border-bottom: 1px solid black;
+    border-top: 0px solid black;
+    border-collapse: collapse;
+    border-radius:0;
+}
+
+th, td {
+    min-width: 150px;
+    padding-right: 15px;
+    border-radius:0;
+}
+
+#contact {
+    border-style: solid;
+    border-width:2px;
+    border-radius:30px;
+    border-color: rgba(0, 0, 0,0);
+
+    background: #30Fd93;
+    padding: 5 10 5 10;
+    color:    #000;
+
+}
+
+.point-div {
+    display: inline-block;
+    width: fit-content;
+    min-width: 20px;
+    min-height: 20px;
+    height: fit-content;
+}
+
+.width-200 {
+    min-width: 200px;
+    padding-right: 20px;
+}
+
+.exclude:hover {
+    color: #aa3333;
+    cursor: pointer;
+}
+
+.reset:hover {
+    color: #5373da;
+    cursor: pointer;
+}
+
+</style>
+
+<html>
+    <body style = 'width:100%; background-color: {{ header_color }}; position:relative;'>
+        <div class = 'fixed-action-btn horizontal click-to-toggle' style = 'position:fixed; right: 30px; bottom: 100px'>
+            <a style = '' id = 'menu-btn' class = 'pulse btn-floating btn-large waves-effect waves-light green'><i class = 'material-icons'>menu</i></a>
+        </div>
+
+        <div style = 'position: fixed; right: 30px; bottom: 180px; text-align:right; display: none;' id = 'menu-action'>
+            <div style = 'padding: 20px; border-radius: 8px; background: #527aff; color: white; margin-bottom: 15px' class = 'z-depth-3'>
+                <span id = 'current-grade'>speculative grade: 95.2%</span>
+            </div>
+
+            <div style = 'padding: 0px; border-radius: 8px; background: {{ header_color }}' class = 'z-depth-3'>
+                <div id = 'reset' class = 'action' style = 'background: #ff7a52; color: white; padding: 10 15 10 15; border-radius: 8px 8px 0px 0px; text-align:center' ><b>reset assignments</b></div>
+                <div id = 'add' class = 'action' style = 'background: #b259d3; color: white; padding: 10 15 10 15; text-align:center' ><b>add assignment</b></div>
+                <a class = '' href = '#canvas-wrapper'><div class = 'action' style = 'background: #224acf; color: white; padding: 10 15 10 15; text-align:center; border-radius: 0px 0px 8px 8px; '><b>jump to graph</b></div></a>
+            </div>
+        </div>
+
+        <div style = 'width:100%; position:relative; height:70px;'>
+                            <img src = '/static/gradebook.svg' style = 'width:300px; position:absolute; left:10%; top:35px;'>
+
+            <div style = 'position:absolute; right:10%;'>
+                <div style = 'margin-left:150px; margin-top:15px; background: url("{{ profile }}"); display:inline-block; background-size: cover; background-repeat:no-repeat; background-position:50% 20%' class = 'profile z-depth-3' ></div>
+                        <div style = 'display:inline-block; height:40px;' class= 'valign-wrapper'>
+                        </div>
+                    </div>
+                     <div style = 'position:absolute; left: 20px'>
+            </div>
+                </div>
+
+           
+            </div>
+
+        <div id = 'mnu' style = 'width:20%; height:30px; margin-top: 50px;margin-bottom: 60px; padding-bottom:px; margin-left:10%'>
+           
+           <table>
+                <tr>
+                    <td>
+                        <div style = 'border-radius:0px; font-weight:700px; font-size:25px; padding:  5 5 5 5; border-bottom-style: solid; border-color: #527aff; margin-right: 10px' class = ''>
+                            <a href = '/grades' style = 'color: #527aff; font-weight: 700'>Grades</a>
+                        </div>
+                    </td>
+                
+                    <td>
+                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                            <a href = '/chat' style = 'color: #ccc; font-weight: 700'>Chat</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                            <a style = 'color: #ccc; font-weight: 700' href = '/profile'>Profile</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div style = 'font-weight:700px; font-size:25px; padding: 5 10 5 5; margin-right: 10px'>
+                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/'>Logout</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id = 'content-wrapper' style = 'z-index:1; width: 100%; padding-bottom:300px;' >
+            <div id = 'content' style = 'margin-left: 0px; margin-top:0px; border-radius: 10px; background: {{ bg_color }}; margin-top:8px; width: 80%; margin-left: 10%; padding: 50px 120px 100px 80px; ' class = 'z-depth-3'>
+
+                <br/>
+                <a href = '/home' style = 'vertical-align:middle; margin-left:0px; font-size:70px; margin-right:15px;' class = 'material-icons'>keyboard_backspace</a><span style = 'font-size: 70px; vertical-align:middle'>{{class_name}}</span>
+
+                <div id = 'canvas-wrapper'><canvas id="canvas" class="chartjs-render-monitor" style="margin-top:10px; display: block; height: 500px; width: 100%; margin-bottom: 50px;"></canvas></div>
+            </div>
+
+            <div id = 'content' style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 100px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
+                
+
+                <br/>
+                <span style = 'font-size: 70px; '>Summary</span>
+<br/>
+
+                <table>
+                    {% for row in summary %}
+                        {% set counter = loop.index0 %}
+                        <tr style = 'font-weight: 700; border-bottom: solid; border-width: 1px'>
+                            {% for item in row %}
+                                {% if counter == 0 %}
+                                    <td style = 'font-weight: 700'>{{ item|safe }}</td>
+                                {% else %}
+                                    <td style = 'font-weight: 500'>{{ item|safe }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+            <div  style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 50px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
+                <span style = 'font-size: 70px'>Assignments</span>
+
+                <table id = 'assignments-table'>
+                    <tr style = 'font-weight: 700' id = 'assignments-title'>
+                        <td>Date</td>
+                        <td>Assignment</td>
+                        <td>Assignment Type</td>
+                        <td>Points</td>
+                        <td>Notes</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    
+        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
+
+        <div style = 'width:100%; text-align:center; position:fixed; bottom:10px; left: calc(50% - 171px)' class = 'center-align'>
+        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
+            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = '/community'>Contact us!</a></span></div></div>
+</div>
+
+    </body>
+
+</html>
+
+<script>
+    var category_order = ['Date', 'Assignment', 'Assignment Type', 'Points', 'Notes']
+    var assignment_json = {{parsed_assignments|safe}};
+    var summary_json = {{parsed_summary|safe}};
+    
+    console.log(summary_json);
+    console.log(assignment_json);
+
+    // Create an assignment_type -> weight hashMap
+    var category_weight_mapping = {};
+    for (var category in summary_json['Assignment Type']){
+        category_weight_mapping[summary_json['Assignment Type'][category]] = summary_json['Weight'][category].slice(0, -1);
+    }
+
+    // Keep a current state and an original state so assignments can be reverted
+    current_state = assignment_json
+    original_state = JSON.parse(JSON.stringify(assignment_json))
+
+    // ALL the front end will be tied to current_state
+    function insertAssignment(assignment){
+        var parent = $(`#assignment-${assignment}`);
+
+        parent.html('');
+
+        for (var category in category_order){
+            var column_element;
+    
+            if (category == 1){
+                column_element = $(`<td style = 'height: 120px; padding-right: 50px' class = 'width-20'>`);
+                column_element.html(`<div id = name-${assignment} contentEditable>${current_state[category_order[category]][assignment]}</div>`);    
+            }else if (category == 2){
+                column_element = $(`<td class = 'width-200' style = 'padding-top: 30px; padding-right: 50px'>`);
+                select_element = $(`<select class = 'assignment-category' id = assignment-category-${assignment}>`);
+                    
+                column_element.append(select_element);
+
+                for (var assignment_type in summary_json['Assignment Type']){
+
+                    var option_element = $(`<option value = ${summary_json['Assignment Type'][assignment_type]}>${summary_json['Assignment Type'][assignment_type]}</option>`);
+
+                    if (summary_json['Assignment Type'][assignment_type] == current_state[category_order[category]][assignment]){
+                        option_element.attr('selected', '');
+                    }
+
+
+                    select_element.append(option_element);
+                }
+            }else if (category == 3){
+                var points = current_state[category_order[category]][assignment].split('/');
+                var score = points[0];
+                var total = points[1];
+                var percentage = score/total * 100;
+
+                column_element = $(`<td class = 'width-200' style = '' id = points-${assignment}>`);
+                column_element.html(`<div class = 'point-div' id = point-score-${assignment} contentEditable>${score}</div>/<div class = 'point-div' id = point-total-${assignment} contentEditable>${total}</div>`);    
+
+                // Get assignment color 
+                var color = `rgba(${Math.ceil(Math.min((1.2 - percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((.2 + percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((percentage/100.)/2. * 255, 255))}, 0.5)`;
+
+                parent.css('background', color);
+            }else{
+                column_element = $(`<td>`);    
+                column_element.html(current_state[category_order[category]][assignment]);    
+            }
+
+            parent.append(column_element);
+
+            // Initialize the column
+            if (category == 2){
+                $("#assignment-category-" + assignment).material_select();                
+            }
+        }
+
+        // Finally add reset and exclude controls
+        var column_element = $(`<td class = '' style = 'min-width: 50px' id = controls-${assignment}>`)
+        column_element.html(`
+            <div style = 'text-align:right'>
+                <i class = 'material-icons exclude' id = assignment-exclude-${assignment} exclude = 'false' style = 'font-size:35'>close</i>
+            </div>
+            <div style = 'text-align:right; margin-top: 20px;'>
+                <i class = 'material-icons reset' id = assignment-reset-${assignment} style = 'font-size:35'>refresh</i>
+            </div>
+        `)
+
+        parent.append(column_element);
+
+    }
+
+    function renderAssignments(){
+        for (var assignment = current_state['Date'].length - 1; assignment > -1; assignment--){
+            var row_element = $(`<tr id = assignment-${assignment} style = 'border-bottom: solid; border-color: {{text_color}}; border-width: 2px'>`);
+            row_element.insertAfter("#assignments-title")
+        }
+
+        for (var category in category_order){
+            for (var assignment = 0; assignment < current_state[category_order[category]].length; assignment++){
+                insertAssignment(assignment);
+            }
+        }
+    }
+
+    // Render all visual elements 
+    function renderAssignment(assignment){
+        var parent = $(`#assignment-${assignment}`);
+
+        var column_element;
+
+        var points = current_state['Points'][assignment].split('/');
+        var score = points[0];
+        var total = points[1];
+        var percentage = score/total * 100;
+
+        if (score == 'NA' || total == 'NA'){
+            parent.css('background', '');
+        }else{
+            parent.css('background', '');
+        }
+
+        // Get assignment color 
+        var color = `rgba(${Math.ceil(Math.min((1.2 - percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((.2 + percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((percentage/100.)/2. * 255, 255))}, 0.5)`;
+
+        parent.css('background', color);
+    }
+
+    function calculateGrade(){
+        var timesteps = [];
+
+        var category_points = {};
+
+        for (var category in summary_json['Assignment Type']){
+            // Exclude totals
+            if (summary_json['Assignment Type'][category] != 'Totals'){
+                category_points[summary_json['Assignment Type'][category]] = [0.0001, 0.0001]; 
+            }
+        }
+
+        for (var assignment = current_state['Date'].length - 1; assignment > -1; assignment--){
+            var category = current_state['Assignment Type'][assignment];
+
+            var points = current_state['Points'][assignment].split('/');
+
+            if ($("#assignment-exclude-" + assignment).attr('exclude') == 'false' && points.indexOf("NA") < 0){
+                var score = points[0]*1;
+                var total = points[1]*1;
+
+                category_points[category][0] += score;
+                category_points[category][1] += total;
+            }
+
+            var percentage = 0;
+            for (var category in category_points){
+                console.log(category + " " +  category_points[category][0]/category_points[category][1]);
+                percentage += category_points[category][0]/category_points[category][1] * category_weight_mapping[category];
+                
+            }
+
+            timesteps.push(round(percentage, 2));
+            console.log(percentage + " percentage");
+
+        }
+        var percentage = 0;
+        for (var category in category_points){
+            percentage += category_points[category][0]/category_points[category][1] * category_weight_mapping[category];
+        }
+
+        var percentage = round(percentage, 2);
+
+        $('#current-grade').html(`speculative grade: ${percentage}%`);
+
+        document.getElementById("canvas-wrapper").removeChild(document.getElementById("canvas-wrapper").childNodes[0]);
+
+        document.getElementById("canvas-wrapper").innerHTML = '<canvas id="canvas" class="chartjs-render-monitor" style="margin-top:10px; display: block; height: 500px; width: 100%; margin-bottom: 50px;"></canvas>';
+
+        var ctx = document.getElementById("canvas").getContext('2d');
+        ctx.clearRect(0, 0, ctx.width, ctx.height);
+       
+        var possible_colors = ['#f44336', '#ba68c8', '#2196f3', '#4dd0e1', '#ff7043', '#795548', '#424242'];
+
+        colors = [];
+        bColors = [];
+        var _ = {};
+        var c = 0;
+        for (var a = current_state['Points'].length - 1; a > -1; a--){
+            if ((current_state['Assignment Type'][a] in _)){
+                colors.push(_[current_state['Assignment Type'][a]]);
+                bColors.push(_[current_state['Assignment Type'][a]])
+
+            }else{
+                _[current_state['Assignment Type'][a]] = possible_colors[c];
+                colors.push(_[current_state['Assignment Type'][a]]);
+                bColors.push(_[current_state['Assignment Type'][a]])
+                c++;
+            }
+        }
+            
+       
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: current_state['Date'],
+                datasets: [{
+                    label: 'Grade through time',
+                    data: timesteps,
+                    pointBackgroundColor: colors,
+                    borderWidth: 1,
+                    backgroundColor: "rgba(130, 250, 150, .2)",
+                    borderColor: "rgba(130, 250, 150, 1)",
+                    fill:true
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        labels: current_state['Date'],
+                        ticks: {
+                            beginAtZero:false,
+                            callback: function(value, index, values) {
+                                return value + '%';
+                            }
+                        }
+                        
+                    }],
+
+                    xAxes: [{
+                        
+                        ticks: {
+                            beginAtZero:false,
+                            callback: function(value, index, values) {
+                                //console.log(value);
+                                var split = value.split('on ');
+
+
+                                return split[split.length - 1];
+                            }
+                        }
+                    }],
+                },
+
+                tooltips: {
+                    callbacks: {
+                        title: function(t, d) {
+                        return current_state['Assignment'][t[0].index] + ' on ' + current_state['Date'][t[0].index] + ' (' + timesteps[t[0].index] + '%)';
+                        }
+                    }   
+                }
+            }
+        })
+    }
+
+    renderAssignments();
+    calculateGrade();
+
+  
+    function round(num, prec){
+        var f = Math.pow(10, prec);
+        return Math.round(num * f) / f;
+    }
+
+     $('body').on('keyup', '.point-div', function(){
+        $(this).css('color', '#527aff');
+        $(this).css('font-weight', '700');
+
+        // Assume that the score has been updated, and re-render the assignment
+        // Update current_state
+        var assignment = $(this).attr('id').split('-').slice(-1)[0];
+        current_state['Points'][assignment] = $(`#point-score-${assignment}`).html() + '/' + $(`#point-total-${assignment}`).html();
+
+        renderAssignment(assignment);
+        calculateGrade();
+   })
+
+   $('body').on('change', '.assignment-category', function(){
+        var category = $(this).val()
+        var assignment = $(this).attr('id').split('-').slice(-1)[0];
+
+        current_state['Assignment Type'][assignment] = category;
+
+        calculateGrade();
+   }) 
+
+   $('body').on('click', '.exclude', function(){
+        // lazy asf so i'll just do a simple color flagging thing
+        if ($(this).attr('exclude') == 'true'){
+            $(this).attr('exclude', 'false');
+            $(this).css('color', 'black');
+        }else{
+            $(this).attr('exclude', 'true');
+            $(this).css('color', 'rgb(255, 50, 50)');
+        }
+        
+        calculateGrade();
+   }) 
+
+   $('body').on('click', '.reset', function(){
+        // refer to original_state to reset the assignment
+        var assignment = $(this).attr('id').split('-').slice(-1)[0];
+        
+        // Reset score
+        var new_score = original_state['Points'][assignment];
+        current_state['Points'][assignment] = new_score;
+
+        var score = new_score.split('/')[0];
+        var total = new_score.split('/')[1];
+
+        $('#point-score-' + assignment).html(score);
+        $('#point-total-' + assignment).html(total);
+
+        // Reset category type
+        var new_category = original_state['Assignment Type'][assignment];
+        current_state['Assignment Type'][assignment] = new_category;
+
+        $('#assignment-category-' + assignment).val(new_category);
+        $('#assignment-category-' + assignment).material_select()
+
+        renderAssignment(assignment);
+        calculateGrade();
+   }) 
+
+    var showing_action = false;
+
+     $('#menu-btn').click(function(){
+      if (!showing_action){
+        $('#menu-action').css('display', 'inline');
+
+      }else{
+         $('#menu-action').css('display', 'none');
+      }
+
+      showing_action = !showing_action
+  })
+
+    $('#reset').click(function(){
+        // Delete everything
+
+        for (var assignment in current_state['Date']){
+            $('#assignment-' + assignment).remove();
+        }
+        current_state = JSON.parse(JSON.stringify(original_state));
+        renderAssignments();
+        calculateGrade()
+    })
+
+    $('#add').click(function(){
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+
+        if (day < 10){
+            day = '0' + day;
+        }
+
+        if (month < 10){
+            month = '0' + month;
+        }
+
+        current_state['Date'].unshift(month + '/' + day + '/' + year);
+        current_state['Assignment'].unshift('Generic Assignment');
+        current_state['Assignment Type'].unshift(summary_json['Assignment Type'][0]);
+        current_state['Points'].unshift('NA/NA');
+        current_state['Notes'].unshift('');
+
+        for (var assignment = current_state['Date'].length - 2; assignment > -1; assignment--){
+            $('#assignment-' + assignment).attr('id', 'assignment-' + (assignment + 1));
+            $('#assignment-category-' + assignment).attr('id', 'assignment-category-' + (assignment + 1));
+            $('#assignment-exclude-' + assignment).attr('id', 'assignment-exclude-' + (assignment + 1));
+            $('#assignment-reset-' + assignment).attr('id', 'assignment-reset-' + (assignment + 1));
+            $('#point-score-' + assignment).attr('id', 'point-score-' + (assignment + 1));
+            $('#point-total-' + assignment).attr('id', 'point-total-' + (assignment + 1));
+        }
+
+        var row_element = $(`<tr id = assignment-0 style = 'border-bottom: solid; border-color: {{text_color}}; border-width: 2px'>`);
+        row_element.insertAfter("#assignments-title");
+
+        insertAssignment(0);
+        renderAssignment(0);
+        
+    });
+
+</script>
