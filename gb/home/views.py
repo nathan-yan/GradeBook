@@ -4,12 +4,13 @@ from bs4 import BeautifulSoup as bs
 import requests
 import json
 
-from .. import auth
-from .. import util
-from .. import db
-from .. import variables
-
 from . import home
+
+from .. import db
+from .. import util
+from .. import auth
+from .. import variables
+from .. import exceptions
 
 @home.route("/")
 def index():
@@ -17,10 +18,12 @@ def index():
 
 @home.route("/grades", methods = ["GET", "POST"])
 def show_home():
-    verified = auth.auth_credentials(request)
-
-    if type(verified) == int:   # We've encountered an error
+    try:
+        verified = auth.auth_credentials(request)
+    except exceptions.AuthError:
         return render_template("index.html", error = 'Invalid Credentials')
+    except exceptions.UninitializedUserError:
+        return redirect("/setup")
 
     cookies, username = verified
 
@@ -170,6 +173,6 @@ def show_class(period):
 
     return response
 
-
+#@home.route("/setup", methods = )
         
 

@@ -6,6 +6,7 @@ from requests import session
 import json
 
 from . import db
+from . import exceptions
 
 def authenticate_by_cookie(request):
     username = request.cookies.get("username")
@@ -16,12 +17,12 @@ def authenticate_by_cookie(request):
     })
 
     if not user:
-        return 1        # Invalid username
+        raise exceptions.AuthError("Invalid Username. USERNAME=%s" % username)        # Invalid username
     
     if user['token'] == token:
         return json.loads(user['SynergyCookies']), username
     else:
-        return 2        # Invalid token
+        raise exceptions.AuthError("Invalid Token. USERNAME=%s, TOKEN=%s" % (username, token))        # Invalid token
 
 def authenticate_by_post(request):
     s = session()
@@ -46,8 +47,20 @@ def authenticate_by_post(request):
 
     error = ret_soup.find(id = "ERROR")
     if error and error.text == "Invalid user id or password":
-        return 3        # Invalid credentials
+        raise exceptions.AuthError("Invalid Credentials. USERNAME=%s" % username)        # Invalid credentials
+    
+    insert_user_based_on_credentials(request, ret_soup, s)
 
+    return dict(s.cookies), request.form.get('username')
+
+def auth_credentials(request):
+    # If GET then we're authenticating via cookies
+    if request.method == 'GET': 
+        return authenticate_by_cookie(request)
+    
+    return authenticate_by_post(request)
+
+def insert_user_based_on_credentials(request, ret_soup, s):
     # If the credentials seem fine, insert them into the database if the user isn't already in it
     user = db.USERS_DB.userSecure.find_one({
         "username" : request.form.get("username"),
@@ -58,8 +71,6 @@ def authenticate_by_post(request):
         profile = ret_soup.find(attrs = {
             "alt" : "Student Picture"
         })
-
-        print(profile)
 
         db.USERS_DB.userSecure.insert({
             "username" : request.form.get("username"),
@@ -79,8 +90,20 @@ def authenticate_by_post(request):
             "SynergyCookies" : json.dumps(dict(s.cookies)),
             "token" : None
         })
+
+        # If the user doesn't exist, we need to populate all the empty links now 
+        # this speeds stuff up in the future.
+        # if Synergy changes the link code every session then we're screwed but i think we're ok
+
+        # EDIT: Synergy uses the same link!
+
+        # We'll implement link population by redirecting the user to a new /setup link
+        # Since it's on the same domain it'll have access to the token we've generated
+
+        raise exceptions.UninitializedUserError("")    # We need to fill user information
+
     else:
-        # Update user cookies
+        # Update user synergy cookies
         db.USERS_DB.userSecure.update({
             "username" : request.form.get("username"),
         },{
@@ -88,15 +111,6 @@ def authenticate_by_post(request):
                 "SynergyCookies" : json.dumps(dict(s.cookies))
             }
         })
-
-    return dict(s.cookies), request.form.get('username')
-
-def auth_credentials(request):
-    # If GET then we're authenticating via cookies
-    if request.method == 'GET': 
-        return authenticate_by_cookie(request)
-    
-    return authenticate_by_post(request)
 
 if __name__ == "__main__":
     pass
