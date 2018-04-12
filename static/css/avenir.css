@@ -7,13 +7,16 @@
     }
     @font-face{
         font-family:"AvenirNextLTW01-Regular";
-        src:url("../fonts/avenir/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix");
-        src:url("../fonts/avenir/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix") format("eot"),url("Fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2") format("woff2"),url("../fonts/avenir/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"),url("Fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype"),url("../fonts/avenir/52a192b1-bea5-4b48-879f-107f009b666f.svg#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
+        src:url("../fonts/avenir/AvenirNextLTW01-Regular.ttf") format("truetype");
+        /*src:url("../fonts/avenir/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix") format("eot"),url("Fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2") format("woff2"),url("../fonts/avenir/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"),url("Fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype"),url("../fonts/avenir/52a192b1-bea5-4b48-879f-107f009b666f.svg#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");*/
     }
     @font-face{
         font-family:"AvenirNextLTW01-Medium";
-        src:url("../fonts/avenir/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?#iefix");
-        src:url("../fonts/avenir/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?#iefix") format("eot"),url("Fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2") format("woff2"),url("../fonts/avenir/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),url("Fonts/63a74598-733c-4d0c-bd91-b01bffcd6e69.ttf") format("truetype"),url("../fonts/avenir/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");
+        src:url("../fonts/avenir/AvenirNextLTW01-Medium.ttf") format("truetype");
+        
+        
+        /*url("../fonts/avenir/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?#iefix");
+        src:url("../fonts/avenir/1a7c9181-cd24-4943-a9d9-d033189524e0.eot?#iefix") format("eot"),url("Fonts/627fbb5a-3bae-4cd9-b617-2f923e29d55e.woff2") format("woff2"),url("../fonts/avenir/f26faddb-86cc-4477-a253-1e1287684336.woff") format("woff"),url("../fonts/avenir/a89d6ad1-a04f-4a8f-b140-e55478dbea80.svg#a89d6ad1-a04f-4a8f-b140-e55478dbea80") format("svg");*/
     }
     @font-face{
         font-family:"Avenir Next LT W01 Bold";
