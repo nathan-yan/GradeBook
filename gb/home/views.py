@@ -41,15 +41,20 @@ def show_home():
     # Get semester links
     heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
     quarter_links = []
+    current_quarter = 1
+    q = 0
 
     for quarter_link in heading_breadcrumb.find_all('li'):
         if (quarter_link.text != '|'):
+            q += 1
+
             link = quarter_link.find('a')
 
             if link:
                 quarter_links.append(link.get('href'))
             else:
                 quarter_links.append('selected')
+                current_quarter = q
     
     quarters = ['grades?q=1', 'grades?q=2', 'grades?q=3', 'grades?q=4']
     quarter_links = { str(i + 1) : quarter_links[i] for i in range (len(quarter_links))}
@@ -80,7 +85,7 @@ def show_home():
         "username" : username
     }, {
         "$set" : {
-            "classLinks" : links,
+            "classLinks." + str(current_quarter) : links,
             "quarterLinks" : quarter_links,
             "token" : token
         }
@@ -92,7 +97,7 @@ def show_home():
     profile = user['settings']['profilePicture']
 
     response = make_response(
-        render_template("home/dashboard_grade_start.html", profile = profile, quarter_links = quarters, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color)
+        render_template("home/dashboard_grade_start.html", profile = profile, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color)
     )
 
     response.set_cookie("token", token, httponly = True)
@@ -114,7 +119,9 @@ def show_class(period):
         "username" : username
     })
 
-    class_link = user['classLinks'][period]
+    quarter_number = request.args.get("q")
+    
+    class_link = user['classLinks'][quarter_number][period]
 
     # Get class info
     class_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + class_link, cookies = cookies).text

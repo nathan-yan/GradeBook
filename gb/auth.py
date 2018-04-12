@@ -63,13 +63,13 @@ def authenticate_by_post(request):
 
         db.USERS_DB.userSecure.insert({
             "username" : request.form.get("username"),
-            "classLinks" : [],
-            "quarterLinks" : {
+            "classLinks" : {
                 "1" : [],
                 "2" : [],
                 "3" : [],
                 "4" : []
             },
+            "quarterLinks" : [],
             "settings" : {
                 "theme" : "day", 
                 "profilePicture" : "https://wa-bsd405-psv.edupoint.com/" + profile.get("src"),

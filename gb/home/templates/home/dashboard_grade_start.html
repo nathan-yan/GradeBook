@@ -362,16 +362,15 @@ th, td {
                 <br/>
                 <span style = 'font-size: 70px; '>Grades</span>
                 <br/>
-
                 {% for quarter in quarter_links %}
-                    {% if quarter == "selected" %}
+                    {% if loop.index == current_quarter %}
                         <span style = 'margin-right: 20px; font-size: 30px; color: black;' class = 'line'>Q{{loop.index}}</span>
                     {% else %}
-                        <a href = "{{quarter}}" style = 'color: #527aff; margin-right: 20px; font-size: 30px' class = 'line'>Q{{loop.index}}</a>
+                        <a href = "{{quarter}}" style = 'color: #527aff; margin-right: 20px; font-size: 30px' class = ''>Q{{loop.index}}</a>
                     {% endif %}
                 {% endfor %}
-
-                <table>
+                <br/>
+                <table style = 'margin-top: 25px'>
                     {% for row in grades %}
                         {% if loop.index0 % 2 == 1 %}
                             <tr style = 'background: {{header_color}}a; height: 70px; font-weight: 700'>
@@ -518,7 +517,6 @@ th, td {
             </div>
         </div>
 
-        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
 
         
              <div style = 'position: absolute; left:0; bottom: 0px; width: 100%; text-align: center; color: white; font-size: 12px; padding: 20px 10px 15px 10px; background: #527aff;'>
