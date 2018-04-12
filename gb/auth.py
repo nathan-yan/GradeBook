@@ -74,11 +74,13 @@ def insert_user_based_on_credentials(request, ret_soup, s):
 
         db.USERS_DB.userSecure.insert({
             "username" : request.form.get("username"),
+            "initialized" : False,
             "classLinks" : {
                 "1" : [],
                 "2" : [],
                 "3" : [],
-                "4" : []
+                "4" : [],
+                "default" : []
             },
             "quarterLinks" : [],
             "settings" : {
@@ -111,6 +113,9 @@ def insert_user_based_on_credentials(request, ret_soup, s):
                 "SynergyCookies" : json.dumps(dict(s.cookies))
             }
         })
+
+        if not user['initialized']:
+            raise exceptions.UninitializedUserError("")
 
 if __name__ == "__main__":
     pass

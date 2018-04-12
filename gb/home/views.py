@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, redirect
 from bs4 import BeautifulSoup as bs
 
 import requests
@@ -23,7 +23,25 @@ def show_home():
     except exceptions.AuthError:
         return render_template("index.html", error = 'Invalid Credentials')
     except exceptions.UninitializedUserError:
-        return redirect("/setup")
+        # Generate a session token so that we can recognize the user in the /setup page
+        username = request.form.get("username")
+
+        token = util.salt(128)
+
+        db.USERS_DB.userSecure.update({
+            "username" : username
+        }, {
+            "$set" : {
+                "token" : token
+            }
+        })
+
+        response = make_response(redirect("/setup"))
+
+        response.set_cookie("token", token, httponly = True)
+        response.set_cookie("username", username, httponly = True)
+
+        return response
 
     cookies, username = verified
 
@@ -31,11 +49,12 @@ def show_home():
         "username" : username
     })
 
-    quarter_number = request.args.get("q")
+    quarter_number = request.args.get("q")     # TODO: If 4 < q <= 0 then raise an error
 
     link = 'PXP_Gradebook.aspx?AGU=0'
     if quarter_number:
-        link = user['quarterLinks'][quarter_number]
+        quarter_number = int(quarter_number)
+        link = user['quarterLinks'][quarter_number - 1]
 
     # Get the grades
     grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + link, cookies = cookies).text
@@ -60,8 +79,7 @@ def show_home():
                 current_quarter = q
     
     quarters = ['grades?q=1', 'grades?q=2', 'grades?q=3', 'grades?q=4']
-    quarter_links = { str(i + 1) : quarter_links[i] for i in range (len(quarter_links))}
-
+   
     tables = util.get_info_tables(grade_soup)
 
     # Filter tables. Resources will be blacklisted
@@ -71,10 +89,9 @@ def show_home():
     grade_table = parsed_tables[0]
     periods = grade_table['Period']
 
-    # Reassign all the links so they don't look hella ass
-    # Store the links inside the db for future reference
     links = { bs(p).text : bs(p).find('a').get('href') for p in periods }
 
+    # Reassign all the links so they don't look hella ass
     # Replace the old urls with more pleasing and easily memorizable links
     # Skip the first row since there are no links
     for row in range(1, len(tables[0])):
@@ -88,9 +105,8 @@ def show_home():
         "username" : username
     }, {
         "$set" : {
-            "classLinks." + str(current_quarter) : links,
-            "quarterLinks" : quarter_links,
-            "token" : token
+            "token" : token,
+            "classLinks.default" : links
         }
     })
 
@@ -111,10 +127,30 @@ def show_home():
 @home.route("/class")
 @home.route("/class/<period>", methods = ["GET"])
 def show_class(period):
-    verified = auth.auth_credentials(request)
-
-    if type(verified) == int:
+    try:
+        verified = auth.auth_credentials(request)
+    except exceptions.AuthError:
         return render_template("index.html", error = 'Invalid Credentials')
+    except exceptions.UninitializedUserError:
+        # Generate a session token so that we can recognize the user in the /setup page
+        username = request.form.get("username")
+
+        token = util.salt(128)
+
+        db.USERS_DB.userSecure.update({
+            "username" : username
+        }, {
+            "$set" : {
+                "token" : token
+            }
+        })
+
+        response = make_response(redirect("/setup"))
+
+        response.set_cookie("token", token, httponly = True)
+        response.set_cookie("username", username, httponly = True)
+
+        return response
 
     cookies, username = verified
 
@@ -124,7 +160,10 @@ def show_class(period):
 
     quarter_number = request.args.get("q")
     
-    class_link = user['classLinks'][quarter_number][period]
+    if quarter_number:
+        class_link = user['classLinks'][str(int(quarter_number) - 1)][period]
+    else:
+        class_link = user['classLinks']['default'][period]
 
     # Get class info
     class_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + class_link, cookies = cookies).text
@@ -173,6 +212,122 @@ def show_class(period):
 
     return response
 
-#@home.route("/setup", methods = )
-        
+@home.route("/setup", methods = ['GET'])
+def show_setup(): 
+    return render_template("setup/setup.html")
 
+@home.route("/setup_", methods = ['GET'])
+def do_setup():
+    try:
+        verified = auth.auth_credentials(request)
+    except exceptions.AuthError:
+        return render_template("index.html", error = 'Invalid Credentials')
+    except exceptions.UninitializedUserError:
+        pass
+
+    user = db.USERS_DB.userSecure.find_one({
+        "username" : request.cookies.get("username")
+    })
+
+    cookies, username = json.loads(user['SynergyCookies']), user['username']
+
+    # Get the grades
+    grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/PXP_Gradebook.aspx?AGU=0", 
+    cookies = cookies).text
+    grade_soup = bs(grade_page)
+
+    tables = util.get_info_tables(grade_soup)
+
+    parsed_tables = util.parse_info_tables(tables)
+    grade_table = parsed_tables[0]
+    periods = grade_table['Period']
+
+    # Get the links
+    class_links = {}
+
+    links = { bs(p).text : bs(p).find('a').get('href') for p in periods }
+    class_links['default'] = links
+
+    # Get semester links
+    heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
+    quarter_links = []
+    current_quarter = 1
+    q = 0
+
+    for quarter_link in heading_breadcrumb.find_all('li'):
+        if (quarter_link.text != '|'):
+            q += 1
+
+            link = quarter_link.find('a')
+
+            if link:
+                quarter_links.append(link.get('href'))
+            else:
+                quarter_links.append('selected')
+                current_quarter = q
+    
+    # Find first non-selected quarter_link
+    non_selected_quarter_link = None
+    for quarter_link in quarter_links: 
+        if quarter_link != 'selected':
+            non_selected_quarter_link = quarter_link
+            break; 
+    
+    # This is super ugly but we're going to use the first non-selected quarter_link to load another grade page to get the quarter_link that IS selected 
+    grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + non_selected_quarter_link, 
+    cookies = cookies).text
+    grade_soup = bs(grade_page)
+
+    # Get semester links
+    heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
+    current_quarter = 1
+    q = 0
+
+    for quarter_link in heading_breadcrumb.find_all('li'):
+        if (quarter_link.text != '|'):
+            q += 1
+
+            link = quarter_link.find('a')
+
+            if link:
+                quarter_links[q - 1] = link.get('href')
+            
+            # If there is no link that's fine, because we can ensure that the link has already been collected in the previous iteration of getting quarter_links
+    
+    # OHHHH MY GOOODD IT JUST KEEPS GETTING WORSE AND WORSE
+    # We'll go through each of the quarter_links to get class_links
+    q = 0
+    for quarter_link in quarter_links:
+        grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + quarter_link, 
+    cookies = cookies).text
+        grade_soup = bs(grade_page)
+
+        tables = util.get_info_tables(grade_soup)
+
+        parsed_tables = util.parse_info_tables(tables)
+        grade_table = parsed_tables[0]
+        periods = grade_table['Period']
+
+        # Get the links
+        links = { bs(p).text : bs(p).find('a').get('href') for p in periods }
+
+        class_links[str(q)] = links
+        q += 1
+    
+    db.USERS_DB.userSecure.update({
+        "username" : username
+    }, {
+        "$set" : {
+            "classLinks" : class_links,
+            "quarterLinks" : quarter_links,
+            "initialized" : True 
+        }
+    })
+
+    return json.dumps({
+        "status" : "success"
+    })
+
+@home.route("/info/setup", methods = ['GET'])
+def show_info_setup():
+    return render_template("")
