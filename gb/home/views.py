@@ -12,6 +12,9 @@ from .. import auth
 from .. import variables
 from .. import exceptions
 
+# A set of users who have seen the update
+updated_users = set()
+
 @home.route("/")
 def index():
     return render_template("index.html")
@@ -115,8 +118,13 @@ def show_home():
 
     profile = user['settings']['profilePicture']
 
+    seen_update = "true"
+    if username not in updated_users:
+        updated_users.add(username)
+        seen_update = "false"
+
     response = make_response(
-        render_template("home/dashboard_grade_start.html", profile = profile, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color)
+        render_template("home/dashboard_grade_start.html", profile = profile, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color, seen_update = seen_update)
     )
 
     response.set_cookie("token", token, httponly = True)

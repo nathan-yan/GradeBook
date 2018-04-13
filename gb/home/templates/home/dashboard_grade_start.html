@@ -454,31 +454,28 @@ th, td {
 
         <div id="modal2" class="animation-5" style = 'position: fixed; width: 100%; top: 100%; left: 0; height: 100%; background: {{header_color}}; z-index:10000000'>
                 <div style = 'width: 100%; height: 10px; background: #527aff'></div>
-                <div class="" style = 'width:100%; height: 100%; background: url("../static/cover-organized.svg"); background-size: cover; '>
+                <div class="" style = 'width:100%; height: 100%; background: url("../static/cover-organized.svg"); background-size: contain; background-repeat: no-repeat; background-position: 50% 100%'>
         
-                    <div style = 'width: 100%; height: 100%; padding: 50px; width: 60%; font-size: 17px; ' class = 'valign-wrapper'>
+                    <div style = 'width: 100%; height: 100%; padding: 50px; width: 75%; font-size: 17px; ' class = 'valign-wrapper'>
                         <div>
-                            <img src = '/static/gradebook.svg' style = 'width:300px; margin-bottom:-5px; margin-right:10px'><span style = 'font-size: 30px; color:#FFA4B6 '>v3.4</span>
-                            <p>We just skipped like 38 version labels, but that's what happens when you forget how to count, I guess.</p>
-
-                            <br/>
+                            <img src = '/static/gradebook.svg' style = 'width:300px; margin-bottom:-5px; margin-right:10px'><span style = 'font-size: 30px; color:#FFA4B6 '>v4.0</span>
+                            <p>Phew, this update is a big one for GradeBook! We've refactored all of our code so it's far more readable and we've migrated our data to a database. This was long overdue but now GradeBook has the potential for more features 🤔🤔🤔. In addition, we're (finally) open sourcing our code. The code is licensed under the <a href = 'https://en.wikipedia.org/wiki/MIT_License'>MIT license</a>. Feel free to contribute by forking and creating pull requests! <a href = 'https://github.com/nathan-yan/GradeBook'>Visit our repository!</a></p>
             
                             <span style = 'font-weight: 700'>UPDATES</span>
                             <ol>
-                                <li>GradeBook got a UI update, both in the login screen and in the interface.</li>
+                                <li>GradeBook simplified its URL scheme. It was actually super frickin' difficult.</li>
                                     <ol>
-                                        <li>The contacts tab has been removed, since all the email links go to Dion Yahoudy anyway lol.</li>
-                                        <li>Sections like grades/GPA and class summary/assignments have been separated and labeled, to make things slightly easier to differentiate.</li>
+                                        <li>Class URLs are no longer the ugly jumble of URL parameters Synergy used, but are now organized intuitively as <b>/class/[PERIOD NUMBER]</b></li>
+                                        <li>Quarters are distinguished by a single URL parameter "q", <b>/grades?q=[QUARTER NUMBER]</b></li>
                                     </ol>
                                 </li>
                                 <br/>
-                                <li>Fixed a minor issue where a N/A (0.0) grade would count as a F. N/A classes will not affect your GPA now.</li>
-                                <br/>
-                                <li>We're working on an experimental chat feature, more information in the weeks to come.</li>
-                                <br/>
-                                <li>Also, if you have the time, we would really appreciate signing a petition to support a cause very close to our hearts--allowing unicode characters in legal names--by signing, you are contributing to a new world where everyone is allowed to express themselves in whatever way they please. <a href = 'https://www.change.org/p/the-government-allow-unicode-characters-in-legal-names'>Sign here! Support the cause!</a></li>
+                                <li>The issues page GradeBook had in the past was pretty bad so we're just going to use GitHub's issue page on our repository.</li>
+
                             </ol>
             
+                            If you have any questions or issues please feel free to send us a message via our <a href = 'https://github.com/nathan-yan/GradeBook/issues'>GitHub issue page</a>
+
                             <br>
             
                             Thanks,
@@ -649,7 +646,7 @@ th, td {
      dismissible:false
  });
 
-    if ({{first}}){
+    if (!{{seen_update}}){
           $('#modal2').css('top', '0%');
     }
 

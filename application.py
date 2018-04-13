@@ -1,8 +1,9 @@
 from flask import Flask
 from gb.home import home
 
-app = Flask(__name__)
-app.register_blueprint(home)
+application = Flask(__name__)
+application.register_blueprint(home)
 
-app.run(host = '192.168.1.27', debug = True)
+if __name__ == "__main__":
+    application.run(debug = True)
 
