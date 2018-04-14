@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, make_response, redirect
 from bs4 import BeautifulSoup as bs
 
 import requests
+import time
 import json
 
 from . import home
@@ -24,7 +25,7 @@ def show_home():
     try:
         verified = auth.auth_credentials(request)
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Invalid Credentials')
+        return render_template("index.html", error = 'Oops! Your password or your username was invalid!')
     except exceptions.UninitializedUserError:
         # Generate a session token so that we can recognize the user in the /setup page
         username = request.form.get("username")
@@ -62,6 +63,11 @@ def show_home():
     # Get the grades
     grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + link, cookies = cookies).text
     grade_soup = bs(grade_page)
+
+    # Check for an error, if there is one then the issue is LIKELY that the user's cookie was valid but expired
+    error = grade_soup.find(id = "ERROR")
+    if error and "Object Reference" in error.text:
+        return render_template("index.html", error = 'Expired Token')
 
     # Get semester links
     heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
@@ -177,23 +183,44 @@ def show_class(period):
     class_page = requests.get("https://wa-bsd405-psv.edupoint.com/" + class_link, cookies = cookies).text
     class_soup = bs(class_page)
 
+    # Check for an error, if there is one then the issue is LIKELY that the user's cookie was valid but expired
+    error = class_soup.find(id = "ERROR")
+    if error and "Object Reference" in error.text:
+        return render_template("index.html", error = 'Expired Token')
+
     tables = util.get_info_tables(class_soup, links = False)[:-1]     # Exclude the last table cuz it's some random stuff
     print(tables)
-    tables[1] = tables[1][1:-1]
-    summary_table = tables[0]
-    
-    assignment_table = util.filter_table_by_category(tables[1], whitelist = ["Date", "Assignment", "Assignment Type", "Points", "Notes"])
+    if len(tables) == 2:
+        two = True
+        tables[1] = tables[1][1:-1]
+        assignment_table = util.filter_table_by_category(tables[1], whitelist = ["Date", "Assignment", "Assignment Type", "Points", "Notes"])
 
+        summary_table = tables[0]
+
+        parsed_tables = util.parse_info_tables(tables)
+        parsed_summary_table = parsed_tables[0]
+
+    else:
+        two = False
+        tables[0] = tables[0][1:-1]
+        assignment_table = util.filter_table_by_category(tables[0], whitelist = ["Date", "Assignment", "Assignment Type", "Points", "Notes"])
+
+        summary_table = []
+        
+        parsed_summary_table = {
+            'Assignment Type' : ['Assignment'],
+            'Weight' : ['100%']
+        }
+    
     parsed_assignment_table = util.parse_table(assignment_table)
+    for assignment in range (len(parsed_assignment_table['Points'])):
+        if 'Possible' in parsed_assignment_table['Points'][assignment] or len(parsed_assignment_table['Points'][assignment].split('/')) != 2:
+            parsed_assignment_table['Points'][assignment] = 'NA/NA'
 
    # print(tables)
 
     # There are two scenarios
-    # If tables has a length of two, then there is no summary
-    
-    parsed_tables = util.parse_info_tables(tables)
-    parsed_summary_table = parsed_tables[0]
-    
+        
     theme = variables.themes[user['settings']['theme']]
     bg_color, text_color, header_color = theme['bg_color'], theme['text_color'], theme['header_color']
     
@@ -215,7 +242,8 @@ def show_class(period):
         class_name = class_name,
         bg_color = bg_color,
         header_color = header_color,
-        text_color = text_color)
+        text_color = text_color,
+        two = two)
     )
 
     return response
@@ -332,10 +360,21 @@ def do_setup():
         }
     })
 
+    time.sleep(5)
+    
     return json.dumps({
         "status" : "success"
     })
 
-@home.route("/info/setup", methods = ['GET'])
-def show_info_setup():
-    return render_template("")
+@home.route("/profile", methods = ['GET'])
+def show_profile():
+    return render_template("unfinished.html")
+
+# TODO: Put this in the messaging blueprint
+@home.route("/chat", methods = ['GET'])
+def show_chat():
+    return render_template("unfinished.html")
+
+@home.route("/info", methods = ['GET'])
+def show_info():
+    return render_template("info.html")

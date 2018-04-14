@@ -372,16 +372,26 @@ th, td {
                 <br/>
                 <table style = 'margin-top: 25px'>
                     {% for row in grades %}
+                        {% set counter = loop.index0 %}
+
                         {% if loop.index0 % 2 == 1 %}
                             <tr style = 'background: {{header_color}}a; height: 70px; font-weight: 700'>
-                                {% for item in row %}
-                                    <td>{{ item|safe }}</td>
+                                {% for item in row %}    
+                                        {% if loop.index0 == 4 %}
+                                            <td class = 'class'>{{ item|safe }}</td>
+                                        {% else %}
+                                            <td>{{ item|safe }}</td>
+                                        {% endif %}
                                 {% endfor %}
                             </tr>
                         {% else %}
                             <tr style = 'font-weight: 700; height: 70px; '>
                                 {% for item in row %}
-                                    <td>{{ item|safe }}</td>
+                                    {% if loop.index0 == 4 and counter != 0%}
+                                        <td class = 'class'>{{ item|safe }}</td>
+                                    {% else %}
+                                        <td>{{ item|safe }}</td>
+                                    {% endif %}
                                 {% endfor %}
                             </tr>
                         {% endif %}
@@ -456,25 +466,25 @@ th, td {
                 <div style = 'width: 100%; height: 10px; background: #527aff'></div>
                 <div class="" style = 'width:100%; height: 100%; background: url("../static/cover-organized.svg"); background-size: contain; background-repeat: no-repeat; background-position: 50% 100%'>
         
-                    <div style = 'width: 100%; height: 100%; padding: 50px; width: 75%; font-size: 17px; ' class = 'valign-wrapper'>
+                    <div style = 'width: 100%; height: 100%; padding: 50px; width: 75%; margin-left: 12%; font-family: AvenirNextLTW01-Regular; font-size: 17px; ' class = 'valign-wrapper'>
                         <div>
                             <img src = '/static/gradebook.svg' style = 'width:300px; margin-bottom:-5px; margin-right:10px'><span style = 'font-size: 30px; color:#FFA4B6 '>v4.0</span>
-                            <p>Phew, this update is a big one for GradeBook! We've refactored all of our code so it's far more readable and we've migrated our data to a database. This was long overdue but now GradeBook has the potential for more features 🤔🤔🤔. In addition, we're (finally) open sourcing our code. The code is licensed under the <a href = 'https://en.wikipedia.org/wiki/MIT_License'>MIT license</a>. Feel free to contribute by forking and creating pull requests! <a href = 'https://github.com/nathan-yan/GradeBook'>Visit our repository!</a></p>
-            
+                            <p>Phew, this update is a big one for GradeBook! We've migrated our data to a database, and we've refactored our entire codebase! This was long overdue but now GradeBook has the potential for more features 🤔🤔🤔.
+                            <br/><br/>
                             <span style = 'font-weight: 700'>UPDATES</span>
                             <ol>
-                                <li>GradeBook simplified its URL scheme. It was actually super frickin' difficult.</li>
+                                <li>GradeBook simplified its URL scheme.</li>
                                     <ol>
                                         <li>Class URLs are no longer the ugly jumble of URL parameters Synergy used, but are now organized intuitively as <b>/class/[PERIOD NUMBER]</b></li>
                                         <li>Quarters are distinguished by a single URL parameter "q", <b>/grades?q=[QUARTER NUMBER]</b></li>
                                     </ol>
                                 </li>
                                 <br/>
-                                <li>The issues page GradeBook had in the past was pretty bad so we're just going to use GitHub's issue page on our repository.</li>
+                                <li>The issues page GradeBook had in the past was pretty bad so we're using GitHub's issue page.</li>
 
                             </ol>
             
-                            If you have any questions or issues please feel free to send us a message via our <a href = 'https://github.com/nathan-yan/GradeBook/issues'>GitHub issue page</a>
+                            If you have any questions or issues please feel free to send us a message via our <a href = 'https://github.com/nathan-yan/GradeBookIssues/issues'>GitHub issue page</a>
 
                             <br>
             
@@ -517,7 +527,7 @@ th, td {
 
         
              <div style = 'position: absolute; left:0; bottom: 0px; width: 100%; text-align: center; color: white; font-size: 12px; padding: 20px 10px 15px 10px; background: #527aff;'>
-                <span style = 'font-size: 14px; vertical-align: sub'>&copy</span> 2017-2018 Nathan Yan
+                <span style = 'font-size: 12px;'>&copy</span> 2017-2018 Nathan Yan
             </div>
 
     </body>

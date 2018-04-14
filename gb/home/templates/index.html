@@ -279,16 +279,17 @@ input:-webkit-autofill {
 .fill-input {
     font-weight: 700 !important;
     color: white !important;
-    background:rgba(242, 68, 49, 0.686) !important;
+    border-color:rgba(80, 108, 199, 0.686) !important;
+    border-style: none !important;
+    border-width: 2px !important; 
 
+    background: #527aff !important;
    
     border-radius: 8px !important; 
     padding: 10px 15px 10px 15px !important;
 
     outline-style: none !important;
     box-shadow: none !important;
-
-    border-bottom-style:none !important;
 
     margin-bottom: 0px !important;
 
@@ -297,6 +298,16 @@ input:-webkit-autofill {
     box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.3) !important;
 
 }
+
+#login-button {
+    background: #2d7;
+}
+
+#login-button:hover {
+    cursor: pointer;
+    background: #3a9
+}
+
 </style>
 
 
@@ -309,13 +320,15 @@ input:-webkit-autofill {
     <div  id = 'bg' style = 'background: url("static/cover.svg") ; position:absolute; width:100%; height:100%; z-index:-1; background-size:cover; opacity:1;' class=  ''></div>
 
     <body style = 'width:100%; height:100%; background-size:cover; background: white; ' class = 'valign-wrapper'>
-        <div style = 'margin-left:calc(50% - 225px); height: 560px; width:445px; background: white; border-style: solid; border-width: 5px; border-color: #527aff; padding: 70px 30px 40px 30px; border-radius: 15px; position: relative' class = 'valign-wrapper z-depth-4'>
+        <div style = 'margin-left:calc(50% - 225px); height: 560px; width:445px; background: white; border-style: solid; border-width: 5px; border-color: #527aff; padding: 70px 30px 40px 30px; border-radius: 15px; position: relative; overflow:hidden' class = 'valign-wrapper z-depth-4'>
             
+          
+
             <!--<div style = 'width:100%; margin-top:-20px;background:white; background-position:10% 50%; background-size:cover; font-size: 100px; font-weight:500;-webkit-background-clip: text; -webkit-text-fill-color: transparent;  text-align:center' ><span style = 'text-align:center; font-weight:500'>GradeBook</span></div>-->
             <div>
                 <div style = 'display: flex; margin-bottom: 25px;'>
-                    <img src = 'static/gradebook.svg' style = 'width:200px; text-align:center; padding-right: 10px; margin-left: -5px; margin-bottom: 0px; border-right: solid; border-color: #60609f'>
-                    <div style = 'height: 53px; width: fit-content; font-weight:700; font-size: 30px; margin-left: 10px; color: #60609f' class= 'valign-wrapper'>Log In</div>
+                    <img src = 'static/gradebook.svg' style = ' width:200px; text-align:center; padding-right: 10px; margin-left: -5px; margin-bottom: 0px; border-right: solid; border-color: #60609f'>
+                    <div style = ' height: 53px; width: fit-content; font-weight:700; font-size: 30px; margin-left: 10px; color: #60609f' class= 'valign-wrapper'>Log In</div>
                 </div>
 
                 <form id = 'submit-form' action = '/grades' method = 'post' style = 'width: 100%'>
@@ -328,12 +341,16 @@ input:-webkit-autofill {
                     <div class="row"  style = 'width:100%;'>
                         <div class="input-field"  style = 'width:100%; text-align:ceter; font-size:25px; color:white'>
                             <input name = 'password' id="password" class = 'z-depth-5 fill-input' placeholder = 'bsd password'  type="password" class="validate" style = 'font-size:17px; text-align:ceter; width:335px; margin-top: 5px !important'>
-                    <br/>
-                        <span id = 'login-status' style = 'color: #e55; font-size: 15px'></span>
-                    <br/>
+                    <br/><br/>
                     <input type = 'submit' style = 'display:none'>
-                    <a style = 'color: white; background: #2d7; padding: 5px 20px 5px 20px; border-radius:8px; font-size: 20px' onclick = '$("#submit-form").submit()'>login</a>
-                
+                    <a id = 'login-button' style = 'color: white;  padding: 5px 20px 5px 20px; margin-top: 15px; border-radius:8px; font-size: 20px' onclick = '$("#submit-form").submit()'>login</a>
+
+                    <br/>
+
+                    <br/>
+                    <div style = ''>
+                            <span id = 'login-status' style = 'display:none; font-weight:700; color: #e55; border-radius: 8px; font-size: 17px'></span>
+                    </div>
             </div>
             </div>
 
@@ -383,6 +400,14 @@ input:-webkit-autofill {
     </html>
 
 <script>
+    if ("{{error}}" != ""){
+        $('#login-status').html('{{error}}');
+        $('#login-status').css('display', 'inline');
+
+        $("#login-bubble-status").css('width', '1000px');
+        $('#login-bubble-status').css('height', '1000px');
+    }
+
     $(document).ready(function(){
         var w = screen.width;
         var h = screen.height;

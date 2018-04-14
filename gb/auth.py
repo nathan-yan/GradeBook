@@ -47,7 +47,7 @@ def authenticate_by_post(request):
 
     error = ret_soup.find(id = "ERROR")
     if error and error.text == "Invalid user id or password":
-        raise exceptions.AuthError("Invalid Credentials. USERNAME=%s" % username)        # Invalid credentials
+        raise exceptions.AuthError("Invalid Credentials. USERNAME=%s" % request.form.get('username'))        # Invalid credentials
     
     insert_user_based_on_credentials(request, ret_soup, s)
 

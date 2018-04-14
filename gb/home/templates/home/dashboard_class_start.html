@@ -392,34 +392,39 @@ th, td {
             <div id = 'content' style = 'margin-left: 0px; margin-top:0px; border-radius: 10px; background: {{ bg_color }}; margin-top:8px; width: 80%; margin-left: 10%; padding: 50px 120px 100px 80px; ' class = 'z-depth-3'>
 
                 <br/>
-                <a href = '/grades' style = 'vertical-align:middle; margin-left:0px; font-size:70px; margin-right:15px;' class = 'material-icons'>keyboard_backspace</a><span style = 'font-size: 70px; vertical-align:middle'>{{class_name}}</span>
+                <a href = '/grades'><div style = 'width: fit-content; vertical-align:middle; margin-left:-81px; margin-right:15px; font-size: 50px; background: #527aff; color: white; padding: 15px 80px 15px 30px; border-radius: 0px 8px 8px 0px;'><span style = 'font-size: 30px'>return to grades</span></div></a>
+                <br/><br/><div style = 'margin-top: 20px; font-size: 70px; vertical-align:middle'>{{class_name}}</div>
 
                 <div id = 'canvas-wrapper'><canvas id="canvas" class="chartjs-render-monitor" style="margin-top:10px; display: block; height: 500px; width: 100%; margin-bottom: 50px;"></canvas></div>
             </div>
 
-            <div id = 'content' style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 100px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
-                
+            {% if two %}
 
-                <br/>
-                <span style = 'font-size: 70px; '>Summary</span>
-<br/>
+                <div id = 'content' style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 100px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
+                    
 
-                <table>
-                    {% for row in summary %}
-                        {% set counter = loop.index0 %}
-                        <tr style = 'font-weight: 700; border-bottom: solid; border-width: 1px'>
-                            {% for item in row %}
-                                {% if counter == 0 %}
-                                    <td style = 'font-weight: 700'>{{ item|safe }}</td>
-                                {% else %}
-                                    <td style = 'font-weight: 500; font-family: "AvenirNextLTW01-Regular"'>{{ item|safe }}</td>
-                                {% endif %}
+                    <br/>
+                    <span style = 'font-size: 70px; '>Summary</span>
+                     <br/>
+
+                    <table>
+                            {% for row in summary %}
+                                {% set counter = loop.index0 %}
+                                <tr style = 'font-weight: 700; border-bottom: solid; border-width: 1px'>
+                                    {% for item in row %}
+                                        {% if counter == 0 %}
+                                            <td style = 'font-weight: 700'>{{ item|safe }}</td>
+                                        {% else %}
+                                            <td style = 'font-weight: 500; font-family: "AvenirNextLTW01-Regular"'>{{ item|safe }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tr>
                             {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
+                    </table>
 
-            </div>
+                </div>
+            {% endif %}
+
             <div  style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 50px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
                 <span style = 'font-size: 70px'>Assignments</span>
 
@@ -437,11 +442,10 @@ th, td {
         </div>
 
     
-        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
+        <div style = 'position: absolute; left:0; bottom: 0px; width: 100%; text-align: center; color: white; font-size: 12px; padding: 20px 10px 15px 10px; background: #527aff;'>
+                <span style = 'font-size: 12px;'>&copy</span> 2017-2018 Nathan Yan
+            </div>
 
-        <div style = 'width:100%; text-align:center; position:fixed; bottom:10px; left: calc(50% - 171px)' class = 'center-align'>
-        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
-            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = '/community'>Contact us!</a></span></div></div>
 </div>
 
     </body>
@@ -486,15 +490,20 @@ th, td {
 
                 for (var assignment_type in summary_json['Assignment Type']){
 
-                    var option_element = $(`<option value = ${summary_json['Assignment Type'][assignment_type]}>${summary_json['Assignment Type'][assignment_type]}</option>`);
+                    var option_element = $(`<option value = ${assignment_type}>${summary_json['Assignment Type'][assignment_type]}</option>`);
 
                     if (summary_json['Assignment Type'][assignment_type] == current_state[category_order[category]][assignment]){
                         option_element.attr('selected', '');
                     }
 
-
                     select_element.append(option_element);
                 }
+
+                if ("{{two}}" == "False"){
+                    var option_element = $(`<option selected value = '0'>${current_state[category_order[category]][assignment]}</option>`);
+                    select_element.append(option_element);
+                }
+
             }else if (category == 3){
                 var points = current_state[category_order[category]][assignment].split('/');
                 var score = points[0];
@@ -585,8 +594,13 @@ th, td {
         }
 
         for (var assignment = current_state['Date'].length - 1; assignment > -1; assignment--){
-            var category = current_state['Assignment Type'][assignment];
+            if ("{{two}}" == "False"){
+                var category = 'Assignment';
 
+            }else{
+                var category = current_state['Assignment Type'][assignment];
+            }
+            
             var points = current_state['Points'][assignment].split('/');
 
             if ($("#assignment-exclude-" + assignment).attr('exclude') == 'false' && points.indexOf("NA") < 0 && points.length == 2){
@@ -642,8 +656,7 @@ th, td {
                 c++;
             }
         }
-            
-       
+        
         new Chart(ctx, {
             type: 'line',
             data: {
@@ -689,7 +702,7 @@ th, td {
                 tooltips: {
                     callbacks: {
                         title: function(t, d) {
-                        return current_state['Assignment'][t[0].index] + ' on ' + current_state['Date'][t[0].index] + ' (' + timesteps[t[0].index] + '%)';
+                        return current_state['Assignment'][current_state['Assignment'].length - t[0].index - 1] + ' on ' + current_state['Date'][t[0].index] + ' (' + timesteps[t[0].index] + '%)';
                         }
                     }   
                 }
@@ -706,7 +719,7 @@ th, td {
         return Math.round(num * f) / f;
     }
 
-     $('body').on('keyup', '.point-div', function(){
+    $('body').on('keyup', '.point-div', function(){
         $(this).css('color', '#527aff');
         $(this).css('font-weight', '700');
 
@@ -723,7 +736,7 @@ th, td {
         var category = $(this).val()
         var assignment = $(this).attr('id').split('-').slice(-1)[0];
 
-        current_state['Assignment Type'][assignment] = category;
+        current_state['Assignment Type'][assignment] = summary_json['Assignment Type'][category];
 
         calculateGrade();
    }) 
