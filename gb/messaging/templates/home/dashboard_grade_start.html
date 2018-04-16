@@ -17,13 +17,13 @@
 <script src="https://use.typekit.net/rzr6kwp.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
-<link rel="stylesheet" href="../static/avenir.css">
+<link rel="stylesheet" href="static/css/avenir.css">
 
 
 <style>
     body {
         color: {{ text_color }};
-        font-family:  "europa", AvenirNextLTW01-Medium, 'Segoe UI', 'Lato', Verdana, sans-serif;
+        font-family: "Google Sans", AvenirNextLTW01-Medium, 'Segoe UI', 'Lato', Verdana, sans-serif;
         font-size: 15px;
         font-weight:300;
 
@@ -332,7 +332,7 @@ th, td {
                 <tr>
                     <td>
                         <div style = 'border-radius:0px; font-weight:700px; font-size:25px; padding:  5 5 5 5; border-bottom-style: solid; border-color: #527aff; margin-right: 10px' class = ''>
-                            <a href = '/grades' style = 'color: #527aff; font-weight: 700'>Grades</a>
+                            <a href = '/home' style = 'color: #527aff; font-weight: 700'>Grades</a>
                         </div>
                     </td>
                 
@@ -343,12 +343,12 @@ th, td {
                     </td>
                     <td>
                         <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
-                            <a style = 'color: #ccc; font-weight: 700' href = '/profile'>Profile</a>
+                            <a style = 'color: #ccc; font-weight: 700' href = '/profile'>Settings</a>
                         </div>
                     </td>
                     <td>
                         <div style = 'font-weight:700px; font-size:25px; padding: 5 10 5 5; margin-right: 10px'>
-                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/'>Logout</a>
+                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout'>Logout</a>
                         </div>
                     </td>
                 </tr>
@@ -361,8 +361,44 @@ th, td {
 
                 <br/>
                 <span style = 'font-size: 70px; '>Grades</span>
-<br/>
+                <br/>
+                {% for quarter in quarter_links %}
+                    {% if loop.index == current_quarter %}
+                        <span style = 'margin-right: 20px; font-size: 30px; color: black;' class = 'line'>Q{{loop.index}}</span>
+                    {% else %}
+                        <a href = "{{quarter}}" style = 'color: #527aff; margin-right: 20px; font-size: 30px' class = ''>Q{{loop.index}}</a>
+                    {% endif %}
+                {% endfor %}
+                <br/>
+                <table style = 'margin-top: 25px'>
+                    {% for row in grades %}
+                        {% set counter = loop.index0 %}
 
+                        {% if loop.index0 % 2 == 1 %}
+                            <tr style = 'background: {{header_color}}a; height: 70px; font-weight: 700'>
+                                {% for item in row %}    
+                                        {% if loop.index0 == 4 %}
+                                            <td class = 'class'>{{ item|safe }}</td>
+                                        {% else %}
+                                            <td>{{ item|safe }}</td>
+                                        {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% else %}
+                            <tr style = 'font-weight: 700; height: 70px; '>
+                                {% for item in row %}
+                                    {% if loop.index0 == 4 and counter != 0%}
+                                        <td class = 'class'>{{ item|safe }}</td>
+                                    {% else %}
+                                        <td>{{ item|safe }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+
+                <!--
                 {% for semester in semester_links %}
                     {% if semester == "selected" %}
                         <span style = 'margin-right: 20px; font-size: 30px' class = 'line'>Q{{loop.index}}</span>
@@ -394,7 +430,7 @@ th, td {
                     {% endif %}
                     
                 {% endfor %}
-                </table>
+                </table>-->
 
             </div>
             <div  style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 50px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
@@ -428,31 +464,30 @@ th, td {
 
         <div id="modal2" class="animation-5" style = 'position: fixed; width: 100%; top: 100%; left: 0; height: 100%; background: {{header_color}}; z-index:10000000'>
                 <div style = 'width: 100%; height: 10px; background: #527aff'></div>
-                <div class="" style = 'width:100%; height: 100%; background: url("../static/cover-organized.svg"); background-size: cover; '>
+                <div class="" style = 'width:100%; height: 100%; background: url("../static/cover-organized.svg"); background-size: contain; background-repeat: no-repeat; background-position: 50% 100%'>
         
-                    <div style = 'width: 100%; height: 100%; padding: 50px; width: 60%; font-size: 17px; ' class = 'valign-wrapper'>
+                    <div style = 'width: 100%; height: 100%; padding: 50px; width: 75%; margin-left: 12%; font-family: AvenirNextLTW01-Regular; font-size: 17px; ' class = 'valign-wrapper'>
                         <div>
-                            <img src = '/static/gradebook.svg' style = 'width:300px; margin-bottom:-5px; margin-right:10px'><span style = 'font-size: 30px; color:#FFA4B6 '>v3.4</span>
-                            <p>We just skipped like 38 version labels, but that's what happens when you forget how to count, I guess.</p>
-
-                            <br/>
-            
+                            <img src = '/static/gradebook.svg' style = 'width:300px; margin-bottom:-5px; margin-right:10px'><span style = 'font-size: 30px; color:#FFA4B6 '>v4.0</span>
+                            <p>Phew, this update is a big one for GradeBook! We've migrated our data to a database, and we've refactored our entire codebase! This was long overdue but now GradeBook has the potential for more features 🤔🤔🤔.
+                            <br/><br/>
                             <span style = 'font-weight: 700'>UPDATES</span>
                             <ol>
-                                <li>GradeBook got a UI update, both in the login screen and in the interface.</li>
+                                <li>GradeBook simplified its URL scheme.</li>
                                     <ol>
-                                        <li>The contacts tab has been removed, since all the email links go to Dion Yahoudy anyway lol.</li>
-                                        <li>Sections like grades/GPA and class summary/assignments have been separated and labeled, to make things slightly easier to differentiate.</li>
+                                        <li>Class URLs are no longer the ugly jumble of URL parameters Synergy used, but are now organized intuitively as <b>/class/[PERIOD NUMBER]</b></li>
+                                        <li>Quarters are distinguished by a single URL parameter "q", <b>/grades?q=[QUARTER NUMBER]</b></li>
                                     </ol>
                                 </li>
                                 <br/>
-                                <li>Fixed a minor issue where a N/A (0.0) grade would count as a F. N/A classes will not affect your GPA now.</li>
+                                <li>If you have cookies stored from a previous login, you will automatically be redirected to the grades page, without having to enter your credentials again.</li>
                                 <br/>
-                                <li>We're working on an experimental chat feature, more information in the weeks to come.</li>
-                                <br/>
-                                <li>Also, if you have the time, we would really appreciate signing a petition to support a cause very close to our hearts--allowing unicode characters in legal names--by signing, you are contributing to a new world where everyone is allowed to express themselves in whatever way they please. <a href = 'https://www.change.org/p/the-government-allow-unicode-characters-in-legal-names'>Sign here! Support the cause!</a></li>
+                                <li>The issues page GradeBook had in the past was pretty bad so we're using GitHub's issue page.</li>
+
                             </ol>
             
+                            If you have any questions or issues please feel free to send us a message via our <a href = 'https://github.com/nathan-yan/GradeBookIssues/issues'>GitHub issue page</a>
+
                             <br>
             
                             Thanks,
@@ -491,12 +526,11 @@ th, td {
             </div>
         </div>
 
-        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px"></div>
 
-        <div style = 'width:100%; text-align:center; position:fixed; bottom:10px; left: calc(50% - 171px)' class = 'center-align'>
-        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
-            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = '/community'>Contact us!</a></span></div></div>
-</div>
+        
+             <div style = 'position: absolute; left:0; bottom: 0px; width: 100%; text-align: center; color: white; font-size: 12px; padding: 20px 10px 15px 10px; background: #527aff;'>
+                <span style = 'font-size: 12px;'>&copy</span> 2017-2018 Nathan Yan
+            </div>
 
     </body>
 
@@ -624,7 +658,7 @@ th, td {
      dismissible:false
  });
 
-    if ({{first}}){
+    if (!{{seen_update}}){
           $('#modal2').css('top', '0%');
     }
 
@@ -632,6 +666,8 @@ th, td {
    $('#update-close').click(function(){
        $('#modal2').css('top', '100%');
    })
+
+   
 
 
 </script>

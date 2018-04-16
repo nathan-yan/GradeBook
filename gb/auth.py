@@ -53,8 +53,13 @@ def authenticate_by_post(request):
 
     return dict(s.cookies), request.form.get('username')
 
-def auth_credentials(request):
+def auth_credentials(request, method = None):
     # If GET then we're authenticating via cookies
+    if method == 'COOKIES':
+        return authenticate_by_cookie(request)
+    elif method == 'PASSWORD':
+        return authenticate_by_post(request)
+
     if request.method == 'GET': 
         return authenticate_by_cookie(request)
     

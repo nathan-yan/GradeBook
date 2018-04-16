@@ -1,5 +1,8 @@
-from flask import Flask
+from flask import Blueprint
 
-app = Flask(__name__)
+messaging = Blueprint(name = "messaging",
+                 import_name = __name__,
+                 template_folder = 'templates',
+                 static_folder = 'static')
 
-from gb import routes
+from . import views

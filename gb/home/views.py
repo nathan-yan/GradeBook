@@ -18,7 +18,12 @@ updated_users = set()
 
 @home.route("/")
 def index():
-    return render_template("index.html")
+    try:
+        verified = auth.auth_credentials(request)
+    except exceptions.AuthError:
+        return render_template("index.html")
+    
+    return redirect("/grades")
 
 @home.route("/grades", methods = ["GET", "POST"])
 def show_home():
@@ -65,9 +70,9 @@ def show_home():
     grade_soup = bs(grade_page)
 
     # Check for an error, if there is one then the issue is LIKELY that the user's cookie was valid but expired
-    error = grade_soup.find(id = "ERROR")
-    if error and "Object Reference" in error.text:
-        return render_template("index.html", error = 'Expired Token')
+    # because of the way the error appears I don't think beautifulSoup catches it. So we're going to directly search for the error. 
+    if "Object reference" in grade_page:
+        return render_template("index.html", error = 'Your StudentVUE token has expired!')
 
     # Get semester links
     heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
@@ -184,9 +189,9 @@ def show_class(period):
     class_soup = bs(class_page)
 
     # Check for an error, if there is one then the issue is LIKELY that the user's cookie was valid but expired
-    error = class_soup.find(id = "ERROR")
-    if error and "Object Reference" in error.text:
-        return render_template("index.html", error = 'Expired Token')
+    # because of the way the error appears I don't think beautifulSoup catches it. So we're going to directly search for the error. 
+    if "Object reference" in class_page:
+        return render_template("index.html", error = 'Your StudentVUE token has expired!')
 
     tables = util.get_info_tables(class_soup, links = False)[:-1]     # Exclude the last table cuz it's some random stuff
     print(tables)
@@ -366,15 +371,116 @@ def do_setup():
         "status" : "success"
     })
 
-@home.route("/profile", methods = ['GET'])
+@home.route("/profile", methods = ['GET', 'POST'])
 def show_profile():
-    return render_template("unfinished.html")
+    print("\n\n" + str(request.form) + "\n\n")
+    try:
+        verified = auth.auth_credentials(request, 'COOKIES')
+    except exceptions.AuthError:
+        return render_template("index.html", error = 'Invalid Credentials')
+    except exceptions.UninitializedUserError:
+        # Generate a session token so that we can recognize the user in the /setup page
+        username = request.form.get("username")
 
-# TODO: Put this in the messaging blueprint
-@home.route("/chat", methods = ['GET'])
-def show_chat():
-    return render_template("unfinished.html")
+        token = util.salt(128)
 
-@home.route("/info", methods = ['GET'])
+        db.USERS_DB.userSecure.update({
+            "username" : username
+        }, {
+            "$set" : {
+                "token" : token
+            }
+        })
+
+        response = make_response(redirect("/setup"))
+
+        response.set_cookie("token", token, httponly = True)
+        response.set_cookie("username", username, httponly = True)
+
+        return response
+
+    cookies, username = verified
+
+    if request.method == 'GET':
+        user = db.USERS_DB.userSecure.find_one({
+            "username" : username
+        })
+
+        theme = variables.themes[user['settings']['theme']]
+        bg_color, text_color, header_color = theme['bg_color'], theme['text_color'], theme['header_color']
+        
+        profile = user['settings']['profilePicture']
+
+        current_settings = user['settings']
+        parsed_settings = json.dumps(current_settings)
+
+        return render_template("home/profile_template.html",
+                               bg_color = bg_color,
+                               text_color = text_color,
+                               header_color = header_color,
+                               profile = profile,
+                               parsed_settings = parsed_settings)
+    
+    # If this was a POST, the user wants to change something about their account
+    change_type = request.form.get("change")
+    change_value = request.form.get("value")
+
+    if change_type == "theme":
+        if change_value in ['day', 'night']:
+            # Set the user's theme
+            db.USERS_DB.userSecure.update({
+                "username" : username
+            }, {
+                '$set' : {
+                    'settings.theme' : change_value
+                }
+            })
+        
+        return "success"
+
+@home.route("/logout", methods = ['GET'])
+def logout():
+    try:
+        verified = auth.auth_credentials(request)
+    except exceptions.AuthError:
+        return render_template("index.html", error = 'Invalid Credentials')
+    
+    cookies, username = verified 
+
+    # log the user out of the ACTUAL synergy account.
+    requests.get("https://wa-bsd405-psv.edupoint.com/Login_Student_PXP.aspx?Logout=1", cookies = cookies)
+
+    # set cookies to some random value
+    # it's important that it's random, otherwise an attacker could just guess the new cookie
+
+    db.USERS_DB.userSecure.update({
+        "username" : username
+    }, {
+        "$set" : {
+            "token" : util.salt(128)
+        }
+    })
+
+    return redirect("/")
+
+@home.route("/delete", methods = ['POST'])
+def delete_account():
+    try:
+        verified = auth.auth_credentials(request, 'COOKIES')
+    except exceptions.AuthError:
+        return render_template("index.html", error = 'Invalid Credentials')
+    
+    cookies, username = verified
+
+    # delete the user's account
+
+    db.USERS_DB.userSecure.delete_one({
+        "username" : username
+    })
+
+    return render_template("misc/deleted.html")
+
+@home.route("/info/data", methods = ['GET'])
 def show_info():
-    return render_template("info.html")
+    return render_template("info/data.html")
+

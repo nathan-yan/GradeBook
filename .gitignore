@@ -1,2 +1,6 @@
 *.pyc
 gb/__pycache__
+.ebextensions/securelistener.config
+*.zip
+..gitignore.un~
+.gitignore~
