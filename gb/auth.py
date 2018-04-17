@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 from requests import session
 import json
+import hashlib
 
 from . import db
 from . import exceptions
@@ -54,16 +55,31 @@ def authenticate_by_post(request):
     return dict(s.cookies), request.form.get('username')
 
 def auth_credentials_api(request):
-    # If GET then we're authenticating via cookies
-    if method == 'COOKIES':
-        return authenticate_by_cookie(request)
-    elif method == 'PASSWORD':
-        return authenticate_by_post(request)
-
-    if request.method == 'GET': 
-        return authenticate_by_cookie(request)
+    # The key is a 36 character alphanumeric.
+    # There are 62 possibilities per character
+    # The first 15 characters will represent a SHA-256 hash of the username truncated to 89 bits
+    # The other 21 characters will be the actual access key. This ensures that the key itself is 128 bits and that a username is extractable from the key.  
     
-    return authenticate_by_post(request)
+    key = request.form.get("api_key")
+
+    if not key:
+        raise exceptions.AuthError("Invalid Credentials, no key")
+
+    # Parse the key
+    user_hash = key[:15]
+    access_key = key[15:]
+
+    user = db.API_KEY_DB.userKeys.find_one({
+        "userHash" : user_hash
+    })
+
+    if not user:
+        raise exceptions.AuthError("No user exists")
+
+    if access_key in user['accessKeys']:
+
+    useranme = request.form.get("username")
+    password = request.form.get("password")
 
 def insert_user_based_on_credentials(request, ret_soup, s):
     # If the credentials seem fine, insert them into the database if the user isn't already in it
