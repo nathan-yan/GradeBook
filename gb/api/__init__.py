@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-home = Blueprint(name = "home",
+api = Blueprint(name = "api",
                  import_name = __name__,
                  template_folder = 'templates',
                  static_folder = 'static')
