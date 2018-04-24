@@ -24,6 +24,22 @@ def authenticate_by_cookie(request):
     else:
         raise exceptions.AuthError("Invalid Token. USERNAME=%s, TOKEN=%s" % (username, token))        # Invalid token
 
+def authenticate_by_socket(data):
+    username = data.get("username")
+    token = data.get("token")
+
+    user = db.USERS_DB.userSecure.find_one({
+        "username" : username
+    })
+
+    if not user:
+        raise exceptions.AuthError("Invalid Username. USERNAME=%s" % username)        # Invalid username
+    
+    if user['token'] == token:
+        return json.loads(user['SynergyCookies']), username
+    else:
+        raise exceptions.AuthError("Invalid Token. USERNAME=%s, TOKEN=%s" % (username, token))        # Invalid token
+
 def authenticate_by_post(request):
     s = session()
     
@@ -59,6 +75,8 @@ def auth_credentials(request, method = None):
         return authenticate_by_cookie(request)
     elif method == 'PASSWORD':
         return authenticate_by_post(request)
+    elif method == 'SOCKET':
+        return authenticate_by_socket(request)
 
     if request.method == 'GET': 
         return authenticate_by_cookie(request)
