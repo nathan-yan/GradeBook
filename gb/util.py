@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 from requests import session
 import random 
+import math 
 
 from . import db
 
@@ -140,12 +141,25 @@ def salt(length):
     
     return s
 
-if __name__ == "__main__":
-    table = [
-        ['c1', 'c2', 'c3'],
-        ['test11', 'test12', 'test13'],
-        ['test21', 'test22', 'test23'],
-        ['test31', 'test32', 'test33']
-    ]
+def int_to_base(n, b):
+    digits = math.floor(math.log(n, b))
 
-    print(filter_table_by_category(table, whitelist = ['c1', 'c3']))
+    result = []
+
+    while digits > -1:
+        p = b ** digits 
+
+        quotient = n // p 
+        n = n % p 
+
+        result.append(quotient) 
+
+        digits -= 1
+    
+    return result
+
+def cleanse_underscore(i):
+    return i.lower().replace(" ", "_")
+
+if __name__ == "__main__":
+    print(int_to_base(256, 2))
