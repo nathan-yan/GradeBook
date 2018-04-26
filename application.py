@@ -15,16 +15,16 @@ import json
 from bson import BSON 
 from bson import json_util
 
-application_ = Flask(__name__)
+application = Flask(__name__)
 
-application_.register_blueprint(home)
-application_.register_blueprint(messaging, url_prefix = '/messaging')
+application.register_blueprint(home)
+application.register_blueprint(messaging, url_prefix = '/messaging')
 
-application = SocketIO(application_)
+application_ = SocketIO(application)
 from gb.messaging import views
 
-views.init_application(application)
+views.init_application(application_)
 
 if __name__ == "__main__":
-    application.run(application_, host = '0.0.0.0', debug = True)
+    application.run(host = '206.189.172.22', debug = True)
 
