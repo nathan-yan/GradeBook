@@ -1,0 +1,1083 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel = 'stylesheet' href = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css'>
+<script src = 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js'></script>
+<link href = 'https://fonts.googleapis.com/icon?family=Material+Icons' rel = 'stylesheet'>
+<script src = "https://www.jsdelivr.com/package/npm/chart.js?path=dist"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+
+<link rel="icon" href="../static/gradebook_icon.png">
+<link rel="stylesheet" href="../static/avenir.css">
+
+<meta 
+     name='viewport' 
+     content='width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=1' 
+/>
+
+<style>
+    body {
+        color: {{ text_color }};
+
+        font-family:   "europa", AvenirNextLTW01-Medium,"chalet-london-sixty", "ColfaxWeb", 'Segoe UI', 'Lato', Verdana, sans-serif;
+        font-size: 15px;
+        font-weight:500;
+
+        text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+    }
+
+    #menu-logo{
+         transition:0.5s all ease;
+        -webkit-transition:0.5s all ease;
+        -moz-transition:all 0.5s ease;
+        -o-transition:all 0.5 ease;
+    }
+
+    .affix{
+        position:fixed;
+        top:50;
+        left:8;
+
+        width:100%;
+
+        z-index:1;
+}
+
+.special-link {
+        -webkit-transition: all .5s ease;
+        -moz-transitition: all .5s ease;
+        -o-transition: all .5s ease;
+        transition: all .5s ease;
+
+        color: #B9FDFF;
+        font-weight:700;
+
+    }
+
+    .special-link:hover {
+        color: rgb(50, 100, 240);
+    }
+
+
+.menu-item{
+    display:inline-block;
+    margin-left:40px;
+    font-weight:500;
+
+}
+
+#menu{
+    transition:0.5s all ease;
+    -webkit-transition:0.5s all ease;
+    -moz-transition:all 0.5s ease;
+    -o-transition:all 0.5 ease;
+
+    position:fixed;
+    top:10; left: 0px;
+
+    z-index:10000;
+}
+
+#main-logo{
+
+     transition:4s color, 1s font-size ease;
+    -webkit-transition:4s color, 1s font-size ease;
+    -moz-transition:color 4s, 1s font-size ease;
+    -o-transition:color 4s, 1s font-size ease;
+
+}
+
+.animation-10{
+      transition:1s all ease !important;
+    -webkit-transition:1s all ease !important;
+    -moz-transition:all 1s ease !important;
+    -o-transition:all 1s ease!important;
+
+}
+
+
+.colored-a {
+    transition:1s color ease;
+    -webkit-transition:1s color ease;
+    -moz-transition:1s color ease;
+    -o-transition:1s color ease;
+}
+
+.circle {
+    width:12px;
+    height:12px;
+    border-radius:50%;
+
+    border-style:solid;
+    background-color:white;
+    border-color:black;
+
+    display:inline-block;
+
+    padding-top:3px;
+
+    text-align:center;
+
+}
+
+.circle-small {
+    width:3px;
+    height:3px;
+
+    background-color:white;
+    display:inline-block;
+
+}
+
+.blur {
+    -webkit-filter: blur(2px);-moz-filter: blur(2px);-o-filter: blur(2px);-ms-filter: blur(2px); filter: blur(2px);
+}
+
+.h1 {
+    font-size:70px;
+    font-weight:400;
+}
+
+.h2 {
+    font-size:30px;
+}
+
+.h3 {
+    font-size:20px;
+}
+
+#forward {
+
+    z-index:1000;
+}
+
+#forward:hover{
+    cursor:pointer;
+}
+
+.shifted{
+    left:500px !important;
+}
+
+.page {
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+
+}
+
+.page-s{
+       transition:0.8s top ease !important;
+    -webkit-transition:0.8s top ease !important;
+    -moz-transition:top 0.8s ease !important;
+    -o-transition:top 0.8s ease!important;
+
+    position:absolute;
+    width:100%;
+    height:100%;
+
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.center-v {
+    display:flex;
+    justify-content:center;
+    vertical-align:middle;
+    flex-direction:column
+}
+
+.h1-0{
+    font-size:0;
+}
+
+.margin-50 {
+    margin-left:50;
+}
+
+.invert-color {
+    -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.demo-card {
+
+}
+
+.button-a{
+     transition:0.2s all ease;
+    -webkit-transition:0.2s all ease;
+    -moz-transition:all 0.2s ease;
+    -o-transition:all 0.2s ease;
+
+    background-color: rgba(0, 0, 0, 0);
+    color:white
+}
+
+.button-a:hover{
+    background-color: rgba(255, 255, 255, .2);
+    color:white;
+}
+
+ @-webkit-keyframes autofill {
+    to {
+        color: #aaa;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+
+.bottom-margin {
+    margin-bottom: 20px;
+}
+
+.grade {
+    padding-top:-3px;
+    padding-right: 10px;
+
+     transition:1s all ease !important;
+            -webkit-transition:1s all ease !important;
+            -moz-transition:all 1s ease !important;
+            -o-transition:all 1.5s ease!important;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0) 50%, rgb(150, 200, 255) 50%);
+            background-size: 200% 100%;
+            background-position: 99% bottom;
+ 
+}
+
+.grade:hover{
+              background-position: left bottom;
+
+            
+}
+
+.profile {
+    width:70px;
+    height:70px;
+    border-radius: 50%;
+}
+
+td {
+    border-radius:0 !important;
+}
+
+.line {
+    border-bottom: 1px solid black;
+    border-top: 0px solid black;
+    border-collapse: collapse;
+    border-radius:0;
+}
+
+th, td {
+    min-width:150px;
+    padding-right: 15px;
+    border-radius:0;
+}
+
+#profile-section{
+    color: rgba(0,0 ,0 ,0);
+}
+
+.point {
+    width: 5px;
+    height: 5px;
+
+    background: black;
+
+    border-radius:50%;
+}
+
+.point:hover {
+    border-style:solid;
+    border-color: black;
+    background: white;
+}
+
+#contact {
+    border-style: solid;
+    border-width:2px;
+    border-radius:30px;
+    border-color: rgba(0, 0, 0,0);
+
+    background: #30Fd93;
+    padding: 5 10 5 10;
+    color:     #000;
+
+}
+
+.round-btn {
+    border-radius: 20px;
+
+    padding: 8 14 8 14;
+}
+
+@-webkit-keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+
+}
+
+.refresh:hover{
+    cursor: pointer;
+    color: #206d53;
+    animation: spin 1s ease-in infinite;
+}
+
+.close:hover {
+    color: darkred; 
+    cursor: pointer;
+}
+
+.action:hover {
+    cursor: pointer;
+    opacity: 0.8
+}
+</style>
+
+<html>
+    <div class = 'fixed-action-btn horizontal click-to-toggle' style = 'position:fixed; right: 30px; bottom: 100px'>
+        <a style = '' id = 'menu-btn' class = 'pulse btn-floating btn-large waves-effect waves-light green'><i class = 'material-icons'>menu</i></a>
+    
+       
+            
+
+    </div>
+
+    <div style = 'position: fixed; right: 30px; bottom: 180px; text-align:right; display: none;' id = 'menu-action'>
+        <div style = 'padding: 20px; border-radius: 8px; background: #527aff; color: white; margin-bottom: 15px' class = 'z-depth-3'>
+            <span id = 'current-grade'>speculative grade: 95.2%</span>
+        </div>
+
+        <div style = 'padding: 0px; border-radius: 8px; background: {{ header_color }}' class = 'z-depth-3'>
+            <div id = 'reset' class = 'action' style = 'background: #ff7a52; color: white; padding: 10 15 10 15; border-radius: 8px 8px 0px 0px; text-align:center' ><b>reset assignments</b></div>
+            <div id = 'add' class = 'action' style = 'background: #b259d3; color: white; padding: 10 15 10 15; text-align:center' ><b>add assignment</b></div>
+            <a class = '' href = '#canvas-wrapper'><div class = 'action' style = 'background: #224acf; color: white; padding: 10 15 10 15; text-align:center; border-radius: 0px 0px 8px 8px; '><b>jump to graph</b></div></a>
+        </div>
+    </div>
+
+    <body style = 'width:100%; height:100%; background: {{ header_color }}'>
+        <div style = 'width:100%; position:relative; height:70px;'>
+            <img src = '/static/gradebook.svg' style = 'width:300px; position:absolute; left:10%; top:35px;'>
+
+        <div style = 'position:absolute; right:10%;'>
+            <div style = 'margin-left:150px; margin-top:15px; background: url("{{ profile }}"); display:inline-block; background-size: cover; background-repeat:no-repeat; background-position:50% 20%' class = 'profile z-depth-3' ></div>
+                    <div style = 'display:inline-block; height:40px;' class= 'valign-wrapper'>
+                    </div>
+                </div>
+                <div style = 'position:absolute; left: 20px'>
+        </div>
+            </div>
+
+    
+        </div>
+
+    <div id = 'mnu' style = 'width:20%; height:30px; margin-top: 50px;margin-bottom: 60px; padding-bottom:px; margin-left:10%'>
+    
+            <table>
+                    <tr>
+                        <td style = 'min-width: 0; padding: 15 5 15 5'>
+                            <div style = 'border-radius:0px; width: fit-content; font-weight:700px; font-size:25px; padding:  5 5 5 5; border-bottom-style: solid; border-color: #527aff; margin-right: 10px' class = ''>
+                                <a href = '/grades' style = 'color: #527aff; font-weight: 700'>Grades</a>
+                            </div>
+                        </td>
+                    
+                        <td style = 'min-width: 0; padding: 15 5 15 5'>
+                            <div style = 'font-weight:700px; width: fit-content;  font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                                <a href = '/chat' style = 'color: #ccc; font-weight: 700'>Chat</a>
+                            </div>
+                        </td>
+                        <td style = 'min-width: 0; padding: 15 5 15 5'>
+                            <div style = 'font-weight:700px;  width: fit-content; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                                <a style = 'color: #ccc; font-weight: 700' href = '/profile'>Profile</a>
+                            </div>
+                        </td>
+                        <td style = 'min-width: 0; padding: 15 5 15 5'>
+                            <div style = 'font-weight:700px; width: fit-content;  font-size:25px; padding: 5 10 5 5; margin-right: 10px'>
+                                <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/'>Logout</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+    </div>
+
+
+        <div id = 'content-wrapper' style = 'z-index:1; width: 100%; padding-bottom: 300px' >
+            <div id = 'content' style = 'margin-left: 0px; margin-top:0px; border-radius: 10px; background: {{ bg_color }}; margin-top:8px; width: 80%; margin-left: 10%; padding: 50px 120px 100px 80px; ' class = 'z-depth-3'>
+
+                <br/>
+                <a href = '/grades' style = 'vertical-align:middle; margin-left:0px; font-size:70px; margin-right:15px;' class = 'material-icons'>keyboard_backspace</a><span style = 'font-size: 70px; vertical-align:middle'>{{class_name}}</span>
+
+                <div id = 'canvas-wrapper'><canvas id="canvas" class="chartjs-render-monitor" style="margin-top:10px; display: block; height: 500px; width: 100%; margin-bottom: 50px;"></canvas></div>
+            </div>
+
+            {% if summary|length > 1 %}
+                <div  style = 'margin-left: 0px; margin-top:30px; background: {{ bg_color }}; border-radius: 10px; width: 80%; margin-left: 10%; padding: 50px 120px 100px 80px; ' class = 'z-depth-3'>
+                    <div style = 'font-size: 70px'>
+                        Summary
+                    </div>
+                    <table>
+
+                        {% for row in summary %}
+                            {% set counter = loop.index %}
+
+                            <tr class = 'line'>
+                            {% for v in row %}
+                                {% if counter == 1 %}
+                                    <td style = 'font-weight:700'> {{v}} </td>
+                                {% else %}
+                                    <td style = 'font-weight:200'> {{v}} </td>
+                                {% endif %}
+
+                            {% endfor %}
+                            </tr>
+
+                            {% set counter = counter + 1 %}
+                        {% endfor %}
+                    </table>
+
+
+                </div>
+            {% endif %}
+
+            <div style = 'margin-left: 0px; margin-top:30px; background: {{ bg_color }}; border-radius: 10px; width: 80%; margin-left: 10%; padding: 50px 120px 150px 80px; ' class = 'z-depth-3'> 
+               
+                <table>
+                    {% for row in assignments %}
+                        {% set counter = loop.index0 %}
+
+                        {% if counter == 0 %}
+                            <div style = 'font-size: 70px'>
+                                    Assignments
+                                </div>
+                            {% for v in row %}
+                               
+                                    {{v}}
+                               
+                            {% endfor %}
+                        {% elif counter == 1 %}
+                            <tr  id = 'row-{{loop.index0}}'>
+                                {% for v in row %}
+                                        <td class=  'line' style = 'font-weight: 700'>{{v}}</td>
+                                {% endfor %}
+                            </tr>
+
+                        {% else %}
+                            <tr class=  'animation-10' id = 'row-{{loop.index0}}'>
+                                {% for v in row %}
+                                    {% if counter == 1 %}
+                                        <td  class = 'line' style = 'font-weight:700; '> {{v}} </td>
+                                    {% else %}
+                                            {% if loop.index0 == 3 %}
+                                                <td   style = 'font-weight:200; ' id = 'assignment-{{counter}}' class = 'line grade-points'> {{v}}</td>
+                                            {% elif loop.index0 == 2 %}
+                                                <td  style = 'font-weight:200; width: 300px' id = 'assignment-type-{{counter}}' class = 'assignment-type line'> {{v}}</td>
+                                            
+                                            {% else %}
+                                                <td  class = 'line' style = 'font-weight:200; '> {{v}}</td>
+                                            {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <td style = 'font-weight: 200; min-width: 0px !important; background: transparent; padding-right:0; padding-left: 15px; padding-right: 10px; border-top-style: solid; border-bottom:nne' class = 'line'>
+                                    <div>
+                                        <i class = 'refresh material-icons' onclick = 'resetHandler(this)' id = 'refresh-{{counter}}' style = 'font-size: 35px'>refresh</i>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <i class = 'close material-icons' onclick = "closeHandler(this)" id = 'close-{{counter}}'  style = 'font-size: 35px'>close</i>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+
+                <div style = 'height: 100px'></div>
+                
+                <!--<div><span>{{p1}}</span>&emsp;<span>{{class1}}</span>&emsp;<span>{{resources1}}</span>&emsp;<span>{{room1}}</span>&emsp;<span>{{grade1}}</span></div>
+                <div><span>{{p2}}</span>&emsp;<span>{{class2}}</span>&emsp;<span>{{resources2}}</span>&emsp;<span>{{room2}}</span>&emsp;<span>{{grade2}}</span></div>
+                <div><span>{{p3}}</span>&emsp;<span>{{class3}}</span>&emsp;<span>{{resources3}}</span>&emsp;<span>{{room3}}</span>&emsp;<span>{{grade3}}</span></div>
+                <div><span>{{p4}}</span>&emsp;<span>{{class4}}</span>&emsp;<span>{{resources4}}</span>&emsp;<span>{{room4}}</span>&emsp;<span>{{grade4}}</span></div>
+                <div><span>{{p5}}</span>&emsp;<span>{{class5}}</span>&emsp;<span>{{resources5}}</span>&emsp;<span>{{room5}}</span>&emsp;<span>{{grade5}}</span></div>
+                <div><span>{{p6}}</span>&emsp;<span>{{class6}}</span>&emsp;<span>{{resources6}}</span>&emsp;<span>{{room6}}</span>&emsp;<span>{{grade6}}</span></div>
+                <div><span>{{p7}}</span>&emsp;<span>{{class7}}</span>&emsp;<span>{{resources7}}</span>&emsp;<span>{{room7}}</span>&emsp;<span>{{grade7}}</span></div>
+                <div><span>{{p8}}</span>&emsp;<span>{{class8}}</span>&emsp;<span>{{resources8}}</span>&emsp;<span>{{room8}}</span>&emsp;<span>{{grade8}}</span></div>
+                <div><span>{{p9}}</span>&emsp;<span>{{class9}}</span>&emsp;<span>{{resources9}}</span>&emsp;<span>{{room9}}</span>&emsp;<span>{{grade9}}</span></div>
+                <div><span>{{p10}}</span>&emsp;<span>{{class10}}</span>&emsp;<span>{{resources10}}</span>&emsp;<span>{{room10}}</span>&emsp;<span>{{grade10}}</span></div>
+                <div><span>{{p11}}</span>&emsp;<span>{{class11}}</span>&emsp;<span>{{resources11}}</span>&emsp;<span>{{room11}}</span>&emsp;<span>{{grade11}}</span></div>-->
+                
+            </div>
+        </div>
+
+        <div style="position:fixed; bottom:0; width:100%; background: {{ header_color }}; height: 71px" class = 'valign-wrapper'>
+
+        <div style = 'width:100%; text-align:center; margin-left: calc(50% - 171px)' class = 'center-align'>
+        <div id = 'what-is-this' style = 'display:flex; text-align:center; color:{{ text_color }}'>                            <img src = '/static/gradebook_beta.svg' style = 'padding-right: 25px; width:150px; border-right-style:solid; border-right-width:2px;'>
+            <div style = 'vertical-align:middle;  height: 45px; margin-left:20px;' class= 'valign-wrapper'><span>Got suggestions? <a id = 'contact' href = 'mailto:newportgrades@gmail.com'>Contact us!</a></span></div></div></div>
+    </body>
+
+</html>
+
+<script>
+    var classes = document.getElementsByClassName("grade-points");
+    for (var c= 0 ; c < classes.length; c++){
+        var inner = classes[c].innerHTML;
+        var split = inner.split('/');
+
+        if (split.length == 2){
+classes[c].innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[0] + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[1] + "</div>" ;        
+            }else{
+                var split = inner.split(' ');
+                console.log(split );
+                console.log(inner);
+
+                classes[c].innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + "NA" + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[1] + "</div>" ;  
+            }
+    }
+
+
+    $('#profile-picture').hover(function(){
+        console.log("HOVER");
+        $('#profile-section').css('color', "{{ text_color }}");
+        $('#profile-picture').css('border-radius', '0%');
+    })
+
+     $('#profile-picture').mouseout(function(){
+        console.log("HOVER");
+        $('#profile-section').css('color', "rgba(0, 0, 0, 0)");
+        $('#profile-picture').css('border-radius', '50%');
+    })
+
+
+   
+
+</script>
+
+<script>
+    $(document).ready(function(){
+        var w = screen.width;
+        var h = screen.height;
+        console.log(w);
+        if (w < 900){
+            window.location.href = window.location.href + "&mobile=True";   
+        }
+    })
+
+    function closeHandler(e){
+        var c = e.style['color'];
+        if (c === 'red'){
+            e.style['color'] = 'black';
+        }else{
+            e.style['color'] = 'red';
+        }
+
+        updateGrades();
+    }
+
+    function resetHandler(e){
+        var gotGrades = getGrades();
+        temp_assignments = gotGrades[0];
+       
+        var num = e.parentNode.parentNode.parentNode.id.split('-')[1];
+        var select = $("#select-" + num);
+        
+        var point_diff = assignments['Points'].length - temp_assignments['Points'].length;
+        console.log(point_diff)
+
+        var num_ = num - (2 + point_diff); 
+
+        if (num_ >= 0) {        // is this an original assignment (not added)
+            // revert assignment category to original
+            select.val(temp_assignments["Assignment Type"][num_]);
+            assignments['Assignment Type'][num_ + point_diff] = temp_assignments["Assignment Type"][num_];
+            select.material_select();
+
+            console.log(temp_assignments);
+            var points = temp_assignments["Points"][num_];
+            var points_element = document.getElementById('assignment-' + num);
+
+            var split = points.split('/');
+
+            if (split.length == 2){
+                points_element.innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[0] + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[1] + "</div>" ;        
+            }else{
+                var split = inner.split(' ');
+
+                points_element.innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + "NA" + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[1] + "</div>" ;  
+            }
+
+        }else{
+            // revert assignment to first assignment type available
+            select.val(summary["Assignment Type"][0]);
+            assignments['Assignment Type'][num_ + point_diff] = summary['Assignment Type'][0];
+            select.material_select();
+
+            var points_element = document.getElementById('assignment-' + num);
+            points_element.innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + "NA" + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + "NA" + "</div>" ;  
+        }
+
+        updateGrades();
+    }
+
+    $('#menu-btn').click(function(){
+        $(this).removeClass('pulse');
+    });
+
+    function keydown(e){
+        if ((e.keyCode || e.which) == 13){
+            e.preventDefault();
+            return false;
+        }
+        return true;
+    }
+
+    function keyup(element){
+        element.style['color'] = '#0d47a1'
+        element.style['font-weight'] = '700';
+        
+        updateGrades();
+    }
+    
+        // Given js_assignments and js_summary
+        //var thing = {{ js_assignments }};
+    
+    var dates = []
+    var scores = [];
+    {% for v in dates %}
+        dates.push('{{ dates[loop.index0] }}');
+    {% endfor %}
+    
+    var assignments = [];
+    var dummy = []
+    {% for v in categories %}
+        assignments.push('{{ categories[loop.index0] }}');
+        dummy.push("darn");
+    {% endfor %}
+
+    var possible_colors = ['#f44336', '#ba68c8', '#2196f3', '#4dd0e1', '#ff7043', '#795548', '#424242'];
+
+    var assignments = {}
+    var summary = {} 
+
+    var timesteps = []
+    var three = {{three}}
+    var showing_action = false;
+    var first_calculation = true;
+
+    function getGrades(){
+        a = {};
+        s = {};
+
+        {% for category in js_assignments %}
+            a['{{ category }}'] = []
+            {% for item in js_assignments[category] %}
+                a['{{ category }}'].push('{{ item }}')
+            {% endfor %}
+
+        {% endfor %}
+
+        {% for category in js_summary %}
+            s['{{ category }}'] = []
+            {% for item in js_summary[category] %}
+                s['{{ category }}'].push('{{ item }}')
+            {% endfor %}
+
+        {% endfor %}
+
+        return [a, s];
+        //console.log(thing);
+    }
+
+    var gotGrades = getGrades();
+    assignments = gotGrades[0];
+    summary = gotGrades[1];
+
+    function round(num, prec){
+        var f = Math.pow(10, prec);
+        return Math.round(num * f) / f;
+    }
+
+
+    function updateGrades(){
+        for (var a =  assignments['Points'].length + 1; a > 1; a--){
+            var element = document.getElementById("assignment-" + a);
+            assignments['Points'][a - 2] = element.innerText;
+            console.log(a + " inner");
+        }
+
+
+        var category_acc = {}
+        var category_total = {}
+
+        var timesteps = [];
+        dates = []
+        scores = [];
+
+        for (var category = 0; category < summary['Assignment Type'].length; category++){
+            category_acc[summary['Assignment Type'][category]] = 0.000001;
+            category_total[summary['Assignment Type'][category]] = 0.000001;
+
+        }
+
+       // console.log(category_acc)
+
+        for (var a = assignments['Points'].length - 1; a > -1; a--){
+            
+            dates.push(assignments['Assignment'][a] + ' on ' + assignments['Date'][a])
+
+            var points = assignments['Points'][a];
+            points = points.split('/');
+
+            var row = document.getElementById("row-" + (a + 2));
+            var close = document.getElementById("close-" + (a + 2));
+
+            if (close.style['color'] === 'red'){
+                row.style['background'] = 'rgba(125, 125, 125, 0.5)';
+
+                scores.push("N/A")
+            }else{
+
+                if (points.length == 2){
+                    if (three){
+                        category = assignments['Assignment Type'][a];
+                    }else{
+                        category = 'assignment'
+                    }
+                // console.log(category, category_acc[category]);
+
+                    if (points[0] != 'NA'){
+                    
+
+                        var percentage = round(100 * (0.0 + + points[0]) / (0.00001 + + points[1] ), 2);
+                        scores.push(percentage);
+
+                            category_acc[category] = category_acc[category] + + points[0];
+                            category_total[category] =  category_total[category] + + points[1] + 0.00001;
+
+                            var row = document.getElementById('row-' + (a + 2));
+                            var grade_color = "rgba(" + Math.ceil(Math.min((1.2 - percentage/100.) * 255, 255)) + "," + Math.ceil(Math.min((percentage/100. + .2) * 255, 255)) + "," + Math.ceil(Math.min(((percentage/100.)/2.) * 255, 255)) + ", 0.5)";
+                        row.style['background-color'] = grade_color;
+                    }else{
+                        var row = document.getElementById('row-' + (a + 2));
+                    row.style['background'] = '';
+
+                    scores.push("N/A")
+
+                    }
+
+                    //console.log(category_acc[category] + " " + points[0])
+                }else{
+                    var row = document.getElementById('row-' + (a + 2));
+                    row.style['background'] = '';
+
+                    scores.push("N/A")
+                }
+            }
+            
+            // Calculate grade at this point 
+            var sum = 0;
+            for (var category = 0; category < summary['Assignment Type'].length; category++){
+                //console.log(category_acc[summary['Assignment Type'][category]]);
+                //console.log( category_acc[summary['Assignment Type'][category]]);
+                var category_percentage = category_acc[summary['Assignment Type'][category]]/category_total[summary['Assignment Type'][category]]
+            
+                // weight it 
+                //console.log( summary['Weight'][category].slice(0, -1) + " " + category_percentage);
+                console.log(three);
+                if (three){
+                    var weighted_percentage = summary['Weight'][category].slice(0, -1) * category_percentage;
+                sum += weighted_percentage;
+
+                }else{
+                    var weighted_percentage = 100 * category_percentage;
+                sum += weighted_percentage;
+
+                }
+
+            }
+
+            if (three){
+                timesteps.push(round(sum - 100,2));
+            }
+            else{
+                timesteps.push(round(sum,2));
+            }
+
+        }
+
+      
+        colors = [];
+        bColors = [];
+        var _ = {};
+        var c = 0;
+        for (var a = assignments['Points'].length - 1; a > -1; a--){
+            if ((assignments['Assignment Type'][a] in _)){
+                colors.push(_[assignments['Assignment Type'][a]]);
+                            bColors.push(_[assignments['Assignment Type'][a]])
+
+            }else{
+                _[assignments['Assignment Type'][a]] = possible_colors[c];
+                colors.push(_[assignments['Assignment Type'][a]]);
+                bColors.push(_[assignments['Assignment Type'][a]])
+                c++;
+            }
+
+        }
+
+        document.getElementById('current-grade').innerHTML = 'speculative grade: <b>' + timesteps.slice(-1) + '%</b>';
+
+        if (!first_calculation && !showing_action){
+            $('#menu-btn').click();
+        }
+
+        first_calculation = false;
+
+
+        document.getElementById("canvas-wrapper").removeChild(document.getElementById("canvas-wrapper").childNodes[0]);
+
+        document.getElementById("canvas-wrapper").innerHTML = '<canvas id="canvas" class="chartjs-render-monitor" style="margin-top:10px; display: block; height: 500px; width: 100%; margin-bottom: 50px;"></canvas>';
+
+          var ctx = document.getElementById("canvas").getContext('2d');
+          ctx.clearRect(0, 0, ctx.width, ctx.height);
+       new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: [{
+            label: 'Grade through time',
+            data: timesteps,
+            pointBackgroundColor: colors,
+            borderWidth: 1,
+            backgroundColor: "rgba(130, 250, 150, .2)",
+            borderColor: "rgba(130, 250, 150, 1)",
+            fill:true
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                labels: dates,
+                ticks: {
+                    beginAtZero:false,
+                    callback: function(value, index, values) {
+                        return value + '%';
+                    }
+                }
+                   
+                },
+                           ],
+
+            xAxes: [{
+                
+                ticks: {
+                    beginAtZero:false,
+                    callback: function(value, index, values) {
+                        //console.log(value);
+                        var split = value.split('on ');
+
+
+                        return split[split.length - 1];
+                    }
+                }
+                   
+                },
+                           ],
+        },
+
+        tooltips: {
+         callbacks: {
+            title: function(t, d) {
+               return d.labels[t[0].index] + ' (' + scores[t[0].index] + '%)';
+            }
+         }
+      }
+    }})
+    }
+    
+    updateGrades();
+
+    
+    
+   
+    console.log(colors);
+    
+  
+    $("#reset").click(function(){
+        // Remove extra classes
+        var length = $('.extra-class').length;
+        $('.extra-class').remove();
+
+        var gotGrades = getGrades();
+        assignments = gotGrades[0];
+        summary = gotGrades[1];
+
+        for (var a = 2 + length; a < assignments['Points'].length + 2 + length; a++){
+            console.log(a);
+          var thing = $('#row-' + (a)); 
+          var thing2 = $('#assignment-type-' + (a)); 
+          var thing3 = $('#assignment-' + (a)); 
+          var thing4 = $('#close-' + (a)); 
+          var thing5 = $('#refresh-' + (a)); 
+          var thing6 = $('#select-' + (a)); 
+
+          thing.attr('id', 'row-' + (a - length))
+          thing2.attr('id', 'assignment-type-' + (a- length))
+          thing3.attr('id', 'assignment-' + (a - length))
+          thing4.attr('id', 'close-' + (a - length)); 
+          thing5.attr("id", "refresh-" + (a - length));
+          thing6.attr("id", "select-" + (a - length));
+
+      }
+
+//        updateGrades();
+
+        console.log("clicked!");
+
+         for (var a =  assignments['Points'].length + 1; a > 1; a--){
+            var element = document.getElementById("assignment-" + a);
+            element.innerText = assignments['Points'][a - 2];
+        }
+
+        updateGrades();
+
+        var classes = document.getElementsByClassName("grade-points");
+        for (var c= 0 ; c < classes.length; c++){
+            var inner = classes[c].innerHTML;
+            var split = inner.split('/');
+
+            if (split.length == 2){
+classes[c].innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[0] + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[1] + "</div>" ;        
+            }else{
+                var split = inner.split(' ');
+
+                classes[c].innerHTML = "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + "NA" + "</div>/" + "<div onkeydown = 'return keydown(event)' onkeyup = 'keyup(this)' contentEditable = true type = 'text' style = 'width:fit-content; display:inline-block'>" + split[0] + "</div>" ;  
+            }
+        }
+    })
+
+    function updateAssignmentType(){
+        var classes = document.getElementsByClassName("assignment-type");
+                for (var c= 0 ; c < classes.length - 1; c++){
+                    if (!classes[c].classList.contains("updated")){
+                        console.log("UPdating " + c);
+
+                        var inner = classes[c].innerHTML;
+                        classes[c].classList.add("updated")
+
+                        var options = '<option value = "" selected disabled>' + inner + '</option>';
+                        for (var category = 0; category < summary['Assignment Type'].length ; category ++){
+                            options += '<option value = "' + summary['Assignment Type'][category] + '">' + summary['Assignment Type'][category] + '</option>';
+
+                            classes[c].innerHTML = '<div class="input-field col s12 round-btn" ><select id = "select-' + (c + 2) + '"> ' + options + '</select></div>    ';  
+                        }
+
+                        $('#select-' + (c + 2)).on('change', function(){
+                                    $('#myselect').material_select();
+
+                                var category = $(this).val();
+                                var id = $(this).parent().parent().parent().attr('id');
+
+                                console.log(id)
+
+                                var num =  id.split('-')[2] - 2;
+                                console.log(num + "lebronjames");
+
+
+                                console.log(assignments['Assignment Type'])
+                                assignments['Assignment Type'][num] = category;
+                                
+                                console.log(assignments['Assignment Type'])
+                                updateGrades();
+
+                        })
+                    }
+                }
+                    $('select').material_select();
+
+    }
+
+    updateAssignmentType();
+
+        $(document).ready(function() {
+    $('select').material_select();
+  });
+
+  $('#add').click(function(){
+      var generic_assignment = `
+      <tr class="animation-10 extra-class" id="row-2" style="background-color: rgba(69, 255, 119, 0.5);">
+        <td class = "line" style="font-weight:200; "> 01/18/2018</td>
+        <td class = "line" style="font-weight:200; ">
+            <div contenteditable="true">Generic Assignment</div>
+        </td>
+        
+        <td style="font-weight:200; width: 300px" id="assignment-type-2" class="assignment-type line">` + summary['Assignment Type'][0] + `</td>
+        
+        <td style="font-weight:200;" id="assignment-2" class="line grade-points">
+            <div onkeydown="return keydown(event)" onkeyup="keyup(this)" contenteditable="true" type="text" style="width:fit-content; display:inline-block"> NA</div>/<div onkeydown="return keydown(event)" onkeyup="keyup(this)" contenteditable="true" type="text" style="width:fit-content; display:inline-block">NA</div>
+        </td>
+        
+        <td class = "line" style="font-weight:200; "> &nbsp;</td>
+        
+        <td style = "font-weight: 200; min-width: 0px !important; padding-right:0; padding-left: 15px; border-top: none;" class = 'line'>
+            <div>
+                <i class = "refresh material-icons" id = "refresh-2" onclick = "resetHandler(this)" style = "font-size: 35px">refresh</i>
+            </div>
+            <br/>
+            <div>
+                <i class = "close material-icons" onclick = "closeHandler(this)" id = "close-2"  style = "font-size: 35px">close</i>
+            </div>
+        </td>
+        </tr></tr>`;
+
+
+      for (var a = assignments['Assignment Type'].length - 1; a >- 1 ; a--){
+          var thing = $('#row-' + (a + 2)); 
+          var thing2 = $('#assignment-type-' + (a + 2)); 
+          var thing3 = $('#assignment-' + (a + 2)); 
+          var thing4 = $('#close-' + (a + 2))
+          var thing5 = $('#refresh-' + (a + 2))
+          var thing6 = $('#select-' + (a + 2)); 
+
+          thing.attr('id', 'row-' + (a + 3))
+          thing2.attr('id', 'assignment-type-' + (a + 3))
+          thing3.attr('id', 'assignment-' + (a + 3))
+          thing4.attr('id', 'close-' + (a + 3)); 
+          thing5.attr('id', 'refresh-' + (a + 3)); 
+          thing6.attr("id", "select-" + (a + 3));
+
+      }
+
+      assignments['Assignment Type'].unshift(summary['Assignment Type'][0]);
+      assignments['Points'].unshift('1/1');
+
+
+      $("#row-1").after(generic_assignment)
+        updateAssignmentType();
+      updateGrades();
+
+  })
+
+  $('#menu-btn').click(function(){
+      if (!showing_action){
+        $('#menu-action').css('display', 'inline');
+
+      }else{
+         $('#menu-action').css('display', 'none');
+      }
+
+      showing_action = !showing_action
+  })
+
+       
+    </script>
