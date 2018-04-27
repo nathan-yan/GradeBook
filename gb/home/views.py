@@ -21,7 +21,7 @@ def index():
     try:
         verified = auth.auth_credentials(request)
     except exceptions.AuthError:
-        return render_template("index.html")
+        return render_template("index.html", server_name = variables.SERVER_NAME)
     
     return redirect("/grades")
 
