@@ -9,6 +9,7 @@ SERVER_NAME = os.environ.get("gradebook_server_name")
 
 if not (SERVER_NAME):
     print("WARNING: Server name not set, default to GenericServer")
+    SERVER_NAME = "GenericServer"
 
 themes = {
     "night" : {
