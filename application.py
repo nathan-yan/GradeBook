@@ -26,5 +26,5 @@ from gb.messaging import views
 views.init_application(application_)
 
 if __name__ == "__main__":
-    application.run(host = '206.189.172.22', debug = True)
+    application.run(debug = True)
 
