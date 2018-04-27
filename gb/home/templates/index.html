@@ -308,6 +308,15 @@ input:-webkit-autofill {
     background: #3a9
 }
 
+#what-is-this:hover {
+    background: #426aef !important;
+}
+
+#digitalocean:hover {
+    background: #527aff !important;
+    cursor: pointer;
+}
+
 </style>
 
 
@@ -356,7 +365,8 @@ input:-webkit-autofill {
 
 
                 <div style = 'position: absolute; left:0; bottom: 10px; width: 100%; text-align: center; '>
-                    <span style = 'color: #bbb; padding: 5px 20px 5px 20px; border-radius: 4px; background: #f3f3f3; font-size: 13px; border-radius: 4px;'>&copy 2017-2018 Nathan Yan</span>
+                    <span style = 'color: #bbb; padding: 4px 19px 4px 19px; border: solid #eee 1px; border-radius: 4px; background: #f3f3f3; font-size: 13px; border-radius: 4px; margin-right: 5px'>&copy 2017-2018 Nathan Yan</span>
+                    <span style = 'padding: 5 10 5 10; background: #527aff; color: white; border-radius: 4px; font-size: 13px; cursor: pointer;' id = 'what-is-this' >what is GradeBook?</span>
                 </div>
                 
                 </div>
@@ -370,8 +380,9 @@ input:-webkit-autofill {
     
      
 
-    <div id = 'what-is-this' style = 'position:fixed; width:100%; bottom:10 ;left:0; text-align:center;'><span style = 'padding: 5 10 5 10; background: #527aff; color: white; border-radius: 5px;'>what is GradeBook?</span></div>
+    <div style = 'position:fixed; width:100%; bottom:10 ;left:0; text-align:center;'><a target = '_blank' href = 'https://www.digitalocean.com/'><span id = 'digitalocean' style = ' padding: 5 10 5 10; background: #527aff99; color: #ffffff; border-radius: 5px; '>served with <i class = 'material-icons' style = 'font-size: 15px; vertical-align: sub'>favorite</i> by {{server_name}}</span></a></div>
 
+    
     <div id="modal1" class="animation-5" style = 'position: fixed; top: 100%; left: 0; height: 100%; background: white'>
         <div style = 'widht: 100%; height: 10px; background: #527aff'></div>
         <div class="" style = 'width:100%; height: 100%; background: url("../static/cover-organized.svg"); background-size: cover; '>
@@ -379,7 +390,7 @@ input:-webkit-autofill {
             <div style = 'width: 100%; height: 100%; padding: 50px; width: 60%; font-size: 17px; ' class = 'valign-wrapper'>
                 <div>
                     <img src = '/static/gradebook.svg' style = 'width:300px; margin-left: -5px; '>
-                    <p>GradeBook is an interface for the (unofficial) StudentVUE/ParentVUE API. StudentVUE is pretty ugly, and there are actually a number of security flaws that can potentially expose your district password. Because of these flaws, the GradeBook team created this website so students could view their grades in a more pleasing way. Functionally, GradeBook is completely the same as StudentVUE, but with updated graphics and security.</p>
+                    <p>GradeBook is an interface for the (unofficial) StudentVUE/ParentVUE API. StudentVUE is not the greatest, so the GradeBook team created this website so students could view their grades in a more pleasing way. Functionally, GradeBook is completely the same as StudentVUE, but with updated graphics and security.</p>
                     <p>Logging in is totally safe, as your username and password are not stored anywhere on our servers. Your information is encrypted by as it's used to log you in so we never see it.</p>
                     
                     <br/>
