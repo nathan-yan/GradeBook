@@ -110,7 +110,9 @@ def show_home():
     # Skip the first row since there are no links
     for row in range(1, len(tables[0])):
         for column in range(len(tables[0][row])):
-            tables[0][row][column] = "<a href = %s>%s</a>" % ("/class/" + bs(tables[0][row][0]).text, bs(tables[0][row][column]).text)
+            tables[0][row][column] = "%s" % (bs(tables[0][row][column]).text)
+
+    class_links = ["/class/" + bs(tables[0][row][0]).text for row in range (1, len(tables[0]))]
 
     # Generate a session token
     token = util.salt(128)
@@ -133,9 +135,9 @@ def show_home():
     if username not in updated_users:
         updated_users.add(username)
         seen_update = "false"
-
+    print(class_links)
     response = make_response(
-        render_template("home/dashboard_grade_start.html", profile = profile, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color, seen_update = seen_update)
+        render_template("home/dashboard_grade_start.html", profile = profile, class_links = class_links, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color, seen_update = seen_update,)
     )
 
     response.set_cookie("token", token, httponly = True)

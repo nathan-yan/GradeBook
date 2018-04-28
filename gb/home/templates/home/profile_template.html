@@ -61,12 +61,6 @@
     }
 
 
-.menu-item{
-    display:inline-block;
-    margin-left:40px;
-    font-weight:500;
-
-}
 
 #menu{
     transition:0.5s all ease;
@@ -371,6 +365,12 @@ user-select: none;
    color:    rgb(56, 45, 56);
 }
 
+
+.menu-item:hover {
+    color: #40405f !important;
+}
+
+
 </style>
 
 <html>
@@ -418,31 +418,32 @@ user-select: none;
         </div>
 
         <div id = 'mnu' style = 'width:20%; height:30px; margin-top: 50px;margin-bottom: 60px; padding-bottom:px; margin-left:10%; font-weight: 700'>
-           <table>
-                <tr>
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'border-radius:0px; font-weight:700px; font-size:25px; padding:  5 5 5 5; margin-right: 10px' class = ''>
-                            <a href = '/grades' style = 'color: #ccc; font-weight: 700'>Grades</a>
-                        </div>
-                    </td>
-                
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
-                            <a href = '/chat' style = 'color: #ccc; font-weight: 700'>Chat</a>
-                        </div>
-                    </td>
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px; border-bottom-style: solid; border-color: #527aff; '>
-                            <a style = 'color: #527aff; font-weight: 700' href = '/profile'>Settings</a>
-                        </div>
-                    </td>
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 10 5 5; margin-right: 10px'>
-                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout'>Logout</a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                <table>
+                    <tr>
+                        <td style = 'min-width: 0'>
+                            <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                                <a style = 'color: #ccc; font-weight: 700' href = '/grades' class = 'menu-item'>Grades</a>
+                            </div>
+                        </td>
+                    
+                        <td style = 'min-width: 0'>
+                            <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px' >
+                                <a href = '/chat' style = 'color: #ccc; font-weight: 700' class = 'menu-item'>Chat</a>
+                            </div>
+                        </td>
+                        <td style = 'min-width: 0'>
+                            
+                            <div style = 'border-radius:0px; font-weight:700px; font-size:25px; padding: 5 5 5 5; border-bottom-style: solid; border-color: #527aff; margin-right: 10px' class = ''>
+                                <a href = '#' style = 'color: #527aff; font-weight: 700'>Settings</a>
+                            </div>
+                        </td>
+                        <td style = 'min-width: 0'>
+                            <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                                <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout' class = 'menu-item'>Logout</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
         </div>
         
         <div id = 'content-wrapper' style = 'z-index:1; width: 100%; padding-bottom:300px;' >

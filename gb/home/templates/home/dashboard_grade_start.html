@@ -65,12 +65,6 @@
     }
 
 
-.menu-item{
-    display:inline-block;
-    margin-left:40px;
-    font-weight:500;
-
-}
 
 #menu{
     transition:0.5s all ease;
@@ -305,6 +299,34 @@ th, td {
 
 }
 
+.period {
+    transition: all 0.5s;
+
+}
+
+.period:hover {
+    /*background: #527aff66 !important;*/
+    cursor: pointer;
+
+
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
+}
+
+.quarter-link {
+    padding: 3px 5px 3px 5px;
+
+}
+
+.quarter-link:hover {
+    background: #527aff33;
+    border-radius: 5px;
+
+}
+
+.menu-item:hover {
+    color: #40405f !important;
+}
+
 </style>
 
 <html>
@@ -337,18 +359,18 @@ th, td {
                     </td>
                 
                     <td>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
-                            <a href = '/chat' style = 'color: #ccc; font-weight: 700'>Chat</a>
+                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px' >
+                            <a href = '/chat' style = 'color: #ccc; font-weight: 700' class = 'menu-item'>Chat</a>
                         </div>
                     </td>
                     <td>
                         <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
-                            <a style = 'color: #ccc; font-weight: 700' href = '/profile'>Settings</a>
+                            <a style = 'color: #ccc; font-weight: 700' href = '/profile' class = 'menu-item'>Settings</a>
                         </div>
                     </td>
                     <td>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 10 5 5; margin-right: 10px'>
-                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout'>Logout</a>
+                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout' class = 'menu-item'>Logout</a>
                         </div>
                     </td>
                 </tr>
@@ -364,9 +386,9 @@ th, td {
                 <br/>
                 {% for quarter in quarter_links %}
                     {% if loop.index == current_quarter %}
-                        <span style = 'margin-right: 20px; font-size: 30px; color: black;' class = 'line'>Q{{loop.index}}</span>
+                        <span style = 'margin-right: 20px; font-size: 30px; color: {{text_color}};' class = 'line'>Q{{loop.index}}</span>
                     {% else %}
-                        <a href = "{{quarter}}" style = 'color: #527aff; margin-right: 20px; font-size: 30px' class = ''>Q{{loop.index}}</a>
+                        <a href = "{{quarter}}" style = 'color: #527aff; margin-right: 15px; font-size: 30px' class = 'quarter-link'>Q{{loop.index}}</a>
                     {% endif %}
                 {% endfor %}
                 <br/>
@@ -375,7 +397,7 @@ th, td {
                         {% set counter = loop.index0 %}
 
                         {% if loop.index0 % 2 == 1 %}
-                            <tr style = 'background: {{header_color}}a; height: 70px; font-weight: 700'>
+                            <tr class = 'period' style = 'background: {{header_color}}5; height: 70px; font-family: AvenirNextLTW01-Regular' ref = '{{class_links[loop.index0 - 1]}}'>
                                 {% for item in row %}    
                                         {% if loop.index0 == 4 %}
                                             <td class = 'class'>{{ item|safe }}</td>
@@ -385,7 +407,11 @@ th, td {
                                 {% endfor %}
                             </tr>
                         {% else %}
-                            <tr style = 'font-weight: 700; height: 70px; '>
+                            {% if loop.index0 == 0 %}
+                                <tr class = '' style = 'height: 70px; font-family: AvenirNextLTW01-Medium; font-weight: 700'>
+                            {% else %}
+                                <tr class = 'period' style = 'height: 70px; font-family: AvenirNextLTW01-Regular' ref = '{{class_links[loop.index0 - 1]}}'>
+                            {% endif %}
                                 {% for item in row %}
                                     {% if loop.index0 == 4 and counter != 0%}
                                         <td class = 'class'>{{ item|safe }}</td>
@@ -630,7 +656,7 @@ th, td {
         var classes = document.getElementsByClassName("class");
         var class_grades = [];
         for (var c= 0; c < classes.length; c++){
-            var grade = classes[c].lastChild.innerText;
+            var grade = classes[c].innerText;
 
             if (grade.split(' (')[0] != 'N/A'){
                 grade = (grade.split(' (')[1].slice(0, -1) + + 0);
@@ -667,7 +693,9 @@ th, td {
        $('#modal2').css('top', '100%');
    })
 
-   
+    $('body').on('click', '.period', function(){
+        window.location.href = $(this).attr('ref');
+    });
 
 
 </script>

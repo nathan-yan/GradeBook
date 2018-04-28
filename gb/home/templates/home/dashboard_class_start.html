@@ -59,13 +59,6 @@
     }
 
 
-.menu-item{
-    display:inline-block;
-    margin-left:40px;
-    font-weight:500;
-
-}
-
 #menu{
     transition:0.5s all ease;
     -webkit-transition:0.5s all ease;
@@ -324,6 +317,10 @@ th, td {
     cursor: pointer;
 }
 
+.menu-item:hover {
+    color: #40405f !important;
+}
+
 </style>
 
 <html>
@@ -361,31 +358,31 @@ th, td {
 
         <div id = 'mnu' style = 'width:20%; height:30px; margin-top: 50px;margin-bottom: 60px; padding-bottom:px; margin-left:10%; font-weight: 700'>
            
-           <table>
-                <tr>
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'border-radius:0px; font-weight:700px; font-size:25px; padding:  5 5 5 5; border-bottom-style: solid; border-color: #527aff; margin-right: 10px' class = ''>
-                            <a href = '/grades' style = 'color: #527aff; font-weight: 700'>Grades</a>
-                        </div>
-                    </td>
-                
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
-                            <a href = '/chat' style = 'color: #ccc; font-weight: 700'>Chat</a>
-                        </div>
-                    </td>
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
-                            <a style = 'color: #ccc; font-weight: 700' href = '/profile'>Settings</a>
-                        </div>
-                    </td>
-                    <td style = 'min-width: 0; padding-right: 5'>
-                        <div style = 'font-weight:700px; font-size:25px; padding: 5 10 5 5; margin-right: 10px'>
-                            <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout'>Logout</a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                <table>
+                        <tr>
+                            <td style = 'min-width: 0'>
+                                <div style = 'border-radius:0px; font-weight:700px; font-size:25px; padding:  5 5 5 5; border-bottom-style: solid; border-color: #527aff; margin-right: 10px' class = ''>
+                                    <a href = '/home' style = 'color: #527aff; font-weight: 700'>Grades</a>
+                                </div>
+                            </td>
+                        
+                            <td style = 'min-width: 0'>
+                                <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px' >
+                                    <a href = '/chat' style = 'color: #ccc; font-weight: 700' class = 'menu-item'>Chat</a>
+                                </div>
+                            </td>
+                            <td style = 'min-width: 0'>
+                                <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                                    <a style = 'color: #ccc; font-weight: 700' href = '/profile' class = 'menu-item'>Settings</a>
+                                </div>
+                            </td>
+                            <td style = 'min-width: 0'>
+                                <div style = 'font-weight:700px; font-size:25px; padding: 5 5 5 5; margin-right: 10px'>
+                                    <a style = 'color: rgb(255, 110, 100); font-weight: 700' href = '/logout' class = 'menu-item'>Logout</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
         </div>
         
         <div id = 'content-wrapper' style = 'z-index:1; width: 100%; padding-bottom:300px;' >
@@ -407,7 +404,7 @@ th, td {
                     <span style = 'font-size: 70px; '>Summary</span>
                      <br/>
 
-                    <table>
+                    <table style = 'border-collapse:separate; border-spacing:0 10px;'>
                             {% for row in summary %}
                                 {% set counter = loop.index0 %}
                                 <tr style = 'font-weight: 700; border-bottom: solid; border-width: 1px'>
@@ -415,7 +412,13 @@ th, td {
                                         {% if counter == 0 %}
                                             <td style = 'font-weight: 700'>{{ item|safe }}</td>
                                         {% else %}
-                                            <td style = 'font-weight: 500; font-family: "AvenirNextLTW01-Regular"'>{{ item|safe }}</td>
+                                            {% if loop.index0 == 0 %}
+                                                <td style = 'font-weight: 500; font-family: "AvenirNextLTW01-Regular"; border-radius: 8px 0px 0px 8px'>{{ item|safe }}</td>
+                                            {% elif loop.index1 == row|length %}
+                                                <td style = 'font-weight: 500; font-family: "AvenirNextLTW01-Regular"; border-radius: 0px 8px 8px 0px'>{{ item|safe }}</td>
+                                            {% else %}
+                                                <td style = 'font-weight: 500; font-family: "AvenirNextLTW01-Regular"'>{{ item|safe }}</td>
+                                            {% endif %}
                                         {% endif %}
                                     {% endfor %}
                                 </tr>
@@ -428,7 +431,7 @@ th, td {
             <div  style = 'border-radius: 10px; margin-top:30px; width: 80%; padding: 50px 80px 50px 80px; margin-left: 10%; background: {{ bg_color }}; ' class = 'z-depth-4'>
                 <span style = 'font-size: 70px'>Assignments</span>
 
-                <table id = 'assignments-table' style = 'font-family: "AvenirNextLTW01-Regular"'>
+                <table id = 'assignments-table' style = 'font-family: "AvenirNextLTW01-Regular"; border-collapse:separate; border-spacing:0 10px;'>
                     <tr style = 'font-weight: 700; font-family: "AvenirNextLTW01-Medium"; border-bottom-style: solid; border-bottom-width: 2px;' id = 'assignments-title'>
                         <td>Date</td>
                         <td>Assignment</td>
@@ -517,6 +520,10 @@ th, td {
                 var color = `rgba(${Math.ceil(Math.min((1.2 - percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((.2 + percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((percentage/100.)/2. * 255, 255))}, 0.5)`;
 
                 parent.css('background', color);
+
+                if (score == 'NA' || total == 'NA'){
+                    parent.css('background', '#fff4');
+                }
             }else{
                 column_element = $(`<td>`);    
                 column_element.html(current_state[category_order[category]][assignment]);    
@@ -527,6 +534,11 @@ th, td {
             // Initialize the column
             if (category == 2){
                 $("#assignment-category-" + assignment).material_select();                
+            }
+
+            // if category is 0 add rounded corners. The exclude and reset buttons will be the final column, so those will have rounded corners too
+            if (category == 0){
+                column_element.css('border-radius', '8px 0px 0px 8px');
             }
         }
 
@@ -541,6 +553,7 @@ th, td {
             </div>
         `)
 
+        column_element.css('border-radius', '0px 8px 8px 0px');
         parent.append(column_element);
 
     }
@@ -569,16 +582,14 @@ th, td {
         var total = points[1];
         var percentage = score/total * 100;
 
-        if (score == 'NA' || total == 'NA'){
-            parent.css('background', '');
-        }else{
-            parent.css('background', '');
-        }
-
         // Get assignment color 
         var color = `rgba(${Math.ceil(Math.min((1.2 - percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((.2 + percentage/100.) * 255, 255))}, ${Math.ceil(Math.min((percentage/100.)/2. * 255, 255))}, 0.5)`;
 
         parent.css('background', color);
+
+        if (score == 'NA' || total == 'NA'){
+            parent.css('background', '#fff4');
+        }
     }
 
     function calculateGrade(){
@@ -665,14 +676,19 @@ th, td {
                     label: 'Grade through time',
                     data: timesteps,
                     pointBackgroundColor: colors,
-                    borderWidth: 1,
                     backgroundColor: "rgba(130, 250, 150, .2)",
-                    borderColor: "rgba(130, 250, 150, 1)",
+                    borderColor: "rgba(130, 200, 220, 1)",
+                    borderWidth: 0,
+                    pointBorderWidth: 0,
+                    pointRadius: 5,
                     fill:true
                 }]
             },
             options: {
                 scales: {
+                    gridLines : {
+                        display: false
+                    },
                     yAxes: [{
                         labels: current_state['Date'],
                         ticks: {
@@ -720,7 +736,7 @@ th, td {
     }
 
     $('body').on('keyup', '.point-div', function(){
-        $(this).css('color', '#527aff');
+        $(this).css('color', '#40405f');
         $(this).css('font-weight', '700');
 
         // Assume that the score has been updated, and re-render the assignment
@@ -742,13 +758,19 @@ th, td {
    }) 
 
    $('body').on('click', '.exclude', function(){
-        // lazy asf so i'll just do a simple color flagging thing
         if ($(this).attr('exclude') == 'true'){
             $(this).attr('exclude', 'false');
-            $(this).css('color', 'black');
+            $(this).css('color', '{{text_color}}');
+
+            var assignment = $(this).parent().parent().parent().attr('id').split('-').slice(-1)[0] // holy shit
+            renderAssignment(assignment);
+            
         }else{
             $(this).attr('exclude', 'true');
             $(this).css('color', 'rgb(255, 50, 50)');
+
+            $(this).parent().parent().parent().css('background', '#f3e4');
+            $(this).parent().parent().parent().css('border', 'solid 2px red');
         }
         
         calculateGrade();
