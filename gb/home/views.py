@@ -30,7 +30,7 @@ def show_home():
     try:
         verified = auth.auth_credentials(request)
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Oops! Your password or your username was invalid!')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Oops! Your password or your username was invalid!')
     except exceptions.UninitializedUserError:
         # Generate a session token so that we can recognize the user in the /setup page
         username = request.form.get("username")
@@ -72,7 +72,7 @@ def show_home():
     # Check for an error, if there is one then the issue is LIKELY that the user's cookie was valid but expired
     # because of the way the error appears I don't think beautifulSoup catches it. So we're going to directly search for the error. 
     if "Object reference" in grade_page:
-        return render_template("index.html", error = 'Your StudentVUE token has expired!')
+        return render_template("index.html",  server_name = variables.SERVER_NAME, error = 'Your StudentVUE token has expired!')
 
     # Get semester links
     heading_breadcrumb = grade_soup.find("div", attrs = {"class" : "heading_breadcrumb"})
@@ -137,7 +137,7 @@ def show_home():
         seen_update = "false"
     print(class_links)
     response = make_response(
-        render_template("home/dashboard_grade_start.html", profile = profile, class_links = class_links, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color, seen_update = seen_update,)
+        render_template("home/dashboard_grade_start.html", server_name = variables.SERVER_NAME, profile = profile, class_links = class_links, quarter_links = quarters, current_quarter = current_quarter, grades = tables[0], bg_color = bg_color, header_color = header_color, text_color = text_color, seen_update = seen_update,)
     )
 
     response.set_cookie("token", token, httponly = True)
@@ -151,7 +151,7 @@ def show_class(period):
     try:
         verified = auth.auth_credentials(request)
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Invalid Credentials')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Invalid Credentials')
     except exceptions.UninitializedUserError:
         # Generate a session token so that we can recognize the user in the /setup page
         username = request.form.get("username")
@@ -193,7 +193,7 @@ def show_class(period):
     # Check for an error, if there is one then the issue is LIKELY that the user's cookie was valid but expired
     # because of the way the error appears I don't think beautifulSoup catches it. So we're going to directly search for the error. 
     if "Object reference" in class_page:
-        return render_template("index.html", error = 'Your StudentVUE token has expired!')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Your StudentVUE token has expired!')
 
     tables = util.get_info_tables(class_soup, links = False)[:-1]     # Exclude the last table cuz it's some random stuff
     print(tables)
@@ -241,6 +241,7 @@ def show_class(period):
 
     response = make_response(
         render_template("home/dashboard_class_start.html",
+        server_name = variables.SERVER_NAME,
         profile = profile,
         summary = summary_table,
         assignments = assignment_table,
@@ -264,7 +265,7 @@ def do_setup():
     try:
         verified = auth.auth_credentials(request)
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Invalid Credentials')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Invalid Credentials')
     except exceptions.UninitializedUserError:
         pass
 
@@ -379,7 +380,7 @@ def show_profile():
     try:
         verified = auth.auth_credentials(request, 'COOKIES')
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Invalid Credentials')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Invalid Credentials')
     except exceptions.UninitializedUserError:
         # Generate a session token so that we can recognize the user in the /setup page
         username = request.form.get("username")
@@ -417,6 +418,7 @@ def show_profile():
         parsed_settings = json.dumps(current_settings)
 
         return render_template("home/profile_template.html",
+                               server_name = variables.SERVER_NAME,
                                bg_color = bg_color,
                                text_color = text_color,
                                header_color = header_color,
@@ -445,7 +447,7 @@ def logout():
     try:
         verified = auth.auth_credentials(request)
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Invalid Credentials')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Invalid Credentials')
     
     cookies, username = verified 
 
@@ -470,7 +472,7 @@ def delete_account():
     try:
         verified = auth.auth_credentials(request, 'COOKIES')
     except exceptions.AuthError:
-        return render_template("index.html", error = 'Invalid Credentials')
+        return render_template("index.html", server_name = variables.SERVER_NAME, error = 'Invalid Credentials')
     
     cookies, username = verified
 
@@ -486,3 +488,6 @@ def delete_account():
 def show_info():
     return render_template("info/data.html")
 
+@home.route("/chat", methods = ['GET'])
+def show_chat():
+    return render_template("unfinished.html")
