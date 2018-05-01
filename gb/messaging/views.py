@@ -18,7 +18,7 @@ from .. import exceptions
 from bson import BSON 
 from bson import json_util
 
-@messaging.route("/", methods = ['GET', 'POST'])
+@messaging.route("", methods = ['GET', 'POST'])
 def show_chat():
     try:
         verified = auth.auth_credentials(request)

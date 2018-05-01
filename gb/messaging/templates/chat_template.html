@@ -439,7 +439,7 @@
 </script>
 
 <script id = 'global-functions'>
-    var socket = io.connect("https://grades.newportml.com/");       // Set the secure flag just in case ;)
+    var socket = io.connect();       // Set the secure flag just in case ;)
 
     socket.on('connect', function(data){
         console.log(data);
