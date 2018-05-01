@@ -17,6 +17,9 @@ from bson import json_util
 
 application = Flask(__name__)
 
+# No strict slashes to deal with issues with trailing slashes
+application.url_map.strict_slashes = False
+
 application.register_blueprint(home)
 application.register_blueprint(messaging, url_prefix = '/messaging')
 
