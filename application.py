@@ -29,5 +29,5 @@ from gb.messaging import views
 views.init_application(application_)
 
 if __name__ == "__main__":
-    application.run(debug = True)
+    application_.run(application, debug = True)
 

@@ -46,20 +46,21 @@
     }
 
     .message-left {
-        font-family: "AvenirNextLTW01-Medium", "Segoe UI", "San Francisco", "Roboto";
+        font-family: "AvenirNextLTW01-Regular", "Segoe UI", "San Francisco", "Roboto";
         font-size: 15px;
         font-weight: 200;
 
         text-rendering: optimizeLegibility;
 
-        background: #222;
         color: white;
 
         display:inline-block;
-        padding: 5 15 5 15px;
+        padding: 10 15 10 15px;
 
-        border-radius: 8px;
+        border-radius: 30px 30px 30px 5px;
         margin-bottom: 3px;
+
+        font-weight: 700;
 
         max-width: 400px;
 
@@ -69,24 +70,23 @@
 
     .message-right {
 
-        font-family: "AvenirNextLTW01-Medium", "Segoe UI", "San Francisco", "Roboto";
+        font-family: "AvenirNextLTW01-Regular", "Segoe UI", "San Francisco", "Roboto";
         font-size: 15px;
-
+        font-weight: 700;
         /*text-rendering: optimizeLegibility;*/
 
-        background: #222;
         color: white;
 
         display:inline-block;
-        padding: 5 15 5 15px;
+        padding: 10 15 10 15px;
 
-        border-radius: 8px;
+        border-radius: 30px 30px 5px 30px;
         margin-bottom: 3px;
 
         word-break: break-all;
         word-wrap: break-word;
 
-        text-align:left;
+        text-align:right;
 
         max-width: 400px;
     }
@@ -145,55 +145,20 @@
     }
 
     .utility-icon {
-         width: 100px; 
-         min-height: 100px; 
+         width: 42px; 
+         height: 42px; 
 
          margin-right: 10px; 
                   
          text-align:center;
 
-         border-radius:8px;
+         border-radius:50%;
 
          box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
          -webkit-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12), 0 3px 5px -1px rgba(0,0,0,0.3);
     }
 
-    #color-button {
-        cursor: pointer;
-        background: rgba(100, 150, 255, 0.5);
-    }
-
-     #color-button:hover {
-        cursor: pointer;
-        background: rgb(80, 120, 235);
-    }
-
-    #attach-button {
-        cursor: pointer;
-        background: rgba(140, 200, 255, 0.5);
-    }
-
-    #poll-button {
-        cursor: pointer;
-        background: rgba(100, 160, 240, 0.5);
-    }
-
-    #emoji-button {
-        cursor: pointer;
-        background: rgba(60, 110, 250, 0.5);
-    }
-
-     #emoji-button:hover {
-        background: rgb(40, 90, 230);
-    }
-
-    #attach-button:hover {
-        background: rgb(120, 180, 235);
-    }
-
-    #poll-button:hover {
-        background: rgb(90, 140, 220);
-    }
+   
 
    .color-change {
         width: 50px; height: 50px; border-radius: 50%; margin: 12px 10px 0px 10px;
@@ -265,17 +230,75 @@
     #change-class-modal {
         transition: top 1s;
     }
+
+    #img-send-modal {
+        width: 60%;
+        height: 70%;
+
+        position: fixed;
+
+        top:  15%;
+        left: 20%;
+
+        z-index: 100000;
+
+        background: white;
+
+        border-radius: 8px;
+    }
+
+    .document-photo {
+        transition: 1s all;
+        cursor: pointer;
+    }
+
+    .center-modal {
+
+    }
+
+    .button {
+        font-weight: 700;
+    }
+
+    .button:hover {
+        opacity: 0.9;
+    }
+
+    .delete-circle {
+        width: 25px;
+        height: 25px;
+
+        border-radius: 50%;
+
+        background: #e338;
+        border: solid 2px #ee3353;
+    }
+
+    .wrapper-author {
+        position: absolute; bottom: 5px; left: 15px;
+        padding-right: 15px;
+        font-size: 12px;
+
+        color: #8e9;
+    }
+
+    .wrapper-timestamp {
+        position: absolute; bottom: 5px; right: 20px;
+        padding-left: 15px;
+        font-size: 12px;
+        color: #ddd;
+    }
 </style> 
 
 <html>
     <body style = 'padding-left: 50px;padding-top:20px'>
 
-        <div style = 'position: fixed; right: 0; top: 0; width: 350px; height: 100%; background: #f5f5f5; z-index:1; padding-top: 50px; padding-left: 20px; border-left-style: solid; border-color: #ddd'>
+        <div style = 'position: fixed; right: 0; top: 0; width: 350px; height: 100%; background: white; z-index:1; padding-top: 50px; padding-left: 20px; border-left-style: solid; border-color: #ddd'>
                 <img src = "../static/gradebook_chat.svg" style = 'width: 200px'>
                 <br/><br/>
                 <span style = 'font-weight: 700; font-size: 13px'>Class</span>
                 <br/>
-                <span id = 'title' class = '' style = 'color: #50507f; font-size: 25px; overflow-x:scroll'>AP Calc AB (MAA703.1),</span>
+                <span class = 'title' style = 'color: #50507f; font-size: 25px; overflow-x:scroll'>AP Calc AB (MAA703.1),</span>
                 <br/>
                 <span id = 'teacher' class = '' style = 'color: #50507f; font-size: 20px'>John Johnson</span>
                 <br/><br/>
@@ -286,8 +309,8 @@
                 <div id = '' class = 'action' style = 'font-size: 20px; background: rgb(255, 40, 30)'>Vote to kick</div>
         </div>
 
-        <div id = 'messages' style = 'position:fixed; top:0; left: 20px; margin-top: 20px; padding-right: 50px; width: calc(100% - 350px); height: calc(100% - 250px); overflow-y:scroll'>
-           
+        <div id = 'messages' style = 'position:fixed; top:00px; left: 20px; padding-left: 0px; margin-top: 20px; padding-right: 50px; width: calc(100% - 350px); height: calc(100% ); overflow-y:scroll; padding-bottom: 300px;'>
+            
           <div id = 'm3' style = 'text-align:right; width: 100%'>
                 <div id = 'm1-author' class = 'author' style = 'margin-top: 20px'>Kavel Rao</div>
                 <div id = 'm2-content' class = 'message-right'><div class = 'download material-icons valign-wrapper' style = 'font-size: 12px'><div style = 'width: 100%; text-align:center'>arrow_downward</div></div> <a href = '#' style = 'color:white'><u>classAssign2.docx</u></a></div>
@@ -312,68 +335,75 @@
             <div class = 'color-change' style = '  background: #FF5CA1'></div>
         </div>
 
-        <div style = 'position:fixed; bottom:15px; left:0; width:calc(100% - 350px)'>
-            
-            
-            <div id = 'message-box' class = 'flex-wrap'>
-                <div style = 'background: rgb(50, 100, 240); width: 00px; height: 100px;'></div>
-                <div id = 'message-box-content' class = 'z-depth-3' contentEditable = "true" style = 'min-height: 100px; background: #eeeeee; border-radius: 8px; display:inline-block; width: calc(100% - 510px); margin-right: 10px; margin-left: 25px; height: fit-content; padding-left: 10px; padding-top: 10px;' placeholder = 'Aa'></div>
 
-                <div id = 'attach-button' class = 'utility-icon valign-wrapper'>
-                    <div style = 'width:100%; text-align:center'>
-                        <i class = 'material-icons' style = 'color: white'>attach_file</i>
-                    </div>
-                </div>
+        <div style = 'position:fixed; bottom:10px; left:20px; min-height: 60px; width:fit-content; '>
+           
+            <div style = 'background: #dde; padding: 20px 15px 10px 20px; border-radius: 30px 30px 30px 5px'>
+                <div id = 'message-box' class = 'flex-wrap'>
+                    <div style = 'background: rgb(50, 100, 240); width: 00px; height: 100px;'></div>
+                    <div id = 'message-box-content' class = ' valign-wrapper' contentEditable = "true" style = 'min-height: 30px; border-radius: 30px; display:inline-block; width: 300px; color: #40405f; margin-right: 10px;height: fit-content; ' placeholder = 'Type a message'></div>
 
-                <div id = 'color-button' class = 'utility-icon valign-wrapper'>
-                        <div style = 'width:100%; text-align:center'>
-                            <i class = 'material-icons' style = 'color: white'>color_lens</i>
-                        </div>
-                    </div>
-    
+                    <i class = 'material-icons' id = 'color-button' style = 'color: #aaa; margin-right: 20px; margin-left: 50px'>attach_file</i>
+                    
+                            <i class = 'material-icons' style = 'color: #aaa; margin-right: 20px'>color_lens</i>
+                        
+                            <i class = 'material-icons' style = 'color: #aaa'>tag_faces</i>
 
-                <div id = 'emoji-button'class = 'utility-icon valign-wrapper'>
-                    <div style = 'width:100%; text-align:center'>
-                        <i class = 'material-icons' style = 'color: white'>tag_faces</i>
-                    </div>
-                </div>
-
-                <div id = 'send-button'  class = 'valign-wrapper utility-icon'>
-                    <div style = 'width:100%; text-align:center; color: white' class = ''>
-                        send
-                    </div>
                 </div>
             </div>
         </div>
+                        
+            
+               
+         
 
-        <div class = 'modal' style = 'height: 900px' id = 'img-send-modal'>
+        <div class = 'z-depth-5' style = 'display: none' id = 'img-send-modal'>
             <form action="/file" enctype="multipart/form-data" method="post">
-            <div class = 'valign-wrapper' style = 'height:90%; margin-top:0px; margin-left:50px;'>
-                <div style = 'width:calc(100% - 50px)'>
+            <div class = 'valign-wrapper' style = 'height:100%; margin-top:0px; margin-left:0px;'>
+                <div style = 'width: 100%;'>
                     <input id = 'file-handle' type="text" name="handle" size="40" style = 'display:none;'>
                     <input id = 'file-server' type="text" name="server" size="40" style = 'display:none'>
 
                     <div class="file-field input-field" style = 'width: 100%'>
-                        <div class="valign-wrapper" style = 'width: 70%; margin-left: 15%; border-style: dashed; height: 300px; background-size: contain; background-position: 50% 50%; background-repeat: no-repeat; border-radius:30px; -webkit-box-shadow:0; box-shadow:0; '>
+                        <div class="valign-wrapper" style = 'width: 50%; margin-left: 25%; height: 60%; background-size: contain; background-position: 50% 50%; background-repeat: no-repeat; -webkit-box-shadow:0; box-shadow:0;'>
                             <div style = 'width: 100%; text-align:center'>
-                                Click here to upload files
-                                <input type="file" name="newfile" size="40">
+
+                                <div style = 'width: 200%; margin-left: -50%; height: 100%; position: relative; overflow: hidden'>
+                                    <div style = 'width: 100%; height: 100%; text-align: center; display:flex; overflow-x: scroll; position: absolute; top: 15px; left: 0px'>
+                                        <div style = 'width: 150px; margin-left: calc(50% - 75px); padding-top: 30px;'>
+                                            <div style = 'width: 150px; margin-right: 20px; position: relative'>
+                                                <!--<div style = 'position: absolute; top: -10px; right: -10px' class = 'delete-circle'>
+                                                    <i class = 'material-icons' style = 'font-size: 20px; color: #e55'>close</i>
+                                                </div>-->
+                                                <img src = "../static/document_photos/add_document.svg" style = 'width: 150px; border-radius: 15px;' id = 'add-document' class = 'document-photo z-depth-5'>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style = 'margin-top: 25px; color: #aaa;'>Click here to upload files</div>
+                                <input type="file" name="newfile" id = 'actual-file-input' multiple style = 'width: 100%; height: 60%; display: none; '>
+
+                                <div class="" style = 'width: 100%; text-align: center; margin-top: 50px'>
+                                        <span id = 'image-modal-close' class = 'button' style = 'margin-right: 20px; border-radius: 5px; padding: 10px 20px 10px 20px; background: #e62828; color: white; margin-left:
+                                        \0px'>Close</span>
+                                        <span id = 'image-modal-send' class = 'button' style = 'border-radius: 5px; padding: 10px 20px 10px 20px; background: #15e08c; color: white;  margin-left:
+                                        \0px'>Send</span>
+                                   
+                                </div>
                             </div>
                         </div>
-                        <div class="file-path-wrapper">
+                        
+                        <div class="file-path-wrapper" style = 'padding-left: 0 !important; '>
                             <br/>
-                            <input class="file-path" type="text">
+                            <input class="file-path" placeholder = 'file name' style = 'display: none; padding-left: 20px; color: white !important; background: #000a !important; border-radius: 5px !important; width: 50% !important; margin-left: 10% !important' type="text">
                         </div>
                     </div>
+                   
 
-                    <div class="modal-footer" style = ' width: 100%; text-align:center'>
-                            <span id = 'image-modal-close' style = 'color: #c62828; font-weight:500; margin-left:
-                            \0px'>Close</span>
-                            <input id = 'image-modal-send' class = '' style = 'color:#0084FF; border:0 ;background-color:rgba(0, 0, 0, 0); border-radius:30px; margin-top:10px; margin-left:50px; font-weight:700; -webkit-box-shadow:0; box-shadow:0' type="submit" value="Send">
-                        </div>
                 </div>
 
-            
+            </div>
             
         
             </div>
@@ -434,6 +464,8 @@
     var currentClassname;
     var currentGetMessageRequest;
     var currentGetUpdateMessageRequest;
+
+    var currentWrapper; 
     var previousMessage;
 
 </script>
@@ -447,6 +479,10 @@
 
     socket.on("message", function(data){
         insertMessage(rearrangeMessage(data));
+    })
+
+    socket.on('color_change', function(data){
+        $('.' + data['username']).css('background', data['color']);
     })
 
     function rearrangeMessage(message){
@@ -486,6 +522,7 @@
             "payload" : message, 
             "type" : "plaintext",
             "class" : currentClassname,
+            "class-token" : class_tokens[currentClassname],
             "username" : username, 
             "token" : $('#token').text()
         }
@@ -494,54 +531,91 @@
     };
 
     function insertMessage(message){
-        console.log(message['content'])
-        var message_wrapper = $('<div>');
-        message_wrapper.attr('id', 'm' + message['id'])
-        
+        var message_wrapper_wrapper = $(`<div style = 'width: 100%; text-align: right'>`);
+
+        var message_wrapper = $(`<div style = 'position: relative'>
+            <span style = '' class = 'wrapper-author'>${message['author']}</span>
+            <span style = '' class = 'wrapper-timestamp'>${'7:32 PM'}</span>
+        </div>`);
+
+        message_wrapper.addClass(message['author'])
+        message_wrapper.css('background', userColors[message['author']]);
+
+        var new_wrapper = false; 
+        var appended_wrapper = false;
+
+        if (!currentWrapper){
+            if (message['author'] == username) {
+                message_wrapper.addClass("message-left");
+            }else{
+                message_wrapper_wrapper.append(message_wrapper);
+                message_wrapper.addClass("message-right");
+
+                appended_wrapper = true;
+            }
+
+            currentWrapper = message_wrapper;
+            new_wrapper = true;
+        }
+
+        /*        
         var message_author = $('<div>');
         //message_author.attr('id', 'm' + message['id'] + '-author');
         message_author.html(message['author'])
         message_author.addClass("author");
 
-        var message_content = $('<div>');
         //message_content.attr('id', 'm' + message['id'] + '-content');
         message_content.html(message['content']['payload']);
         message_content.addClass(message['author']);
+        //message_content.addClass("z-depth-4");
+        */
 
-        message_content.css('background', userColors[message['author']]);
+        var message_content = $('<div style = "margin: 20px 0px 20px 0px">');
 
-        if (message['author'] == username){
-            message_content.addClass("message-left");
+        //message_content.css('background', userColors[message['author']]);
+        message_content.html(message['content']['payload']);
 
-        }else{
-            message_wrapper.css('text-align', 'right');
-            message_content.addClass("message-right");
-        }
+         if (message['author'] != lastAuthor){
+             currentWrapper = message_wrapper;
 
-        if (message['author'] != lastAuthor){
-           
-            message_wrapper.append(message_author)
+             if (message['author'] == username) {
+                message_wrapper.addClass("message-left");
+            }else{
+                message_wrapper_wrapper.append(message_wrapper);
+                message_wrapper.addClass("message-right");
+
+                appended_wrapper = true;
+            }
+
+             new_wrapper = true;
+
         }else{
             if (message['author'] == username){
-                message_content.addClass("left-after");
-                previousMessage.addClass("left-before");
+                currentWrapper.append(message_content);
 
             }else{
-                message_content.addClass("right-after");
-                previousMessage.addClass("right-before");
+                currentWrapper.append(message_content);
             }
         }
+       
+        if (new_wrapper){
+            console.log("APPENDING");
+            message_wrapper.append(message_content);
 
-        message_wrapper.append(message_content);
+            if (appended_wrapper){
+                $('#messages').append(message_wrapper_wrapper);
+            }else{
+                $('#messages').append(message_wrapper);
+            }
+            lastAuthor = message['author'];
 
-        $('#messages').append(message_wrapper);
-        lastAuthor = message['author'];
+            
+        }
+
+            previousMessage = message_content;
 
         $('#messages').scrollTop($('#messages')[0].scrollHeight);
-
-        last_id_received = Math.max(last_id_received, message['id']);
-
-        previousMessage = message_content;
+        
     };
 
     function insertUpdateMessage(message){
@@ -554,14 +628,16 @@
     }
 
     function changeColor(color){
-        $.post(
-            "/submit_message",
-            {
-                "content" : color,
-                "type" : "color_change",
-                "author" : username,
-            }
-        );
+        var payload = {
+            "payload" : color, 
+            "type" : "color_change",
+            "class" : currentClassname,
+            "class-token" : class_tokens[currentClassname],
+            "username" : username, 
+            "token" : $('#token').text()
+        }
+
+        socket.emit("color_change", payload)
     }
 
     function getRecap(){
@@ -583,70 +659,27 @@
         )
     ;}
 
-    function getColors(){
+    function getMeta(callback){
         $.post(
-            "/messaging/colors", 
+            "/messaging/metadata", 
             {
-                "class" : currentClassname
+                "class" : currentClassname,
+                "class-token" : class_tokens[currentClassname]
             },
             function (data, status) {
                 if (data['status'] == 'success'){
                     userColors = data['colors'];
+                    callback()
 
                 }
-
             }
     )
     ;}
 
-    function getMessagesLoop(){
-        currentGetMessageRequest = $.post(
-        "/get_messages", 
-        {
-            "class" : currentClassname,
-            "last_id_received" : last_id_received
-        },
-        function (data, status) {
-            var data = JSON.parse(data);
-
-            console.log(data)
-            if (data['status'] == 'success'){
-                for (var message in data['messages']){
-                    console.log(data['messages'][message]);
-                    insertMessage(data['messages'][message]);
-                }
-            }
-
-            getMessagesLoop();
-        });
-    }
-
-    function getUpdateMessagesLoop(){
-        currentGetUpdateMessageRequest = $.post(
-        "/get_update_messages", 
-        {
-            "class" : currentClassname,
-            "last_update_id_received" : last_update_id_received
-        },
-        function (data, status) {
-            var data = JSON.parse(data);
-
-            console.log(data)
-            if (data['status'] == 'success'){
-                for (var message in data['messages']){
-                    console.log(data['messages'][message]);
-                    insertUpdateMessage(data['messages'][message]);
-
-                }
-            }
-
-            getUpdateMessagesLoop();
-        });
-    }
-
     function switchToClass(classname){  // Switch view from one class to another
         previousMessage = undefined;
         lastAuthor = undefined;
+        currentWrapper = undefined;
 
         currentClassname = classname;
 
@@ -658,15 +691,16 @@
             currentGetUpdateMessageRequest.abort();
         }
 
-        getColors();
-        getRecap();
+        getMeta(getRecap);        // Get colors, its callback is the getRecap, to ensure that a recap is received AFTER we receive the colors
 
         $('#messages').html('');
-        $('#title').html(currentClassname);
+        $('.title').html(currentClassname);
     }
 </script> 
 
 <script id = 'initialization-step'>
+    var class_tokens = {{class_tokens|safe}};
+
     var colorItems = $(".color-change");
     for (var i = 0; i < colorItems.length; i++){
         $(colorItems[i]).click(function(){
@@ -705,6 +739,23 @@
 </script>
 
 <script id = 'event-listeners'>
+    $('body').on("mouseenter", ".document-photo", function(){
+        console.log("hovering");
+        $(this).removeClass('z-depth-5');
+    });
+
+    $('body').on("mouseleave", ".document-photo", function(){
+        $(this).addClass('z-depth-5');
+    });
+
+    $('#add-document').click(function(){
+        $("#actual-file-input").click();
+    });
+
+    $('#actual-file-input').change(function(){
+        console.log($(this).val());
+    })
+
     $('#message-box-content').keypress(function(event){
         var key = event.keyCode;
 
