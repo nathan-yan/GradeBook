@@ -1,5 +1,10 @@
 import os
 
+HMAC_MESSAGING_SECRET = 'jfiosjef03joij'
+
+GRADEBOOK_SPACE_SECRET = os.environ.get("gradebook_space_secret")
+GRADEBOOK_SPACE_ID = os.environ.get("gradebook_space_id")
+
 DB_CREDENTIAL = os.environ.get("gradebook_mongodb")
 
 if not (DB_CREDENTIAL):
