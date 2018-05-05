@@ -63,7 +63,11 @@ def show_chat():
         "username" : username
     })['token']
 
-    return render_template("chat_template.html", class_names = class_names, token = token, username = username)
+    # Generate a token for each class that allows the user to verify he belongs to a class
+    # The token is an HMAC derived from a secret serverside and their current cookie
+    class_tokens = {c : auth.generate_class_token(c, token) for c in class_names}
+
+    return render_template("chat_template.html", class_names = class_names, class_tokens = class_tokens, token = token, username = username)
 
 @messaging.route("/recap", methods = ['POST'])
 def get_recap():
@@ -89,8 +93,6 @@ def get_recap():
 
     messages = [json.dumps(message, default = json_util.default) for message in messages]
 
-    print(str(messages))
-
     return jsonify(
         {
             'status' : "success",
@@ -98,10 +100,10 @@ def get_recap():
         }
     )
 
-@messaging.route("/colors", methods = ['POST'])
-def get_colors():
+@messaging.route("/metadata", methods = ['POST'])
+def get_metadata():
     try:
-        verified = auth.auth_credentials(request, method = 'COOKIES')
+        verified = auth.auth_credentials(request, method = 'MESSAGING')
     except exceptions.AuthError:
         return jsonify(
             {
@@ -120,8 +122,6 @@ def get_colors():
 
     colors = {user['username'] : user['color'] for user in classroom['users']}
 
-    print(str(colors))
-
     return jsonify(
         {
             'status' : "success",
@@ -129,13 +129,39 @@ def get_colors():
         }
     )
 
-
 def init_application(application):
     @application.on('connect')
     def handle_connection():
         print("Connected to session ", request.sid)
 
         emit("connect", {"data" : "connect9ed"})
+
+    @application.on("color_change")
+    def handle_color_change(data):
+        try:
+            verified = auth.auth_credentials(data, method = 'SOCKET')
+        except exceptions.AuthError as e:
+            print(str(e))
+            print('invalid credentials')
+            return jsonify(
+                {
+                    "status" : "failure",
+                    "error" : "Invalid credentials"
+                }
+            ), 401
+
+        _, username = verified
+
+        classroom = db.CHAT_DB.classrooms.find_one({
+            "class" : data['class']
+        })
+
+        classroom['users'][data['username']]['color'] = data['payload']
+
+        emit("color_change", {
+            'username' : data['username'],
+            'color' : data['color']
+        })
 
     @application.on("send")
     def handle_message(message):
@@ -153,6 +179,15 @@ def init_application(application):
 
         _, username = verified
 
+        # TODO: Must be a way to verify validity of the classroom
+        # AUTHENTICATION METHOD:
+        # Store a random secret variable. When user connects to /messaging, generate a random salt. 
+        # HMAC(SECRET, class_name + SALT) -> token
+        # Send both the token and the salt to the user
+        # When the user authenticates his classname, he will send both his salt, his class_name and his token
+        # The salt and class_name are appended and HMACed with the SECRET, and if the result matches the sent token, we can ensure that the user belongs to that class.
+        # If the user alters anything, he cannot find the corresponding token because he does not have the SECRET. 
+
         db.CHAT_DB.messages.insert({
             "classroom" : message['class'],
             "content" : {
@@ -164,6 +199,9 @@ def init_application(application):
         })
 
         print('worked')
+
+        # assign an id to the message and emit it
+
 
         emit("ack", {"status" : "success"}, room = request.sid)
         emit("message", message)
