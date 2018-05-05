@@ -26,6 +26,10 @@ def show_chat():
         return render_template("index.html", error = 'Oops! Your password or your username was invalid!')
     
     cookies, username = verified 
+
+    user = db.USERS_DB.userSecure.find_one({
+        "username" : username
+    })
         
     grade_page = requests.get("https://wa-bsd405-psv.edupoint.com/PXP_Gradebook.aspx?AGU=0", cookies = cookies).text
     grade_soup = bs(grade_page)
@@ -51,13 +55,24 @@ def show_chat():
             # add the class 
             db.CHAT_DB.classrooms.insert({
                 "class" : c,
-                "users" : [
-                    {
-                        "username" : username,
+                "users" : {
+                    username : {
                         "color" : "#4455ff"
                     }
-                ]
+                }
             })
+        else:
+            # check if the user is in the class
+            if username not in classroom['users']:
+                db.CHAT_DB.classrooms.update({
+                    "_id" : classroom['_id']
+                }, {
+                    "$set" : {
+                        "users." + username : {
+                            "color" : "#4455ff"
+                        }
+                    }
+                })
     
     token = db.USERS_DB.userSecure.find_one({
         "username" : username
@@ -67,7 +82,7 @@ def show_chat():
     # The token is an HMAC derived from a secret serverside and their current cookie
     class_tokens = {c : auth.generate_class_token(c, token) for c in class_names}
 
-    return render_template("chat_template.html", class_names = class_names, class_tokens = class_tokens, token = token, username = username)
+    return render_template("chat_template.html", class_names = class_names, class_tokens = class_tokens, token = token, username = username, profile = user['settings']['profilePicture'])
 
 @messaging.route("/recap", methods = ['POST'])
 def get_recap():
@@ -120,12 +135,23 @@ def get_metadata():
         "class" : class_name
     })
 
-    colors = {user['username'] : user['color'] for user in classroom['users']}
+    # get colors
+    colors = {user : classroom['users'][user]['color'] for user in classroom['users']}
+
+    # get user profiles
+    profiles = {}
+    for username in classroom['users']:
+        user = db.USERS_DB.userSecure.find_one({
+            "username" : username
+        })
+
+        profiles[username] = user['settings']['profilePicture']
 
     return jsonify(
         {
             'status' : "success",
-            "colors" : colors
+            "colors" : colors,
+            "profiles" : profiles
         }
     )
 
@@ -156,11 +182,17 @@ def init_application(application):
             "class" : data['class']
         })
 
-        classroom['users'][data['username']]['color'] = data['payload']
+        db.CHAT_DB.classrooms.update({
+            "_id" : classroom['_id']
+        }, {
+            "$set" : {
+                "users." + username + ".color" : data['payload']
+            }
+        })
 
         emit("color_change", {
             'username' : data['username'],
-            'color' : data['color']
+            'color' : data['payload']
         })
 
     @application.on("send")

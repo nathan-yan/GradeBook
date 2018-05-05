@@ -59,6 +59,7 @@
 
         border-radius: 30px 30px 30px 5px;
         margin-bottom: 3px;
+        margin-left: 60px;
 
         font-weight: 700;
 
@@ -279,7 +280,7 @@
         padding-right: 15px;
         font-size: 12px;
 
-        color: #8e9;
+        color: #ddd;
     }
 
     .wrapper-timestamp {
@@ -288,12 +289,24 @@
         font-size: 12px;
         color: #ddd;
     }
+
+    .wrapper-profile-left {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+
+        position: absolute;
+        object-fit: cover; 
+        bottom: 0;
+        left: -50px;
+    }
 </style> 
 
 <html>
     <body style = 'padding-left: 50px;padding-top:20px'>
 
-        <div style = 'position: fixed; right: 0; top: 0; width: 350px; height: 100%; background: white; z-index:1; padding-top: 50px; padding-left: 20px; border-left-style: solid; border-color: #ddd'>
+        <div style = 'position: fixed; right: 0; top: 0; width: 350px; height: 100%; background: white; z-index:1; padding-top: 50px; padding-left: 20px; border-color: #ddd'>
                 <img src = "../static/gradebook_chat.svg" style = 'width: 200px'>
                 <br/><br/>
                 <span style = 'font-weight: 700; font-size: 13px'>Class</span>
@@ -320,24 +333,21 @@
         <div id = 'emojis-box' class = 'flex-wrap z-depth-3' style = 'z-index:2; position: fixed; width: 500px; right: 285px; height: 150px; bottom: 130px; overflow-y: scroll; background: #f5f5f5; border-radius: 8px; text-align:cener'>
         </div>
 
-        <div id = 'color-box' class = 'flex-wrap z-depth-3' style = 'z-index:2; position: fixed; width: 500px; right: 395px; height: 150px; bottom: 130px; background: #f5f5f5; border-radius: 8px; text-align:ceter'>
-            <div class = 'color-change' style = '  background: #0084FF'></div>
-            <div class = 'color-change' style = '  background: #44BEC7'></div>
-            <div class = 'color-change' style = '  background: #FFC300'></div>
-            <div class = 'color-change' style = '  background: #FA3C4C'></div>
-            <div class = 'color-change' style = '  background: #D696BB'></div>
-            <div class = 'color-change' style = '  background: #6699CC'></div>
-            <div class = 'color-change' style = '  background: #FF7E29'></div>
-            <div class = 'color-change' style = '  background: #7646FF'></div>
-            <div class = 'color-change' style = '  background: #20CEF5'></div>
-            <div class = 'color-change' style = '  background: #67B868'></div>
-            <div class = 'color-change' style = '  background: #D4A88C'></div>
-            <div class = 'color-change' style = '  background: #FF5CA1'></div>
-        </div>
-
-
         <div style = 'position:fixed; bottom:10px; left:20px; min-height: 60px; width:fit-content; '>
-           
+                <div id = 'color-box' class = 'flex-wrap ' style = 'z-index:2;  width: 500px; margin-bottom: 30px; height: 150px; bottom: 130px;  border-radius: 8px; text-align:ceter'>
+                        <div class = 'color-change' style = '  background: #0084FF'></div>
+                        <div class = 'color-change' style = '  background: #44BEC7'></div>
+                        <div class = 'color-change' style = '  background: #FFC300'></div>
+                        <div class = 'color-change' style = '  background: #FA3C4C'></div>
+                        <div class = 'color-change' style = '  background: #D696BB'></div>
+                        <div class = 'color-change' style = '  background: #6699CC'></div>
+                        <div class = 'color-change' style = '  background: #FF7E29'></div>
+                        <div class = 'color-change' style = '  background: #7646FF'></div>
+                        <div class = 'color-change' style = '  background: #20CEF5'></div>
+                        <div class = 'color-change' style = '  background: #67B868'></div>
+                        <div class = 'color-change' style = '  background: #D4A88C'></div>
+                        <div class = 'color-change' style = '  background: #FF5CA1'></div>
+                    </div>
             <div style = 'background: #dde; padding: 20px 15px 10px 20px; border-radius: 30px 30px 30px 5px'>
                 <div id = 'message-box' class = 'flex-wrap'>
                     <div style = 'background: rgb(50, 100, 240); width: 00px; height: 100px;'></div>
@@ -460,6 +470,7 @@
     var last_id_received = -1;
     var last_update_id_received = 10000;
     var userColors; 
+    var userProfiles;
     
     var currentClassname;
     var currentGetMessageRequest;
@@ -537,6 +548,7 @@
         var message_wrapper = $(`<div style = 'position: relative'>
             <span style = '' class = 'wrapper-author'>${message['author']}</span>
             <span style = '' class = 'wrapper-timestamp'>${'7:32 PM'}</span>
+            <img style = '' src = ${userProfiles[message['author']]} class = 'wrapper-profile-left'>
         </div>`);
 
         message_wrapper.addClass(message['author'])
@@ -670,6 +682,7 @@
             function (data, status) {
                 if (data['status'] == 'success'){
                     userColors = data['colors'];
+                    userProfiles = data['profiles']
                     callback()
 
                 }
