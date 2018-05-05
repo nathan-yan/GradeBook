@@ -673,7 +673,7 @@ th, td {
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: current_state['Date'],
+                labels: current_state['Date'].reverse(),
                 datasets: [{
                     label: 'Grade through time',
                     data: timesteps,

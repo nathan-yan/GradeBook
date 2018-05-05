@@ -446,6 +446,7 @@
     });
 
     socket.on("message", function(data){
+	console.log("RECIEVED MESSAGE");
         insertMessage(rearrangeMessage(data));
     })
 
