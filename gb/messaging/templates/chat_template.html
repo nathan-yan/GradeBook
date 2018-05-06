@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="../static/css/avenir.css">
 
 <script src = '../static/js/emojis.js'></script>
+<script src = '../static/js/moment.js'></script>
 
 <style>
     body {
@@ -55,17 +56,17 @@
         color: white;
 
         display:inline-block;
-        padding: 10 15 10 15px;
+        padding: 0 15 0 15px;
 
-        border-radius: 30px 30px 30px 5px;
-        margin-bottom: 3px;
+        border-radius: 25px 25px 25px 3px;
+        margin-bottom: 15px;
         margin-left: 60px;
+        margin-top: 15px;
 
         font-weight: 700;
 
         max-width: 400px;
 
-        word-break: break-all;
         word-wrap: break-word;
     }
 
@@ -79,12 +80,13 @@
         color: white;
 
         display:inline-block;
-        padding: 10 15 10 15px;
+        padding: 0 15 0 15px;
 
-        border-radius: 30px 30px 5px 30px;
-        margin-bottom: 3px;
+        border-radius: 25px 25px 3px 25px;
+        margin-bottom: 15px;
 
-        word-break: break-all;
+        margin-top: 15px;
+
         word-wrap: break-word;
 
         text-align:right;
@@ -182,33 +184,50 @@
     #emojis-box {
         width: 100%; height: 200px;
         background: rgba(200, 200, 200, 0.5);
-
-        display: none;
-    }
-
-    #color-box {
-        display:none; 
     }
 
     .emoji {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        cursor: pointer;
+
         width: 30px;
         height: 30px;
 
         margin-left: 10px; 
         margin-right: 10px;
         margin-top: 10px;
+
+        transition: all 0.5s
+    }
+
+    .emoji:hover {
+        margin-left: 7px;
+        margin-top: 7px;
+        margin-right: 13px;
+        font-size: 25px;
+
     }
 
     .class-name {
         color: #aaa;
 
-        font-size: 50px;
-        padding-left: 5px;
+        font-size: 20px;
+
+        margin-left: -10px;
+        padding-left: 10px;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
     .class-name:hover{
-        color: white !important;
-        background: #ffffff21;
+        background: #eee;
 
         cursor: pointer;
     }
@@ -275,20 +294,36 @@
         border: solid 2px #ee3353;
     }
 
-    .wrapper-author {
-        position: absolute; bottom: 5px; left: 15px;
+    .wrapper-metadata-left {
+        position: absolute; bottom: -20px; left: 0px;
+        
         padding-right: 15px;
         font-size: 12px;
 
-        color: #ddd;
+        color: #50506f;
+
+        min-width: 200px;
+        width: fit-content;
     }
 
-    .wrapper-timestamp {
-        position: absolute; bottom: 5px; right: 20px;
+    .wrapper-metadata-right {
+        position: absolute; bottom: -20px; right: 0px;
+        
         padding-left: 15px;
         font-size: 12px;
-        color: #ddd;
+
+        color: #50506f;
+
+        min-width: 200px;
+        width: fit-content;
     }
+
+    .wrapper-author {
+        margin-right: 0px;
+        font-weight: 700;
+    }
+
+    
 
     .wrapper-profile-left {
         width: 40px;
@@ -300,6 +335,66 @@
         object-fit: cover; 
         bottom: 0;
         left: -50px;
+    }
+
+    .wrapper-profile-right {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 50%;
+
+        position: absolute;
+        object-fit: cover; 
+        bottom: 0;
+        right: -50px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .message-image {
+        border-radius: 10px;
+        max-width: 250px;
+    }
+
+    .message-url {
+        color: black;
+        text-decoration: underline;
+        background: white;
+        padding: 10px 25px 10px 25px;
+        border-radius: 30px;
+        margin-bottom: 10px;
+    }
+
+    .message-url:hover {
+        background: #eee;
+    }
+
+    .download-icon {
+        margin-left: 10px;
+        font-size: 10px;
+        padding: 3px;
+        vertical-align: baseline;
+        border-radius: 50%;
+        
+        background: black;
+        color: white
+    }
+
+    ::-webkit-input-placeholder {
+        color: #aaa;
+    }
+    :-moz-placeholder {
+        color: #aaa;
+    }
+
+    .action-icon {
+        cursor: pointer
+    }
+
+    .action-icon:hover {
+        color: #666 !important;
     }
 </style> 
 
@@ -315,14 +410,16 @@
                 <br/>
                 <span id = 'teacher' class = '' style = 'color: #50507f; font-size: 20px'>John Johnson</span>
                 <br/><br/>
-                <span style = 'font-weight: 700; font-size: 13px'>Actions</span>
+                <span style = 'font-weight: 700; font-size: 13px'>Classes</span>
                 <br/>
-                <div id = 'classroom-change' class = 'action' style = 'font-size: 20px; background: rgb(30, 220, 90)'>Change classroom</div>
-                <div id = '' class = 'action' style = 'font-size: 20px; background: rgb(80, 60, 200)'>Direct message</div>
-                <div id = '' class = 'action' style = 'font-size: 20px; background: rgb(255, 40, 30)'>Vote to kick</div>
+                <div>
+                    {% for c in class_names %}
+                        <div class = 'class-name' style = 'color: #456487'>{{c}}</div>        
+                    {% endfor %}
+                </div>
         </div>
 
-        <div id = 'messages' style = 'position:fixed; top:00px; left: 20px; padding-left: 0px; margin-top: 20px; padding-right: 50px; width: calc(100% - 350px); height: calc(100% ); overflow-y:scroll; padding-bottom: 300px;'>
+        <div id = 'messages' style = 'position:fixed; top:00px; left: 20px; padding-left: 0px; margin-top: 20px; padding-right: 70px; width: calc(100% - 350px); height: calc(100% ); overflow-y:scroll; padding-bottom: 300px;'>
             
           <div id = 'm3' style = 'text-align:right; width: 100%'>
                 <div id = 'm1-author' class = 'author' style = 'margin-top: 20px'>Kavel Rao</div>
@@ -330,11 +427,14 @@
             </div>
         </div>
 
-        <div id = 'emojis-box' class = 'flex-wrap z-depth-3' style = 'z-index:2; position: fixed; width: 500px; right: 285px; height: 150px; bottom: 130px; overflow-y: scroll; background: #f5f5f5; border-radius: 8px; text-align:cener'>
-        </div>
+        
 
         <div style = 'position:fixed; bottom:10px; left:20px; min-height: 60px; width:fit-content; '>
-                <div id = 'color-box' class = 'flex-wrap ' style = 'z-index:2;  width: 500px; margin-bottom: 30px; height: 150px; bottom: 130px;  border-radius: 8px; text-align:ceter'>
+                <div id = 'emojis-box' class = 'z-depth-3 hidden' style = 'border-radius: 10px; z-index:2; position: absolute; width: 500px; left: 0px; height: 150px; bottom: calc(100% + 20px); overflow: hidden; background: rgba(255, 255, 255, 0.9)'>
+                        <div id = 'emojis-box-content' class = 'flex-wrap' style = 'width: 100%; overflow-y: scroll; position: absolute; top:0; left: 20px; height: 100%;'>
+                        </div>
+                    </div>
+                <div id = 'color-box' class = 'flex-wrap z-depth-3 hidden' style = 'position: absolute; z-index:2;  width: 500px; margin-bottom: 0px; height: 150px; bottom: calc(100% + 20px); background: rgba(255, 255, 255, 0.9); border-radius: 10px; text-align:ceter'>
                         <div class = 'color-change' style = '  background: #0084FF'></div>
                         <div class = 'color-change' style = '  background: #44BEC7'></div>
                         <div class = 'color-change' style = '  background: #FFC300'></div>
@@ -351,23 +451,19 @@
             <div style = 'background: #dde; padding: 20px 15px 10px 20px; border-radius: 30px 30px 30px 5px'>
                 <div id = 'message-box' class = 'flex-wrap'>
                     <div style = 'background: rgb(50, 100, 240); width: 00px; height: 100px;'></div>
-                    <div id = 'message-box-content' class = ' valign-wrapper' contentEditable = "true" style = 'min-height: 30px; border-radius: 30px; display:inline-block; width: 300px; color: #40405f; margin-right: 10px;height: fit-content; ' placeholder = 'Type a message'></div>
+                    <textarea id = 'message-box-content' oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' class = ' valign-wrapper' style = 'overflow-y: hidden; min-height: 30px; height: fit-content !important;border-style: none; display:inline-block; width: 300px; color: #40405f; margin-right: 10px;height: fit-content; ' placeholder = 'Type a message'></textarea>
 
-                    <i class = 'material-icons' id = 'color-button' style = 'color: #aaa; margin-right: 20px; margin-left: 50px'>attach_file</i>
+                    <i class = 'material-icons action-icon' id = 'attach-button' style = 'color: #aaa; margin-right: 20px; margin-left: 50px'>attach_file</i>
                     
-                            <i class = 'material-icons' style = 'color: #aaa; margin-right: 20px'>color_lens</i>
+                            <i class = 'material-icons action-icon' id = 'color-button' style = 'color: #aaa; margin-right: 20px'>color_lens</i>
                         
-                            <i class = 'material-icons' style = 'color: #aaa'>tag_faces</i>
+                            <i class = 'material-icons action-icon' style = 'color: #aaa' id = 'emoji-button'>tag_faces</i>
 
                 </div>
             </div>
         </div>
-                        
-            
-               
-         
 
-        <div class = 'z-depth-5' style = 'display: none' id = 'img-send-modal'>
+        <div class = 'z-depth-5 hidden' style = '' id = 'img-send-modal'>
             <form action="/file" enctype="multipart/form-data" method="post">
             <div class = 'valign-wrapper' style = 'height:100%; margin-top:0px; margin-left:0px;'>
                 <div style = 'width: 100%;'>
@@ -378,26 +474,26 @@
                         <div class="valign-wrapper" style = 'width: 50%; margin-left: 25%; height: 60%; background-size: contain; background-position: 50% 50%; background-repeat: no-repeat; -webkit-box-shadow:0; box-shadow:0;'>
                             <div style = 'width: 100%; text-align:center'>
 
-                                <div style = 'width: 200%; margin-left: -50%; height: 100%; position: relative; overflow: hidden'>
-                                    <div style = 'width: 100%; height: 100%; text-align: center; display:flex; overflow-x: scroll; position: absolute; top: 15px; left: 0px'>
+                                <div style = 'width: 200%; margin-left: -50%; height: 100%; position: relative;'>
+                                    <div style = 'width: 100%; height: 100%; text-align: center; display:flex; position: absolute; top: 15px; left: 0px'>
                                         <div style = 'width: 150px; margin-left: calc(50% - 75px); padding-top: 30px;'>
                                             <div style = 'width: 150px; margin-right: 20px; position: relative'>
                                                 <!--<div style = 'position: absolute; top: -10px; right: -10px' class = 'delete-circle'>
                                                     <i class = 'material-icons' style = 'font-size: 20px; color: #e55'>close</i>
                                                 </div>-->
                                                 <img src = "../static/document_photos/add_document.svg" style = 'width: 150px; border-radius: 15px;' id = 'add-document' class = 'document-photo z-depth-5'>
+                                                <div style = 'margin-top: 25px; color: #aaa; word-break: break-all; width: 500px; margin-left: -175px' id = 'file-name'>Click to upload a file</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div style = 'margin-top: 25px; color: #aaa;'>Click here to upload files</div>
                                 <input type="file" name="newfile" id = 'actual-file-input' multiple style = 'width: 100%; height: 60%; display: none; '>
 
                                 <div class="" style = 'width: 100%; text-align: center; margin-top: 50px'>
-                                        <span id = 'image-modal-close' class = 'button' style = 'margin-right: 20px; border-radius: 5px; padding: 10px 20px 10px 20px; background: #e62828; color: white; margin-left:
+                                        <span id = 'img-modal-close' class = 'button' style = 'margin-right: 20px; border-radius: 5px; padding: 10px 20px 10px 20px; background: #e62828; color: white; margin-left:
                                         \0px'>Close</span>
-                                        <span id = 'image-modal-send' class = 'button' style = 'border-radius: 5px; padding: 10px 20px 10px 20px; background: #15e08c; color: white;  margin-left:
+                                        <span id = 'img-modal-send' class = 'button' style = 'border-radius: 5px; padding: 10px 20px 10px 20px; background: #15e08c; color: white;  margin-left:
                                         \0px'>Send</span>
                                    
                                 </div>
@@ -420,41 +516,6 @@
 
             </form>
 
-        </div>
-
-        <div id="change-class-modal" style = 'position: fixed; overflow-x: hidden; height: 95%; width:70%; z-index:10000; background: rgb(36, 230, 167); padding: 50px 0px 100px 100px; left: 15%; border-radius: 10px; ' class="z-depth-4">
-            <div style = 'overflow-y: scroll; position: relative; top: 0; left: 20px; padding-right: 120px; width: 100%; height: 100%'>
-                <div style = 'font-size: 100px; font-weight: 400; color: white'>
-                    Classes
-                </div>
-                <br/>
-
-                {% for c in class_names %}
-                    <div class = 'class-name' style = 'color: #456487'>{{c}}</div>        
-                {% endfor %}
-            </div> 
-        </div>
-
-         <div id="modal1" class="modal " style = 'height: 100%'>
-            <div class="modal-content valign-wrapper" style = 'width:100%; height: 100%'>
-                <div>
-                <span style = 'font-size: 50'>GPA standards explained</span>
-
-                <p>
-                    High School standard <b>doesn't</b> deal with + and - for grades. So a 90% still counts as an A (4.0), and not an A- (3.7). It is named this way because certain schools, including Newport, use this type of system.
-                </p>
-
-                <p>
-                    Traditional standard <b>does</b> deal with + and - for grades. So a 90% counts as an A- (3.7). It is named that way because most places use this type of scale, including CollegeBoard.
-                </p>
-
-                <p>
-                    Depending on your grade, one standard or the other will be better. For example, if all of your classes are scored 90%, your High School standard GPA would still be a 4.0, but your Traditional standard GPA would be a 3.7. On the other hand, if all your grades were 89%, your High School standard GPA would be a 3.0, while your Traditional standard GPA would be a 3.3.
-                </p>
-                
-                <a href="#" class="modal-action modal-close" style = 'color: rgb(255, 110, 100)'>Close</a>
-                </div>
-            </div>
         </div>
 
         <div style = 'display: none' id = 'token'>{{token}}</div>
@@ -489,7 +550,8 @@
     });
 
     socket.on("message", function(data){
-	console.log("RECIEVED MESSAGE");
+    console.log("RECIEVED MESSAGE");
+    console.log(data);
         insertMessage(rearrangeMessage(data));
     })
 
@@ -505,6 +567,11 @@
                 'payload' : message['payload']
             },
             'author' : message['username'],    
+            'timestamp' : message['timestamp']
+        }
+
+        if ('file-name' in message){
+            message_['content']['file-name'] = message['file-name']
         }
 
         return message_
@@ -542,14 +609,70 @@
         socket.emit("send", payload)
     };
 
+    function sendFile(){
+        var payload = new FormData();
+        payload.append("type", "file");
+        payload.append("class", currentClassname);
+        payload.append("class-token", class_tokens[currentClassname]);
+        payload.append("username", username);
+        payload.append("token", $('#token').text());
+        payload.append("file-name", $('#file-name').val());
+
+        // Add the file
+        payload.append("payload", $("#actual-file-input")[0].files[0]);
+
+        // Have to use ajax cuz jquery (to my knowledge) cannot handle FormData very well
+        $.ajax({
+            url: "/messaging/file",
+            data: payload,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function(data) {
+                if (data['status'] == 'success'){
+                    console.log("file uploaded succesfully")
+                }
+            }
+        });
+
+        $.post(
+            "/messaging/file",
+            payload,
+            function (status, data){
+                if (data['status'] == 'success'){
+                    console.log("file upload successful");
+                }
+            }
+        )
+    }
+
     function insertMessage(message){
         var message_wrapper_wrapper = $(`<div style = 'width: 100%; text-align: right'>`);
 
-        var message_wrapper = $(`<div style = 'position: relative'>
-            <span style = '' class = 'wrapper-author'>${message['author']}</span>
-            <span style = '' class = 'wrapper-timestamp'>${'7:32 PM'}</span>
+        var message_wrapper;
+        
+        var timestamp = moment(message['timestamp'] * 1000).fromNow();
+
+        if (message['author'] == username){
+            message_wrapper = $(`
+            <div style = 'position: relative'>
+                <div class = 'wrapper-metadata-left'>
+                    <span class = 'wrapper-author'>${message['author']},</span>
+                    <span style = '' class = 'wrapper-timestamp' time = ${message['timestamp'] * 1000}>${timestamp}</span>
+                </div>
             <img style = '' src = ${userProfiles[message['author']]} class = 'wrapper-profile-left'>
         </div>`);
+        }else{
+            message_wrapper = $(`
+            <div style = 'position: relative'>
+                <div class = 'wrapper-metadata-right'>
+                    <span class = 'wrapper-author'>${message['author']},</span>
+                    <span style = '' class = 'wrapper-timestamp' time = ${message['timestamp'] * 1000}>${timestamp}</span>
+                </div>
+            <img style = '' src = ${userProfiles[message['author']]} class = 'wrapper-profile-right'>
+        </div>`);
+        }
+        
 
         message_wrapper.addClass(message['author'])
         message_wrapper.css('background', userColors[message['author']]);
@@ -583,11 +706,30 @@
         //message_content.addClass("z-depth-4");
         */
 
-        var message_content = $('<div style = "margin: 20px 0px 20px 0px">');
+        var message_type = message['content']['type'];
+        if (message_type === "image"){
+            var message_content = $(`
+                <div style = "margin: 10px 0px 10px 0px">
+                    <img src = ${message['content']['payload']} class = 'message-image'>
+                </div>
+            `);
+        }else if (message_type === 'file'){
+            var message_content = $(`
+                <div style = "margin: 20px 0px 20px 0px">
+                    <a href = ${message['content']['payload']} download = ${message['content']['file-name']} class = 'message-url'>
+                        ${message['content']['file-name']}
+                        <i class = 'material-icons download-icon' style = ''>arrow_downward</i>
+                    </a>
+                </div>
+            `);
+        }else{
+            var message_content = $('<div style = "margin: 10px 0px 10px 0px">');
 
-        //message_content.css('background', userColors[message['author']]);
-        message_content.html(message['content']['payload']);
+            //message_content.css('background', userColors[message['author']]);
+            message_content.text(message['content']['payload']);
 
+        }
+        
          if (message['author'] != lastAuthor){
              currentWrapper = message_wrapper;
 
@@ -623,6 +765,9 @@
             lastAuthor = message['author'];
 
             
+        }else{
+            // update the timestamp and time attribute
+            currentWrapper.find('.wrapper-timestamp').attr("time", message['timestamp'] * 1000).text(timestamp);
         }
 
             previousMessage = message_content;
@@ -708,7 +853,7 @@
         getMeta(getRecap);        // Get colors, its callback is the getRecap, to ensure that a recap is received AFTER we receive the colors
 
         $('#messages').html('');
-        $('.title').html(currentClassname);
+        $('.title').text(currentClassname);
     }
 </script> 
 
@@ -736,11 +881,11 @@
 
     // Populate emojis
     for (var emoji in face_emojis){
-        var img = $('<img>');
-        img.attr('src', "https://" + face_emojis[emoji]);
+        var img = $('<span>');
+        img.html(face_emojis[emoji]);
         img.addClass("emoji");
 
-        $('#emojis-box').append(img);
+        $('#emojis-box-content').append(img);
     }
 
     $('.modal').modal({
@@ -749,6 +894,8 @@
     
     $('#change-class-modal').css("top", '10%');
     $('.modal-overlay').css('z-index', '0');
+
+    switchToClass("{{class_names[0]}}");
 
 </script>
 
@@ -762,12 +909,23 @@
         $(this).addClass('z-depth-5');
     });
 
+    $('body').on("click", ".emoji", function(){
+        $('#message-box-content').val($('#message-box-content').val() + $(this).html());
+    })
+
     $('#add-document').click(function(){
         $("#actual-file-input").click();
     });
 
+    // User has selected a file
     $('#actual-file-input').change(function(){
         console.log($(this).val());
+
+        // Change the file-name and also change the add-document photo from an "add-document" to a document
+
+        $('#add-document').attr('src', '../static/document_photos/red.svg');
+        $('#file-name').text($(this).val().split('\\').slice(-1)[0]);
+
     })
 
     $('#message-box-content').keypress(function(event){
@@ -775,45 +933,50 @@
 
         if (key == 13){
             event.preventDefault();
-            console.log($('#message-box-content').text())
-            sendPlaintext($('#message-box-content').text(), currentClassname);
+            console.log($('#message-box-content').val())
+            sendPlaintext($('#message-box-content').val(), currentClassname);
 
-            $('#message-box-content').html('');
+            $('#message-box-content').val('');
         }
     });
 
     $('#attach-button').click(function(){
-        $('#img-send-modal').modal('open');
+        $('#img-send-modal').toggleClass('hidden');
     })
 
     $('#emoji-button').click(function(){
-        if (!showingEmojis){
-            $("#emojis-box").css('display', 'inline-block');
-        }else{
-            $("#emojis-box").css('display', 'none');
-        }
-
-        showingEmojis = !showingEmojis;
-        $('#color-box').css('display', 'none');
-
-        showingColors = false;
+        $("#emojis-box").toggleClass('hidden');
+        $('#color-box').addClass('hidden');
     });
 
      $('#color-button').click(function(){
-        if (!showingColors){
-            $("#color-box").css('display', 'flex');
-        }else{
-            $("#color-box").css('display', 'none');
-        }
-
-        showingColors = !showingColors;
-        $('#emojis-box').css('display', 'none');
-
-        showingEmojis = false;
+        $("#color-box").toggleClass('hidden');
+        $("#emojis-box").addClass('hidden');
     });
 
     $('#classroom-change').click(function(){
         $('#change-class-modal').css("top", '10%');
     });
+
+    $('#img-modal-send').click(function(){
+        sendFile();
+    })
+
+    $('#img-modal-close').click(function(){
+        $("#img-send-modal").addClass('hidden');
+    })
+
+    setInterval(function (){
+        var timestamps = $('.wrapper-timestamp');
+
+        for (var t = 0; t < timestamps.length; t++){
+            var timestamp = $(timestamps[t]);
+            var time = timestamp.attr('time');
+
+            var updatedTimestamp = moment(time * 1).fromNow();
+
+            timestamp.text(updatedTimestamp);
+        }
+    }, 5000)
 
 </script>

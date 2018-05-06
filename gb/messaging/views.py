@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, make_response, redirect, jsonify
 from flask_socketio import SocketIO, emit, send
+from werkzeug.utils import secure_filename
+
 
 from bs4 import BeautifulSoup as bs
 
@@ -12,11 +14,16 @@ from . import messaging
 from .. import db
 from .. import util
 from .. import auth
+from .. import space
 from .. import variables
+from .. import imagetype
 from .. import exceptions
 
 from bson import BSON 
 from bson import json_util
+
+# A variable that stores the socketio application from application.py for use in the /file endpoint
+socket_app = None
 
 @messaging.route("", methods = ['GET', 'POST'])
 def show_chat():
@@ -155,6 +162,89 @@ def get_metadata():
         }
     )
 
+@messaging.route("/file", methods = ['POST'])
+def handle_file():
+    try:
+        verified = auth.auth_credentials(request, method = 'MESSAGING')
+    except exceptions.AuthError: 
+        return jsonify(
+            {
+                "status" : "failure",
+                "error" : "Invalid Credentials"
+            }
+        ), 401
+
+    _, username = verified 
+
+    # check if there exists a file
+    print(request.files)
+    if "payload" not in request.files:
+        return jsonify(
+            {
+                "status" : "failure",
+                "error" : "Invalid Input"
+            }
+        ), 400
+
+    f = request.files.get("payload")
+    file_content = f.read()
+    file_name = secure_filename(f.filename)
+    file_extension = file_name.split(".")[-1]
+    
+    is_file_image = imagetype.what(file_content) in ['jpeg', 'png', 'gif']
+
+    # Prevent potentially malicious files from being uploaded
+    if (file_extension in variables.RESTRICTED_FILE_EXTENSIONS):
+        return jsonify(
+            {
+                "status" : "failure",
+                "error" : "Invalid Input"
+            }
+        )
+
+    # Create the object and insert it into gradebook-space-1
+    # Generate a random key name so that people can't access files
+    key = util.salt(100)               
+    key_name = request.form.get('class') + "/" + key
+    key_url = ("https://gradebook-space-1.nyc3.digitaloceanspaces.com/" + key_name).replace(' ', '%20')     # Make the url web-friendly
+    space.GRADEBOOK_SPACE.put_object(
+        Body = file_content,
+        Bucket = "gradebook-space-1",
+        Key = request.form.get('class') + "/" + key,
+        ACL='public-read',
+        ContentDisposition = 'attachment; filename="%s"' % file_name
+    )
+
+    # insert a message with the url of the file, not of the file itself
+    # type should also be replaced. If the file is an image, then type should be "image", otherwise it should be "file"
+    db.CHAT_DB.messages.insert({
+        "classroom" : request.form.get('class'),
+        "content" : {
+            "payload" : key_url,
+            "type" : is_file_image * "image" + (not is_file_image) * "file",
+            "file-name" : file_name
+        },
+        "timestamp" : int(time.time()),
+        "author" : username
+    }) 
+
+    message = {
+        "class" : request.form.get('class'),
+        "type" : is_file_image * "image" + (not is_file_image) * "file",
+        "file-name" : file_name,
+        "timestamp" : int(time.time()),
+        "payload" : key_url,
+        "username" : username
+    }
+
+    socket_app.emit("message", message)
+
+    return jsonify(
+        {
+            "status" : "success"
+        }
+    )
+
 def init_application(application):
     @application.on('connect')
     def handle_connection():
@@ -233,7 +323,8 @@ def init_application(application):
         print('worked')
 
         # assign an id to the message and emit it
-
+        # assign a timestamp to message as well
+        message['timestamp'] = int(time.time())
 
         emit("ack", {"status" : "success"}, room = request.sid)
         emit("message", message)

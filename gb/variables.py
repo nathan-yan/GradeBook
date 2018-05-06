@@ -1,5 +1,7 @@
 import os
 
+RESTRICTED_FILE_EXTENSIONS = ['exe', 'pkg']
+
 HMAC_MESSAGING_SECRET = 'jfiosjef03joij'
 
 GRADEBOOK_SPACE_SECRET = os.environ.get("gradebook_space_secret")
