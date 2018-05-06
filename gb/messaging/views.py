@@ -327,4 +327,4 @@ def init_application(application):
         message['timestamp'] = int(time.time())
 
         emit("ack", {"status" : "success"}, room = request.sid)
-        emit("message", message)
+        emit("message", message, broadcast = True)
